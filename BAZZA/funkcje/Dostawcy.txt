@@ -1,0 +1,36 @@
+DELIMITER //
+CREATE PROCEDURE DodajDostawce (
+    IN p_NazwaDostawcy VARCHAR(255),
+    IN p_NumerTelefonu VARCHAR(10),
+    IN p_IdMagazynu INT
+)
+BEGIN
+    INSERT INTO Dostawcy (NazwaDostawcy, NumerTelefonu, IdMagazynu)
+    VALUES (p_NazwaDostawcy, p_NumerTelefonu, p_IdMagazynu);
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE UsunDostawce (
+    IN p_IdDostawcy INT
+)
+BEGIN
+    DELETE FROM Dostawcy WHERE IdDostawcy = p_IdDostawcy;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE AktualizujDostawce (
+    IN p_IdDostawcy INT,
+    IN p_NazwaDostawcy VARCHAR(255),
+    IN p_NumerTelefonu VARCHAR(10),
+    IN p_IdMagazynu INT
+)
+BEGIN
+    UPDATE Dostawcy
+    SET NazwaDostawcy = p_NazwaDostawcy,
+        NumerTelefonu = p_NumerTelefonu,
+        IdMagazynu = p_IdMagazynu
+    WHERE IdDostawcy = p_IdDostawcy;
+END //
+DELIMITER ;

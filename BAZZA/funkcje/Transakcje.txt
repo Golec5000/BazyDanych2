@@ -1,0 +1,51 @@
+DELIMITER //
+
+CREATE PROCEDURE DodajTransakcje(
+    IN in_NumerTransakcji varchar(10),
+    IN in_DataTransakcji date,
+    IN in_Kwota int(10),
+    IN in_NumerZamowienia varchar(10)
+)
+BEGIN
+    INSERT INTO Transakcje (NumerTransakcji, DataTransakcji, Kwota, NumerZamowienia)
+    VALUES (in_NumerTransakcji, in_DataTransakcji, in_Kwota, in_NumerZamowienia);
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE AktualizujTransakcje(
+    IN in_NumerTransakcji varchar(10),
+    IN in_NowyNumerZamowienia varchar(10)
+)
+BEGIN
+    UPDATE Transakcje
+    SET NumerZamowienia = in_NowyNumerZamowienia
+    WHERE NumerTransakcji = in_NumerTransakcji;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE UsunTransakcje(
+    IN in_NumerTransakcji varchar(10)
+)
+BEGIN
+    DELETE FROM Transakcje WHERE NumerTransakcji = in_NumerTransakcji;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE PobierzDaneTransakcji(
+    IN in_NumerTransakcji varchar(10)
+)
+BEGIN
+    SELECT * FROM Transakcje WHERE NumerTransakcji = in_NumerTransakcji;
+END //
+
+DELIMITER ;
+

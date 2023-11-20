@@ -1,0 +1,49 @@
+DELIMITER //
+
+CREATE PROCEDURE DodajKategorieProduktu(
+    IN in_ProduktyId int(10),
+    IN in_KategorieNazwa varchar(255)
+)
+BEGIN
+    INSERT INTO Produkty_Kategorie (ProduktyId, KategorieNazwaKategorii)
+    VALUES (in_ProduktyId, in_KategorieNazwa);
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE UsunKategorieProduktu(
+    IN in_ProduktyId int(10),
+    IN in_KategorieNazwa varchar(255)
+)
+BEGIN
+    DELETE FROM Produkty_Kategorie
+    WHERE ProduktyId = in_ProduktyId AND KategorieNazwaKategorii = in_KategorieNazwa;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE PobierzKategorieProduktu(
+    IN in_ProduktyId int(10)
+)
+BEGIN
+    SELECT * FROM Produkty_Kategorie WHERE ProduktyId = in_ProduktyId;
+END //
+
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE EdytujKategorie (
+    IN p_IdKategorii INT,
+    IN p_NazwaKategorii VARCHAR(255)
+)
+BEGIN
+    UPDATE Kategorie
+    SET NazwaKategorii = p_NazwaKategorii
+    WHERE IdKategorii = p_IdKategorii;
+END //
+DELIMITER ;

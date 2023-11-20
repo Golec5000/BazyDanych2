@@ -1,0 +1,60 @@
+DELIMITER //
+
+CREATE PROCEDURE DodajKlienta(
+    IN in_nick varchar(20),
+    IN in_Imie varchar(50),
+    IN in_Nazwisko varchar(50),
+    IN in_Adres varchar(50),
+    IN in_Email varchar(60),
+    IN in_NumerTelefonu varchar(10),
+    IN in_NumerTransakcji varchar(10)
+)
+BEGIN
+    INSERT INTO Klienci (nick, Imie, Nazwisko, Adres, Email, NumerTelefonu, NumerTransakcji)
+    VALUES (in_nick, in_Imie, in_Nazwisko, in_Adres, in_Email, in_NumerTelefonu, in_NumerTransakcji);
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE AktualizujKlienta(
+    IN in_nick varchar(20),
+    IN in_Imie varchar(50),
+    IN in_Nazwisko varchar(50),
+    IN in_Adres varchar(50),
+    IN in_Email varchar(60),
+    IN in_NumerTelefonu varchar(10),
+    IN in_NumerTransakcji varchar(10)
+)
+BEGIN
+    UPDATE Klienci
+    SET 
+        Imie = in_Imie,
+        Nazwisko = in_Nazwisko,
+        Adres = in_Adres,
+        Email = in_Email,
+        NumerTelefonu = in_NumerTelefonu,
+        NumerTransakcji = in_NumerTransakcji
+    WHERE nick = in_nick;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE UsunKlienta(IN in_nick varchar(20))
+BEGIN
+    DELETE FROM Klienci WHERE nick = in_nick;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE PobierzDaneKlienta(IN in_nick varchar(20))
+BEGIN
+    SELECT * FROM Klienci WHERE nick = in_nick;
+END //
+
+DELIMITER ;

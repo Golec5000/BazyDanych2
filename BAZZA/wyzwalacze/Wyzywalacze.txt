@@ -1,0 +1,21 @@
+DELIMITER //
+CREATE TRIGGER before_delete_Magazyn
+BEFORE DELETE ON Magazyn
+FOR EACH ROW
+BEGIN
+    DELETE FROM ListaMagazynow
+    WHERE IdMagazynu = OLD.IdMagazynu;
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER before_delete_Dostawcy
+BEFORE DELETE ON Dostawcy
+FOR EACH ROW
+BEGIN
+    DELETE FROM ListaDostawcow
+    WHERE IdDostawcy = OLD.IdDostawcy;
+END;
+//
+DELIMITER ;

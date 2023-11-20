@@ -1,0 +1,42 @@
+DELIMITER //
+
+CREATE PROCEDURE AktualizujProdukt(
+    IN in_IdProduktu int(10),
+    IN in_NazwaProduktu varchar(255),
+    IN in_Cena float,
+    IN in_Opis varchar(10000),
+    IN in_Kategoria varchar(255)
+)
+BEGIN
+    UPDATE Produkty
+    SET 
+        NazwaProduktu = in_NazwaProduktu,
+        Cena = in_Cena,
+        Opis = in_Opis,
+        Kategoria = in_Kategoria
+    WHERE IdProduktu = in_IdProduktu;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE UsunProdukt(
+    IN in_IdProduktu int(10)
+)
+BEGIN
+    DELETE FROM Produkty WHERE IdProduktu = in_IdProduktu;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE PobierzDaneProduktu(
+    IN in_IdProduktu int(10)
+)
+BEGIN
+    SELECT * FROM Produkty WHERE IdProduktu = in_IdProduktu;
+END //
+
+DELIMITER ;

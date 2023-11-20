@@ -1,0 +1,42 @@
+DELIMITER //
+
+CREATE PROCEDURE DodajAdministratora(
+    IN in_Imie varchar(255),
+    IN in_Nazwisko varchar(255),
+    IN in_DataZatrudnienia date
+)
+BEGIN
+    INSERT INTO ListaAdministratorow (Imie, Nazwisko, DataZatrudnienia)
+    VALUES (in_Imie, in_Nazwisko, in_DataZatrudnienia);
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE AktualizujAdministratora(
+    IN in_AdministratorId int(10),
+    IN in_Imie varchar(255),
+    IN in_Nazwisko varchar(255),
+    IN in_DataZatrudnienia date
+)
+BEGIN
+    UPDATE ListaAdministratorow
+    SET 
+        Imie = in_Imie,
+        Nazwisko = in_Nazwisko,
+        DataZatrudnienia = in_DataZatrudnienia
+    WHERE AdministratorId = in_AdministratorId;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE UsunAdministratora(IN in_AdministratorId int(10))
+BEGIN
+    DELETE FROM ListaAdministratorow WHERE AdministratorId = in_AdministratorId;
+END //
+
+DELIMITER ;
+

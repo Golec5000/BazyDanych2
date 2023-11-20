@@ -1,0 +1,24 @@
+CREATE USER 'Sprzedawca'@'localhost' IDENTIFIED BY 'haslo_sprzedawcy';
+
+GRANT SELECT ON baza_danych.Zamówienia TO 'Sprzedawca'@'localhost';
+GRANT SELECT, UPDATE ON baza_danych.Magazyn TO 'Sprzedawca'@'localhost';
+GRANT SELECT ON baza_danych.Produkty TO 'Sprzedawca'@'localhost';
+GRANT SELECT ON baza_danych.Produkty_Kategorie TO 'Sprzedawca'@'localhost';
+GRANT SELECT ON baza_danych.Kategorie TO 'Sprzedawca'@'localhost';
+GRANT SELECT ON baza_danych.OpinieKlientow TO 'Sprzedawca'@'localhost';
+GRANT SELECT ON baza_danych.Klienci TO 'Sprzedawca'@'localhost';
+
+CREATE USER 'Handlowiec'@'localhost' IDENTIFIED BY 'haslo_handlowca';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON baza_danych.Zamówienia TO 'Handlowiec'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON baza_danych.Magazyn TO 'Handlowiec'@'localhost';
+GRANT SELECT ON baza_danych.Dostawcy TO 'Handlowiec'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON baza_danych.Produkty TO 'Handlowiec'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON baza_danych.Transakcje TO 'Handlowiec'@'localhost';
+GRANT SELECT ON baza_danych.Klienci TO 'Handlowiec'@'localhost';
+GRANT SELECT ON baza_danych.Kategorie TO 'Handlowiec'@'localhost';
+GRANT SELECT ON baza_danych.OpinieKlientow TO 'Handlowiec'@'localhost';
+
+CREATE USER 'Administrator'@'localhost' IDENTIFIED BY 'haslo_administratora';
+
+GRANT ALL PRIVILEGES ON baza_danych.* TO 'Administrator'@'localhost';

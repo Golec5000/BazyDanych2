@@ -1,0 +1,38 @@
+DELIMITER //
+
+CREATE PROCEDURE PobierzDaneZamowienia(
+    IN in_NumerZamowienia varchar(10)
+)
+BEGIN
+    SELECT * FROM Zamówienia WHERE NumerZamowienia = in_NumerZamowienia;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE AktualizujStanZamowienia(
+    IN in_NumerZamowienia varchar(10),
+    IN in_NowyStanZamowienia varchar(255)
+)
+BEGIN
+    UPDATE Zamówienia
+    SET StanZamowienia = in_NowyStanZamowienia
+    WHERE NumerZamowienia = in_NumerZamowienia;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE DodajZamowienie(
+    IN in_NumerZamowienia varchar(10),
+    IN in_DataTransakcji date,
+    IN in_StanZamowienia varchar(255)
+)
+BEGIN
+    INSERT INTO Zamówienia (NumerZamowienia, DataTransakcji, StanZamowienia)
+    VALUES (in_NumerZamowienia, in_DataTransakcji, in_StanZamowienia);
+END //
+
+DELIMITER ;

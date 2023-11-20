@@ -1,0 +1,55 @@
+DELIMITER //
+
+CREATE PROCEDURE DodajOpinie(
+    IN in_Ocena int(1),
+    IN in_Komentarz varchar(10000),
+    IN in_nick varchar(20),
+    IN in_IdProduktu int(10)
+)
+BEGIN
+    INSERT INTO OpinieKlientow (Ocena, Komentarz, nick, IdProduktu)
+    VALUES (in_Ocena, in_Komentarz, in_nick, in_IdProduktu);
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE AktualizujOpinie(
+    IN in_Ocena int(1),
+    IN in_Komentarz varchar(10000),
+    IN in_nick varchar(20),
+    IN in_IdProduktu int(10)
+)
+BEGIN
+    UPDATE OpinieKlientow
+    SET Ocena = in_Ocena,
+        Komentarz = in_Komentarz
+    WHERE nick = in_nick AND IdProduktu = in_IdProduktu;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE UsunOpinie(
+    IN in_nick varchar(20),
+    IN in_IdProduktu int(10)
+)
+BEGIN
+    DELETE FROM OpinieKlientow
+    WHERE nick = in_nick AND IdProduktu = in_IdProduktu;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE PobierzOpinieProduktu(
+    IN in_IdProduktu int(10)
+)
+BEGIN
+    SELECT * FROM OpinieKlientow WHERE IdProduktu = in_IdProduktu;
+END //
+
+DELIMITER ;

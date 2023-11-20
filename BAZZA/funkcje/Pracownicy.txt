@@ -1,0 +1,60 @@
+DELIMITER //
+
+CREATE PROCEDURE DodajPracownika(
+    IN in_Imie varchar(50),
+    IN in_Nazwisko varchar(50),
+    IN in_Stanowisko varchar(20),
+    IN in_DataZatrudnienia date,
+    IN in_AdministratorId int(10)
+)
+BEGIN
+    INSERT INTO Pracownicy (Imie, Nazwisko, Stanowisko, DataZatrudnienia, AdministratorId)
+    VALUES (in_Imie, in_Nazwisko, in_Stanowisko, in_DataZatrudnienia, in_AdministratorId);
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE AktualizujPracownika(
+    IN in_Id int(10),
+    IN in_Imie varchar(50),
+    IN in_Nazwisko varchar(50),
+    IN in_Stanowisko varchar(20),
+    IN in_DataZatrudnienia date,
+    IN in_AdministratorId int(10)
+)
+BEGIN
+    UPDATE Pracownicy
+    SET 
+        Imie = in_Imie,
+        Nazwisko = in_Nazwisko,
+        Stanowisko = in_Stanowisko,
+        DataZatrudnienia = in_DataZatrudnienia,
+        AdministratorId = in_AdministratorId
+    WHERE Id = in_Id;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE UsunPracownika(
+    IN in_Id int(10)
+)
+BEGIN
+    DELETE FROM Pracownicy WHERE Id = in_Id;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE PobierzDanePracownika(
+    IN in_Id int(10)
+)
+BEGIN
+    SELECT * FROM Pracownicy WHERE Id = in_Id;
+END //
+
+DELIMITER ;

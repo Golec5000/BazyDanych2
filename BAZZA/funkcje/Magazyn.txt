@@ -1,0 +1,52 @@
+CREATE PROCEDURE PobierzIloscProduktuWMagazynie(
+    IN in_IdMagazynu int(10),
+    IN in_IdProduktu int(10)
+)
+BEGIN
+    SELECT Ilosc FROM Magazyn
+    WHERE IdMagazynu = in_IdMagazynu AND IdProduktu = in_IdProduktu;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE UsunProduktZMagazynu(
+    IN in_IdMagazynu int(10),
+    IN in_IdProduktu int(10)
+)
+BEGIN
+    DELETE FROM Magazyn
+    WHERE IdMagazynu = in_IdMagazynu AND IdProduktu = in_IdProduktu;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE AktualizujIloscProduktuWMagazynie(
+    IN in_IdMagazynu int(10),
+    IN in_IdProduktu int(10),
+    IN in_NowaIlosc int(10)
+)
+BEGIN
+    UPDATE Magazyn
+    SET Ilosc = in_NowaIlosc
+    WHERE IdMagazynu = in_IdMagazynu AND IdProduktu = in_IdProduktu;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE DodajProduktDoMagazynu(
+    IN in_IdMagazynu int(10),
+    IN in_IdProduktu int(10),
+    IN in_Ilosc int(10)
+)
+BEGIN
+    INSERT INTO Magazyn (IdMagazynu, IdProduktu, Ilosc)
+    VALUES (in_IdMagazynu, in_IdProduktu, in_Ilosc);
+END //
+
+DELIMITER ;

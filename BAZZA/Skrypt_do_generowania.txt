@@ -1,0 +1,99 @@
+CREATE TABLE Dostawcy (
+  IdDostawcy    int(10) NOT NULL AUTO_INCREMENT, 
+  NazwaDostawcy varchar(255) NOT NULL, 
+  NumerTelefonu varchar(10) NOT NULL, 
+  IdMagazynu    int(10) NOT NULL, 
+  PRIMARY KEY (IdDostawcy));
+CREATE TABLE Kategorie (
+  NazwaKategorii varchar(255) NOT NULL, 
+  OpisKategorii  varchar(10000) NOT NULL, 
+  PRIMARY KEY (NazwaKategorii));
+CREATE TABLE Klienci (
+  nick            varchar(20) NOT NULL, 
+  Imie            varchar(50) NOT NULL, 
+  Nazwisko        varchar(50) NOT NULL, 
+  Adres           varchar(50) NOT NULL, 
+  Email           varchar(60) NOT NULL UNIQUE, 
+  NumerTelefonu   varchar(10), 
+  NumerTransakcji varchar(10) NOT NULL, 
+  PRIMARY KEY (nick));
+CREATE TABLE ListaAdministratorow (
+  AdministratorId  int(10) NOT NULL AUTO_INCREMENT, 
+  Imie             varchar(255) NOT NULL, 
+  Nazwisko         varchar(255) NOT NULL, 
+  DataZatrudnienia date NOT NULL, 
+  PRIMARY KEY (AdministratorId));
+CREATE TABLE ListaDostawcow (
+  IdDostawcy int(10) NOT NULL, 
+  IdMagazynu int(10) NOT NULL);
+CREATE TABLE ListaDostawcow_Dostawcy (
+  DostawcyIdDostawcy int(10) NOT NULL, 
+  IdMagazynu         int(10) NOT NULL, 
+  PRIMARY KEY (DostawcyIdDostawcy, 
+  IdMagazynu));
+CREATE TABLE ListaMagazynow (
+  IdMagazynu      int(10) NOT NULL AUTO_INCREMENT, 
+  Adres           varchar(50) NOT NULL, 
+  AdministratorId int(10) NOT NULL, 
+  PRIMARY KEY (IdMagazynu));
+CREATE TABLE Magazyn (
+  IdMagazynu int(10) NOT NULL, 
+  IdProduktu int(10) NOT NULL, 
+  Ilosc      int(10) NOT NULL, 
+  PRIMARY KEY (IdMagazynu));
+CREATE TABLE OpinieKlientow (
+  Ocena      int(1), 
+  Komentarz  varchar(10000), 
+  nick       varchar(20) NOT NULL, 
+  IdProduktu int(10) NOT NULL);
+CREATE TABLE Pracownicy (
+  Id               int(10) NOT NULL AUTO_INCREMENT, 
+  Imie             varchar(50) NOT NULL, 
+  Nazwisko         varchar(50) NOT NULL, 
+  Stanowisko       varchar(20) NOT NULL, 
+  DataZatrudnienia date NOT NULL, 
+  AdministratorId  int(10) NOT NULL, 
+  PRIMARY KEY (Id));
+CREATE TABLE Produkty (
+  IdProduktu    int(10) NOT NULL AUTO_INCREMENT, 
+  NazwaProduktu varchar(255) NOT NULL, 
+  Cena          float NOT NULL, 
+  Opis          varchar(10000) NOT NULL, 
+  Kategoria     varchar(255) NOT NULL, 
+  PRIMARY KEY (IdProduktu));
+CREATE TABLE Produkty_Kategorie (
+  ProduktyId              int(10) NOT NULL, 
+  KategorieNazwaKategorii varchar(255) NOT NULL, 
+  PRIMARY KEY (ProduktyId, 
+  KategorieNazwaKategorii));
+CREATE TABLE Transakcje (
+  NumerTransakcji varchar(10) NOT NULL, 
+  DataTransakcji  date NOT NULL, 
+  Kwota           int(10) NOT NULL, 
+  NumerZamowienia varchar(10), 
+  PRIMARY KEY (NumerTransakcji));
+CREATE TABLE Zamówienia (
+  NumerZamowienia varchar(10) NOT NULL, 
+  DataTransakcji  date NOT NULL, 
+  StanZamowienia  varchar(255) NOT NULL, 
+  PRIMARY KEY (NumerZamowienia));
+CREATE TABLE Zamówienia_Transakcje (
+  ZamówieniaNumerZamowienia varchar(10) NOT NULL, 
+  TransakcjeNumerTransakcji varchar(10) NOT NULL, 
+  DataTransakcji            date NOT NULL, 
+  PRIMARY KEY (ZamówieniaNumerZamowienia, 
+  TransakcjeNumerTransakcji));
+ALTER TABLE OpinieKlientow ADD CONSTRAINT FKOpinieKlie85286 FOREIGN KEY (IdProduktu) REFERENCES Produkty (IdProduktu);
+ALTER TABLE Magazyn ADD CONSTRAINT FKMagazyn299317 FOREIGN KEY (IdProduktu) REFERENCES Produkty (IdProduktu);
+ALTER TABLE Produkty_Kategorie ADD CONSTRAINT FKProdukty_K883939 FOREIGN KEY (ProduktyId) REFERENCES Produkty (IdProduktu);
+ALTER TABLE Klienci ADD CONSTRAINT FKKlienci58595 FOREIGN KEY (NumerTransakcji) REFERENCES Transakcje (NumerTransakcji);
+ALTER TABLE OpinieKlientow ADD CONSTRAINT FKOpinieKlie787508 FOREIGN KEY (nick) REFERENCES Klienci (nick);
+ALTER TABLE Zamówienia_Transakcje ADD CONSTRAINT FKZamówienia498578 FOREIGN KEY (ZamówieniaNumerZamowienia) REFERENCES Zamówienia (NumerZamowienia);
+ALTER TABLE Magazyn ADD CONSTRAINT FKMagazyn106861 FOREIGN KEY (IdMagazynu) REFERENCES ListaMagazynow (IdMagazynu);
+ALTER TABLE ListaDostawcow_Dostawcy ADD CONSTRAINT FKListaDosta775197 FOREIGN KEY (DostawcyIdDostawcy) REFERENCES Dostawcy (IdDostawcy);
+ALTER TABLE Pracownicy ADD CONSTRAINT FKPracownicy675238 FOREIGN KEY (AdministratorId) REFERENCES ListaAdministratorow (AdministratorId);
+ALTER TABLE Zamówienia_Transakcje ADD CONSTRAINT FKZamówienia973464 FOREIGN KEY (TransakcjeNumerTransakcji) REFERENCES Transakcje (NumerTransakcji);
+ALTER TABLE Produkty_Kategorie ADD CONSTRAINT FKProdukty_K510709 FOREIGN KEY (KategorieNazwaKategorii) REFERENCES Kategorie (NazwaKategorii);
+ALTER TABLE ListaMagazynow ADD CONSTRAINT FKListaMagaz601202 FOREIGN KEY (AdministratorId) REFERENCES ListaAdministratorow (AdministratorId);
+ALTER TABLE ListaDostawcow ADD CONSTRAINT FKListaDosta431852 FOREIGN KEY (IdMagazynu) REFERENCES ListaMagazynow (IdMagazynu);
+
