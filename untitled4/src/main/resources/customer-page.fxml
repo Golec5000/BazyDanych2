@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="441.0" prefWidth="652.0" style="-fx-background-color: #111111;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.CustomerMainPageController">
+   <children>
+      <Label fx:id="customerLabel" layoutX="31.0" layoutY="31.0" prefHeight="22.0" prefWidth="347.0" text="Customer: " textFill="#fcfcfc">
+         <font>
+            <Font name="Lucida Console" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="ordersListButton" layoutX="31.0" layoutY="183.0" mnemonicParsing="false" onAction="#getOrdersList" prefHeight="90.0" prefWidth="279.0" style="-fx-background-color: #3a6131;" text="Wyświetl swoje zamówienia" textFill="#fcfcfc">
+         <font>
+            <Font name="Lucida Console" size="15.0" />
+         </font>
+      </Button>
+      <Label fx:id="IDLabel" layoutX="31.0" layoutY="71.0" prefHeight="22.0" prefWidth="347.0" text="ID:" textFill="#fcfcfc">
+         <font>
+            <Font name="Lucida Console" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="opinionsListButton" layoutX="31.0" layoutY="287.0" mnemonicParsing="false" onAction="#getOpinionsList" prefHeight="90.0" prefWidth="279.0" style="-fx-background-color: #3a6131;" text="Wyświetl swoje opinie" textFill="#fcfcfc">
+         <font>
+            <Font name="Lucida Console" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="productsButton" layoutX="346.0" layoutY="183.0" mnemonicParsing="false" onAction="#getProducts" prefHeight="90.0" prefWidth="279.0" style="-fx-background-color: #3a6131;" text="Wyświetl dostępne produkty" textFill="#fcfcfc">
+         <font>
+            <Font name="Lucida Console" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="accountEditButton" layoutX="346.0" layoutY="287.0" mnemonicParsing="false" onAction="#editAccount" prefHeight="90.0" prefWidth="279.0" style="-fx-background-color: #3a6131;" text="Edycja danych konta" textFill="#fcfcfc">
+         <font>
+            <Font name="Lucida Console" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="loguotBotton" layoutX="451.0" layoutY="26.0" mnemonicParsing="false" onAction="#logout" prefHeight="67.0" prefWidth="174.0" style="-fx-background-color: #3a6131;" text="Wyloguj" textFill="#fcfcfc">
+         <font>
+            <Font name="Lucida Console" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
