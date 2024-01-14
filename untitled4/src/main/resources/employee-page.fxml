@@ -5,14 +5,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="786.0" style="-fx-background-color: #111111;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.EmployeeMainPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="786.0" style="-fx-background-color: #111111;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.employee.EmployeeMainPageController">
    <children>
       <Label fx:id="nameLabel" layoutX="49.0" layoutY="44.0" prefHeight="16.0" prefWidth="262.0" text="Imie:" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="ordersListButton" layoutX="49.0" layoutY="188.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Wyświetl zamówienia" textFill="#fcfcfc">
+      <Button fx:id="ordersListButton" layoutX="49.0" layoutY="188.0" mnemonicParsing="false" onAction="#getOrdersList" prefHeight="91.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Wyświetl zamówienia" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="15.0" />
          </font>
@@ -32,27 +32,27 @@
             <Font name="Lucida Console" size="25.0" />
          </font>
       </Label>
-      <Button fx:id="productsListButton" layoutX="49.0" layoutY="295.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Wyświetl produkty" textFill="#fcfcfc">
+      <Button fx:id="productsListButton" layoutX="49.0" layoutY="295.0" mnemonicParsing="false" onAction="#getProductsList" prefHeight="91.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Wyświetl produkty" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="categoriesListButton" layoutX="49.0" layoutY="404.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Wyświetl kategorie" textFill="#fcfcfc">
+      <Button fx:id="categoriesListButton" layoutX="49.0" layoutY="404.0" mnemonicParsing="false" onAction="#getCategoriesList" prefHeight="91.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Wyświetl kategorie" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="suppliersListButton" layoutX="364.0" layoutY="188.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="293.0" style="-fx-background-color: #3a6131;" text="Wyświetl dostępnych dostawców" textFill="#fcfcfc">
+      <Button fx:id="suppliersListButton" layoutX="364.0" layoutY="188.0" mnemonicParsing="false" onAction="#getSuppliersList" prefHeight="91.0" prefWidth="293.0" style="-fx-background-color: #3a6131;" text="Wyświetl dostępnych dostawców" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="logout" layoutX="364.0" layoutY="295.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Wyloguj" textFill="#fcfcfc">
+      <Button fx:id="logoutButton" layoutX="364.0" layoutY="295.0" mnemonicParsing="false" onAction="#logout" prefHeight="91.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Wyloguj" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="removeButton" layoutX="364.0" layoutY="404.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Usuń użytkownika" textFill="#fcfcfc">
+      <Button fx:id="removeButton" layoutX="364.0" layoutY="404.0" mnemonicParsing="false" onAction="#remove" prefHeight="91.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Usuń użytkownika" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="15.0" />
          </font>

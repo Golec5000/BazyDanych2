@@ -8,9 +8,9 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="653.0" style="-fx-background-color: #111111;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="653.0" style="-fx-background-color: #111111;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.login.LoginController">
    <children>
-      <Label layoutX="294.0" layoutY="63.0" prefHeight="30.0" prefWidth="97.0" style="-fx-text-fill: #fcfcfc;" text="Chuj !!" textFill="#fcfcfc">
+      <Label layoutX="294.0" layoutY="63.0" prefHeight="30.0" prefWidth="97.0" style="-fx-text-fill: #fcfcfc;" text="x-kom-x" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="20.0" />
          </font>
