@@ -17,28 +17,37 @@ import java.util.ResourceBundle;
 public class CustomerProductsPageController implements Initializable {
 
     @FXML
-    TableView productsTable;
+    private Button backButton;
 
     @FXML
-    TextField searchBar;
+    private ComboBox<?> categoryList;
 
     @FXML
-    ComboBox categoryList;
+    private TableColumn<?, ?> cena;
 
     @FXML
-    Spinner<Integer> minPrice;
+    private Button getdDescriptionButton;
 
     @FXML
-    Spinner<Integer> maxPrice;
+    private Spinner<Integer> maxPrice;
 
     @FXML
-    Button getdDescriptionButton;
+    private Spinner<Integer> minPrice;
 
     @FXML
-    Button orderProductButton;
+    private TableColumn<?, ?> nazwaProduktu;
 
     @FXML
-    Button backButton;
+    private TableColumn<?, ?> ocena;
+
+    @FXML
+    private Button orderProductButton;
+
+    @FXML
+    private TableView<?> productsTable;
+
+    @FXML
+    private TextField searchBar;
 
 
     @Override

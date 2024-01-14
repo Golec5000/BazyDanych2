@@ -61,10 +61,13 @@ public class EmployeeMainPageController {
 
     public void logout(ActionEvent actionEvent){
         System.out.println("logout");
+        getNewScene("/login-page.fxml", actionEvent);
     }
 
     public void getSuppliersList(ActionEvent actionEvent){
         System.out.println("getSuppliersList");
+
+        getNewScene("/employee-delivers-page.fxml", actionEvent);
     }
 
     public void remove(ActionEvent actionEvent){

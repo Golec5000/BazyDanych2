@@ -14,30 +14,70 @@ import java.io.IOException;
 public class EmployeeProductsPageController {
 
     @FXML
+    Button addProductButton;
+
+    @FXML
     Button backButton;
 
     @FXML
-    Button addProductButton;
+    ComboBox<?> categoryBox;
+
+    @FXML
+    TableColumn<?, ?> cena;
+
+    @FXML
+    TableColumn<?, ?> id;
+
+    @FXML
+     TableColumn<?, ?> kategoria;
+
+    @FXML
+    TableColumn<?, ?> nazwa;
+
+    @FXML
+    TableColumn<?, ?> ocena;
 
     @FXML
     Button opiniosButton;
 
     @FXML
-    Spinner<Integer> valueSpinner;
-
-    @FXML
-    ComboBox categoryBox;
+    TableView<?> productTable;
 
     @FXML
     TextField searchBar;
 
     @FXML
-    TableView productTable;
+    TableColumn<?, ?> stan;
+
+    @FXML
+    Spinner<Integer> valueSpinner;
 
     public void back(ActionEvent actionEvent) throws IOException {
         System.out.println("back");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/employee-page.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void getOpinions(ActionEvent actionEvent) throws IOException {
+        System.out.println("getOpinions");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/employee-opinios-page.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void addProduct(ActionEvent actionEvent) throws IOException {
+        System.out.println("addProduct");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/employee-add-product-page.fxml"));
         Parent root = loader.load();
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
