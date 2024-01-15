@@ -13,6 +13,9 @@ public class Product {
         this.kategoria = kategoria;
     }
 
+    public Product(int productId, String productName, float price, int quantity) {
+    }
+
     public int getIdProduktu() {
         return idProduktu;
     }
