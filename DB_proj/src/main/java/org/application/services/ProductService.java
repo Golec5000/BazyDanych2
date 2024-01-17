@@ -19,10 +19,12 @@ public class ProductService {
         return instance;
     }
 
+    private final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
+
     //updatowanie ilosci pod zamowienia, z sprawdzaniem czy dana ilosc jest dostpena
     public boolean updateProductQuantity(int idProduktu, int idMagazynu, int soldQuantity) throws SQLException {
         String query = "UPDATE Magazyn SET Ilosc = Ilosc - ? WHERE IdProduktu = ? AND IdMagazynu = ? AND Ilosc >= ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(query)) {
 
             pst.setInt(1, soldQuantity);
@@ -39,7 +41,7 @@ public class ProductService {
     //restockowanie produktu pod zamowienia
     public boolean restockProduct(int idProduktu, int idMagazynu, int addedQuantity) throws SQLException {
         String query = "UPDATE Magazyn SET Ilosc = Ilosc + ? WHERE IdProduktu = ? AND IdMagazynu = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(query)) {
 
             pst.setInt(1, addedQuantity);
@@ -58,7 +60,7 @@ public class ProductService {
         String insertQuery = "INSERT INTO Magazyn (IdMagazynu, IdProduktu, Ilosc) VALUES (?, ?, ?)";
         String updateQuery = "UPDATE Magazyn SET Ilosc = Ilosc + ? WHERE IdMagazynu = ? AND IdProduktu = ?";
 
-        try (Connection con = DatabaseConnection.getConnection();
+        try (Connection con = databaseConnection.getConnection();
              PreparedStatement check = con.prepareStatement(checkQuery);
              PreparedStatement insert = con.prepareStatement(insertQuery);
              PreparedStatement update = con.prepareStatement(updateQuery)) {
@@ -97,7 +99,7 @@ public class ProductService {
                 "JOIN Magazyn m ON p.IdProduktu = m.IdProduktu " +
                 "WHERE m.IdMagazynu = ?";
 
-        try (Connection con = DatabaseConnection.getConnection();
+        try (Connection con = databaseConnection.getConnection();
              PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, warehouseId);
 
@@ -119,7 +121,7 @@ public class ProductService {
     //dodawanie nowego produktu
     public boolean addProduct(Product product) throws SQLException {
         String query = "INSERT INTO Produkty (NazwaProduktu, Cena, Opis, Kategoria) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(query)) {
 
             pst.setString(1, product.getNazwaProduktu());
@@ -136,7 +138,7 @@ public class ProductService {
     //aktualizowanie istniejącego produktu
     public boolean updateProduct(Product product) throws SQLException {
         String query = "UPDATE Produkty SET NazwaProduktu = ?, Cena = ?, Opis = ?, Kategoria = ? WHERE IdProduktu = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(query)) {
 
             pst.setString(1, product.getNazwaProduktu());
@@ -154,7 +156,7 @@ public class ProductService {
     //usuwanie produktu
     public boolean deleteProduct(int productId) throws SQLException {
         String query = "DELETE FROM Produkty WHERE IdProduktu = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(query)) {
 
             pst.setInt(1, productId);
@@ -169,7 +171,7 @@ public class ProductService {
     public List<Product> getAllProducts() throws SQLException {
         List<Product> products = new ArrayList<>();
         String query = "SELECT * FROM Produkty";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(query);
              ResultSet rs = pst.executeQuery()) {
 
@@ -189,7 +191,7 @@ public class ProductService {
     //pobieranie produktu po ID
     public Product getProductById(int productId) throws SQLException {
         String query = "SELECT * FROM Produkty WHERE IdProduktu = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(query)) {
 
             pst.setInt(1, productId);

@@ -5,14 +5,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.application.services.DatabaseConnection;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class Main extends Application {
 
+    private final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
+
     @Override
     public void start(Stage primaryStage) throws IOException {
+
+        try (Connection connection = databaseConnection.getConnection();) {
+
+            System.out.println("Connected to the database!");
+
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/application/login/login-page.fxml")));
         Scene scene = new Scene(root);
         primaryStage.setTitle("Bazy danych - projekt");

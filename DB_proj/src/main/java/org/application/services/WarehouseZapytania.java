@@ -11,12 +11,24 @@ import java.util.List;
 
 public class WarehouseZapytania {
 
+    private static WarehouseZapytania instance;
+
+    private WarehouseZapytania() {
+    }
+
+    public static WarehouseZapytania getInstance() {
+        if (instance == null) instance = new WarehouseZapytania();
+        return instance;
+    }
+
+    private final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
+
     //wyswietlanie dostepnych magazynow
     public List<Warehouse> getAllWarehouses() throws SQLException {
         List<Warehouse> warehouses = new ArrayList<>();
         String query = "SELECT * FROM ListaMagazynow";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(query)) {
 
             ResultSet resultSet = pst.executeQuery();

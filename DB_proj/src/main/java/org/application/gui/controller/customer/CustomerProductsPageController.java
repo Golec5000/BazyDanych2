@@ -55,7 +55,7 @@ public class CustomerProductsPageController implements Initializable {
     @FXML
     private TextField searchBar;
 
-    private ProductService productService = ProductService.getInstance();
+    private final ProductService productService = ProductService.getInstance();
 
     ObservableList<Product> productsObservableList = FXCollections.observableArrayList();
 

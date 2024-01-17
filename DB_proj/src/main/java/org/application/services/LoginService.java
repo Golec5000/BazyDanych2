@@ -9,6 +9,8 @@ public class LoginService {
 
     private static LoginService instance;
 
+    private final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
+
     private LoginService() {
     }
 
@@ -18,18 +20,18 @@ public class LoginService {
     }
 
     public boolean userExists(String login) {
-        String query="SELECT COUNT(nick) FROM klienci WHERE nick=?";
-        try(Connection connection= DatabaseConnection.getConnection();
-            PreparedStatement preparedStatement=connection.prepareStatement(query)){
-            preparedStatement.setString(1,login);
-            ResultSet resultSet=preparedStatement.executeQuery();
-            if(resultSet.next() ) {
-                if(resultSet.getInt("COUNT(nick)")==1)
+        String query = "SELECT COUNT(nick) FROM klienci WHERE nick=?";
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, login);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                if (resultSet.getInt("COUNT(nick)") == 1)
                     return true;
             }
 
             return false;
-         } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
