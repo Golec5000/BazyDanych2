@@ -9,10 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import org.application.intefaces.ControllerInterface;
 
 import java.io.IOException;
 
-public class CustomerOpniosPageController {
+public class CustomerOpniosPageController implements ControllerInterface {
 
     @FXML
     Button backButton;

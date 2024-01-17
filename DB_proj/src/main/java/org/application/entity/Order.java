@@ -8,7 +8,7 @@ public class Order {
     private String statusZamowienia;
     private String idKlienta;
 
-    public Order () {
+    public Order() {
     }
 
 

@@ -11,10 +11,11 @@ import javafx.scene.control.TextArea;
 
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import org.application.intefaces.ControllerInterface;
 
 import java.io.IOException;
 
-public class CustomerOrdersPageController {
+public class CustomerOrdersPageController implements ControllerInterface {
 
     @FXML
     Button backButton;

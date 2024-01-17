@@ -11,10 +11,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.application.intefaces.ControllerInterface;
 
 import java.io.IOException;
 
-public class EmployeeAddProductPageController {
+public class EmployeeAddProductPageController implements ControllerInterface {
 
     @FXML
     Button addProductButton;

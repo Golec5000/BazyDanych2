@@ -10,10 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import org.application.intefaces.ControllerInterface;
 
 import java.io.IOException;
 
-public class EmployeeDeliversPageController {
+public class EmployeeDeliversPageController implements ControllerInterface {
 
     @FXML
     Button backButton;

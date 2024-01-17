@@ -10,12 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.application.intefaces.ControllerInterface;
 import org.application.services.LoginService;
 
 import java.io.IOException;
 
 
-public class LoginController {
+public class LoginController implements ControllerInterface {
 
     @FXML
     TextField loginTextField;

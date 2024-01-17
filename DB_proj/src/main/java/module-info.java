@@ -14,4 +14,7 @@ module org.application.db_proj {
 
     exports org.application.gui.controller.employee to javafx.fxml;
     opens org.application.gui.controller.employee to javafx.fxml;
+
+    exports org.application.entity to java.base;
+    opens org.application.entity to javafx.base;
 }

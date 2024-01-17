@@ -9,11 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.application.intefaces.ControllerInterface;
 
 import java.io.IOException;
 
 
-public class EmployeeMainPageController {
+public class EmployeeMainPageController implements ControllerInterface {
 
     @FXML
     Label nameLabel;

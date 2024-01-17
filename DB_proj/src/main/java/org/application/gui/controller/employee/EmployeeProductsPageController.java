@@ -8,10 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.application.intefaces.ControllerInterface;
 
 import java.io.IOException;
 
-public class EmployeeProductsPageController {
+public class EmployeeProductsPageController implements ControllerInterface {
 
     @FXML
     Button addProductButton;
