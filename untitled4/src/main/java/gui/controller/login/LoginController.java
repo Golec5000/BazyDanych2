@@ -33,13 +33,13 @@ public class LoginController {
     private void checkLogin(String login, ActionEvent actionEvent) {
         System.out.println("checkLogin");
 
-        if (login.equals("admin")) {
-            System.out.println("admin");
+        if (loginService.userExists(login)) {
 
-            getNewScene("/employee-page.fxml", actionEvent);
-        }
-        else  {
             System.out.println("customer");
+
+            getNewScene("/customer-page.fxml", actionEvent);
+        } else {
+            System.out.println("admin");
 
             getNewScene("/customer-page.fxml", actionEvent);
         }

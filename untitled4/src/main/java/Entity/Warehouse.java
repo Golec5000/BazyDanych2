@@ -1,3 +1,5 @@
+package Entity;
+
 public class Warehouse {
     private int id;
     private String address;

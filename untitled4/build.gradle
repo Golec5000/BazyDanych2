@@ -14,11 +14,11 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation 'mysql:mysql-connector-java:8.0.23'
-    implementation 'org.openjfx:javafx-controls:15'
-    implementation 'org.openjfx:javafx-fxml:15'
-    implementation 'org.openjfx:javafx-graphics:15'
-    implementation 'org.openjfx:javafx-media:15'
-    implementation 'org.openjfx:javafx-web:15'
+    implementation 'org.openjfx:javafx-controls'
+    implementation 'org.openjfx:javafx-fxml'
+    implementation 'org.openjfx:javafx-graphics'
+    implementation 'org.openjfx:javafx-media'
+    //implementation 'org.openjfx:javafx-web'
 }
 
 test {
@@ -26,6 +26,6 @@ test {
 }
 
 javafx {
-    version = "21.0.1"
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.media' , 'javafx.web']
+    version = "21.0.2"
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.media']
 }
