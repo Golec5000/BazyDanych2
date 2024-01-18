@@ -47,7 +47,7 @@ public class UserService {
 
     public User updateUserCustomer(User curr_user, String new_login, String email, String password) {
         if (new_login != null && !new_login.isBlank()) {
-            // Step 1: Identify the rows in the zamowienia table that reference the nick value
+            /* Step 1: Identify the rows in the zamowienia table that reference the nick value
             String query = "UPDATE zamowienia SET nick=? WHERE nick=?";
             try (Connection conn = databaseConnection.getConnection();
                  PreparedStatement pst = conn.prepareStatement(query)) {
@@ -57,9 +57,10 @@ public class UserService {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+            */
 
             // Step 2: Update the nick value in the klienci table
-            query = "UPDATE klienci SET nick=? WHERE nick=?";
+            String query = "UPDATE klienci SET nick=? WHERE nick=?";
             try (Connection conn = databaseConnection.getConnection();
                  PreparedStatement pst = conn.prepareStatement(query)) {
                 pst.setString(1, new_login);

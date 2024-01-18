@@ -140,7 +140,7 @@ public class OrderZapytania {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT Z.NumerZamowienia, Z.DataTransakcji, Z.StanZamowienia " +
                 "FROM Klienci K " +
-                "JOIN zamowienia Z ON K.nick = Z.nick " +
+                "JOIN zamowienia Z ON K.klientId = Z.klientId " +
                 "WHERE K.nick = ?";
 
         try (Connection conn = databaseConnection.getConnection();
