@@ -2,13 +2,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="810.0" style="-fx-background-color: #111111;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gui.controller.customer.CustomerOrdersPageController">
    <children>
-      <TextArea fx:id="ordersListArea" layoutY="102.0" prefHeight="400.0" prefWidth="487.0" />
       <Label alignment="CENTER" layoutX="298.0" layoutY="14.0" prefHeight="33.0" prefWidth="256.0" text="Twoje zamówienia" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="20.0" />
@@ -19,5 +20,21 @@
             <Font name="Lucida Console" size="20.0" />
          </font>
       </Button>
+      <TextField fx:id="searchBar" alignment="CENTER" layoutX="554.0" layoutY="102.0" prefHeight="35.0" prefWidth="207.0" promptText="Search">
+         <font>
+            <Font name="Lucida Console" size="20.0" />
+         </font>
+      </TextField>
+      <TableView fx:id="tableOrders" layoutX="1.0" layoutY="102.0" prefHeight="400.0" prefWidth="492.0">
+        <columns>
+          <TableColumn fx:id="tableIdZamowienia" prefWidth="75.0" text="idZamowienia" />
+          <TableColumn fx:id="tableDataZamowienia" prefWidth="75.0" text="dataZamowienia" />
+            <TableColumn fx:id="tableStatusZamowienia" prefWidth="75.0" text="statusZamowienia" />
+            <TableColumn fx:id="tableIdKlienta" prefWidth="75.0" text="idKlienta" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
    </children>
 </AnchorPane>
