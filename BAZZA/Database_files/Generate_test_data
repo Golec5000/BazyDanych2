@@ -11,3 +11,10 @@ INSERT INTO Klienci (nick, Imie, Nazwisko, Adres, Email, NumerTelefonu, Haslo) V
 ('klient3', 'Adam', 'Lewandowski', 'ul. Parkowa 26', 'adam.lewandowski1@email.com', '244912138', 'haslo3'),
 ('klient4', 'Dorota', 'Dabrowski', 'ul. Leśna 32', 'dorota.dabrowski13@email.com', '533812272', 'haslo4'),
 ('klient5', 'Adam', 'Lewandowski', 'ul. Słoneczna 25', 'adam.lewandowski70@email.com', '338335072', 'haslo5');
+
+INSERT INTO Dostawcy (NazwaDostawcy, NumerTelefonu, IdMagazynu) VALUES ('ABC Logistics', '123456789', 1);
+INSERT INTO Dostawcy (NazwaDostawcy, NumerTelefonu, IdMagazynu) VALUES ('XYZ Transport', '987654321', 2);
+
+INSERT INTO Zamowienia (NumerZamowienia, DataTransakcji, StanZamowienia, nick, Produkt) VALUES
+('Z123456789', '2024-01-18', 'W trakcie realizacji', 'klient', 'Smartfon XYZ Model 1'),
+('Z987654321', '2024-01-18', 'Zrealizowane', 'klient2', 'Laptop ABC Pro');

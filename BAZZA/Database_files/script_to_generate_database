@@ -34,8 +34,8 @@ CREATE TABLE ListaMagazynow (
   PRIMARY KEY (IdMagazynu));
 CREATE TABLE Magazyn (
   IdMagazynu int(10) NOT NULL,
-  IdProduktu int(10) NOT NULL,
   Ilosc      int(10) NOT NULL,
+  IdProduktu int(10) NOT NULL,
   PRIMARY KEY (IdMagazynu));
 CREATE TABLE OpinieKlientow (
   Ocena      int(1),
@@ -47,7 +47,7 @@ CREATE TABLE Pracownicy (
   Imie             varchar(50) NOT NULL,
   Nazwisko         varchar(50) NOT NULL,
   Stanowisko       varchar(20) NOT NULL,
-  DataZatrudnienia date,
+  DataZatrudnienia date NOT NULL,
   AdministratorId  int(10) NOT NULL,
   Haslo            varchar(255) NOT NULL,
   PRIMARY KEY (Id));
@@ -72,8 +72,9 @@ CREATE TABLE Zamowienia (
   nick            varchar(20) NOT NULL,
   Produkt         varchar(255) NOT NULL,
   PRIMARY KEY (NumerZamowienia));
+ALTER TABLE Magazyn ADD CONSTRAINT FKMagazyn299317 FOREIGN KEY (IdProduktu) REFERENCES Produkty (IdProduktu);
 ALTER TABLE Zamowienia ADD CONSTRAINT FKZamowienia744107 FOREIGN KEY (nick) REFERENCES Klienci (nick);
-ALTER TABLE Transakcje ADD CONSTRAINT FKTransakcje775404 FOREIGN KEY (NumerZamowienia) REFERENCES Zamowienia (NumerZamowienia);
+ALTER TABLE Transakcje ADD CONSTRAINT FKTransakcje371147 FOREIGN KEY (NumerZamowienia) REFERENCES Zamowienia (NumerZamowienia);
 ALTER TABLE OpinieKlientow ADD CONSTRAINT FKOpinieKlie85286 FOREIGN KEY (IdProduktu) REFERENCES Produkty (IdProduktu);
 ALTER TABLE OpinieKlientow ADD CONSTRAINT FKOpinieKlie787508 FOREIGN KEY (nick) REFERENCES Klienci (nick);
 ALTER TABLE Magazyn ADD CONSTRAINT FKMagazyn106861 FOREIGN KEY (IdMagazynu) REFERENCES ListaMagazynow (IdMagazynu);
