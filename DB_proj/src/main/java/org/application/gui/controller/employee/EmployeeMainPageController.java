@@ -44,7 +44,7 @@ public class EmployeeMainPageController implements ControllerInterface {
     Button suppliersListButton;
 
     @FXML
-    Button removeButton;
+    Button editButton;
 
     public void getProductsList(ActionEvent actionEvent){
         System.out.println("getProductsList");
@@ -71,7 +71,7 @@ public class EmployeeMainPageController implements ControllerInterface {
         getNewScene("/org/application/employee/employee-delivers-page.fxml", actionEvent);
     }
 
-    public void remove(ActionEvent actionEvent){
+    public void edit(ActionEvent actionEvent){
         System.out.println("remove");
     }
 
