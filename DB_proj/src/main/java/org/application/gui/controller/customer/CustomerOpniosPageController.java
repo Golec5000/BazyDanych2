@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import org.application.entity.User;
 import org.application.intefaces.ControllerInterface;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class CustomerOpniosPageController implements ControllerInterface {
     @FXML
     TextArea opiniosArea;
 
-    private String customerLogin;
+    private User user;
 
     public void back(ActionEvent actionEvent){
         System.out.println("back");
@@ -35,7 +36,7 @@ public class CustomerOpniosPageController implements ControllerInterface {
         }
 
         CustomerMainPageController customerPageController = loader.getController();
-        customerPageController.setCustomerLogin(customerLogin);
+        customerPageController.setCustomerLogin(user);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -43,7 +44,7 @@ public class CustomerOpniosPageController implements ControllerInterface {
         stage.show();
     }
 
-    public void setCustomerLogin(String customerLogin) {
-        this.customerLogin = customerLogin;
+    public void setCustomerLogin(User user) {
+       this.user = user;
     }
 }

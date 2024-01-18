@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.application.entity.Order;
+import org.application.entity.User;
 import org.application.intefaces.ControllerInterface;
 import org.application.services.OrderZapytania;
 
@@ -46,17 +47,17 @@ public class CustomerOrdersPageController implements ControllerInterface {
     @FXML
     TableColumn<Order, String> tableStatusZamowienia;
 
-    private String customerLogin = "";
+    private User user;
 
     private final OrderZapytania orderZapytania = OrderZapytania.getInstance();
 
     private final ObservableList<Order> ordersObservableList = FXCollections.observableArrayList();
 
     public void loadOrders() {
-        System.out.println("customerLogin: " + customerLogin);
+        System.out.println("customerLogin: " + user.getNick());
 
         try {
-            List<Order> orders = orderZapytania.getOrdersByNick(customerLogin);
+            List<Order> orders = orderZapytania.getOrdersByNick(user.getNick());
 
             ordersObservableList.addAll(orders);
 
@@ -108,7 +109,7 @@ public class CustomerOrdersPageController implements ControllerInterface {
         }
 
         CustomerMainPageController customerPageController = loader.getController();
-        customerPageController.setCustomerLogin(customerLogin);
+        customerPageController.setCustomerLogin(user);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -117,7 +118,7 @@ public class CustomerOrdersPageController implements ControllerInterface {
 
     }
 
-    public void setCustomerLogin(String customerLogin) {
-        this.customerLogin = customerLogin;
+    public void setCustomerLogin(User user) {
+        this.user = user;
     }
 }

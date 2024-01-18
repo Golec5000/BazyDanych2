@@ -16,11 +16,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.application.entity.Product;
+import org.application.entity.User;
 import org.application.intefaces.ControllerInterface;
 import org.application.services.ProductService;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -63,7 +65,7 @@ public class CustomerProductsPageController implements Initializable, Controller
 
     private final ObservableList<Product> productsObservableList = FXCollections.observableArrayList();
 
-    private String customerLogin = "";
+    private User user;
 
 
     @Override
@@ -82,17 +84,15 @@ public class CustomerProductsPageController implements Initializable, Controller
 
             FilteredList<Product> filteredData = new FilteredList<>(productsObservableList, b -> true);
 
-            searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
-                filteredData.setPredicate(product -> {
+            searchBar.textProperty().addListener((observable, oldValue, newValue) -> filteredData.setPredicate(product -> {
 
-                    if (newValue.isBlank() || newValue.isEmpty() || newValue == null) return true;
+                if (newValue.isBlank() || newValue.isEmpty() || newValue == null) return true;
 
-                    String lowerCaseFilter = newValue.toLowerCase();
+                String lowerCaseFilter = newValue.toLowerCase();
 
-                    return product.getNazwaProduktu().toLowerCase().contains(lowerCaseFilter);
+                return product.getNazwaProduktu().toLowerCase().contains(lowerCaseFilter);
 
-                });
-            });
+            }));
 
             SortedList<Product> sortedData = new SortedList<>(filteredData);
             sortedData.comparatorProperty().bind(productsTable.comparatorProperty());
@@ -110,7 +110,7 @@ public class CustomerProductsPageController implements Initializable, Controller
         System.out.println("back");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-page.fxml"));
-        Parent root = null;
+        Parent root;
         try {
             root = loader.load();
         } catch (IOException e) {
@@ -118,7 +118,7 @@ public class CustomerProductsPageController implements Initializable, Controller
         }
 
         CustomerMainPageController customerMainPageController = loader.getController();
-        customerMainPageController.setCustomerLogin(customerLogin);
+        customerMainPageController.setCustomerLogin(user);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -126,7 +126,18 @@ public class CustomerProductsPageController implements Initializable, Controller
         stage.show();
     }
 
-    public void setCustomerLogin(String customerLogin) {
-        this.customerLogin = customerLogin;
+    public void oderProduct (ActionEvent actionEvent) {
+        System.out.println("oderProduct");
+        Product basket= productsTable.getSelectionModel().getSelectedItem();
+        try {
+            productService.order(basket,user.getNick());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void setCustomerLogin(User user) {
+        this.user = user;
     }
 }

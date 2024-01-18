@@ -37,7 +37,7 @@
             <Font name="Lucida Console" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="comfirmButton" layoutX="179.0" layoutY="282.0" mnemonicParsing="false" style="-fx-background-color: #3a6131;" text="Zatwierdz" textFill="#fcfcfc">
+      <Button fx:id="comfirmButton" layoutX="179.0" layoutY="282.0" mnemonicParsing="false" onAction="#edit" style="-fx-background-color: #3a6131;" text="Zatwierdz" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="20.0" />
          </font>

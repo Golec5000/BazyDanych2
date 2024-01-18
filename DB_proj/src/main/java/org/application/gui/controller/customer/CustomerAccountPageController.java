@@ -10,7 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.application.entity.User;
 import org.application.intefaces.ControllerInterface;
+import org.application.services.UserService;
 
 import java.io.IOException;
 
@@ -31,9 +33,11 @@ public class CustomerAccountPageController implements ControllerInterface {
     @FXML
     PasswordField passwordTextField;
 
-    private String customerLogin;
+    private User user;
 
-    public void back(ActionEvent actionEvent){
+    private final UserService userService = UserService.getInstance();
+
+    public void back(ActionEvent actionEvent) {
         System.out.println("back");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-page.fxml"));
@@ -45,7 +49,7 @@ public class CustomerAccountPageController implements ControllerInterface {
         }
 
         CustomerMainPageController customerPageController = loader.getController();
-        customerPageController.setCustomerLogin(customerLogin);
+        customerPageController.setCustomerLogin(user);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -53,8 +57,31 @@ public class CustomerAccountPageController implements ControllerInterface {
         stage.show();
     }
 
-    public void setCustomerLogin(String customerLogin) {
-        this.customerLogin = customerLogin;
+    public void edit(ActionEvent actionEvent) {
+        System.out.println("edit");
+
+        user = userService.updateUserCustomer(user, loginTextFild.getText(), emailTextField.getText(), passwordTextField.getText());
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        CustomerMainPageController customerPageController = loader.getController();
+        customerPageController.setCustomerLogin(user);
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    public void setCustomerLogin(User user) {
+        this.user = user;
     }
 
 }

@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.application.entity.User;
 import org.application.intefaces.ControllerInterface;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class CustomerMainPageController implements ControllerInterface {
     @FXML
     Button accountEditButton;
 
-    private String customerLogin = "";
+    private User user;
 
     public void getOrdersList(ActionEvent actionEvent) {
         System.out.println("getOrdersList");
@@ -51,7 +52,7 @@ public class CustomerMainPageController implements ControllerInterface {
         }
 
         CustomerOrdersPageController customerOrdersPageController = loader.getController();
-        customerOrdersPageController.setCustomerLogin(customerLogin);
+        customerOrdersPageController.setCustomerLogin(user);
         customerOrdersPageController.loadOrders();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -72,7 +73,7 @@ public class CustomerMainPageController implements ControllerInterface {
         }
 
         CustomerOpniosPageController customerOpniosPageController = loader.getController();
-        customerOpniosPageController.setCustomerLogin(customerLogin);
+        customerOpniosPageController.setCustomerLogin(user);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -110,7 +111,7 @@ public class CustomerMainPageController implements ControllerInterface {
         }
 
         CustomerProductsPageController customerProductsPageController = loader.getController();
-        customerProductsPageController.setCustomerLogin(customerLogin);
+        customerProductsPageController.setCustomerLogin(user);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -131,7 +132,7 @@ public class CustomerMainPageController implements ControllerInterface {
         }
 
         CustomerAccountPageController customerAccountPageController = loader.getController();
-        customerAccountPageController.setCustomerLogin(customerLogin);
+        customerAccountPageController.setCustomerLogin(user);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -139,11 +140,15 @@ public class CustomerMainPageController implements ControllerInterface {
         stage.show();
     }
 
-    public void setCustomerLogin(String login) {
-        customerLabel.setText("Customer: " + login);
-        this.customerLogin = login;
-        System.out.println("customerLogin: " + customerLogin);
+    public void setCustomerLogin(User user) {
+
+        this.user = user;
+        customerLabel.setText("Customer: " + user.getName());
+        IDLabel.setText("ID: " + user.getNick());
+
     }
+
+
 
 
 }

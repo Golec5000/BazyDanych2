@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="526.0" prefWidth="705.0" style="-fx-background-color: #111111;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gui.controller.login.RegisterController">
    <children>
       <Label alignment="CENTER" layoutX="268.0" layoutY="14.0" prefHeight="38.0" prefWidth="210.0" style="-fx-text-fill: #fcfcfc;" text="Rejestracja" textFill="#fcfcfc">
@@ -20,7 +19,7 @@
             <Font size="20.0" />
          </font>
       </TextField>
-      <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="282.0" layoutY="119.0" prefHeight="26.0" prefWidth="224.0" promptText="Password">
+      <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="282.0" layoutY="116.0" prefHeight="26.0" prefWidth="224.0" promptText="Password">
          <font>
             <Font size="20.0" />
          </font>
@@ -55,36 +54,11 @@
             <Font name="Lucida Console" size="20.0" />
          </font>
       </Label>
-      <PasswordField fx:id="nameTextField" alignment="CENTER" layoutX="282.0" layoutY="169.0" prefHeight="26.0" prefWidth="224.0" promptText="Name">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </PasswordField>
-      <PasswordField fx:id="lastNameTextField" alignment="CENTER" layoutX="282.0" layoutY="219.0" prefHeight="26.0" prefWidth="224.0" promptText="Last name">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </PasswordField>
-      <PasswordField fx:id="addressTextField" alignment="CENTER" layoutX="282.0" layoutY="271.0" prefHeight="26.0" prefWidth="224.0" promptText="Address">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </PasswordField>
-      <PasswordField fx:id="emailTextField" alignment="CENTER" layoutX="282.0" layoutY="322.0" prefHeight="26.0" prefWidth="224.0" promptText="Email">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </PasswordField>
       <Label alignment="CENTER" layoutX="157.0" layoutY="377.0" prefHeight="30.0" prefWidth="97.0" style="-fx-text-fill: #fcfcfc;" text="Number" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="20.0" />
          </font>
       </Label>
-      <PasswordField fx:id="numberTextField" alignment="CENTER" layoutX="282.0" layoutY="370.0" prefHeight="26.0" prefWidth="224.0" promptText="Phone number">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </PasswordField>
       <Button fx:id="registryButton" layoutX="312.0" layoutY="446.0" mnemonicParsing="false" onAction="#registry" style="-fx-background-color: #3a6131;" text="Registry" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="20.0" />
@@ -95,5 +69,30 @@
             <Font name="Lucida Console" size="20.0" />
          </font>
       </Button>
+      <TextField fx:id="nameTextField" alignment="CENTER" layoutX="282.0" layoutY="169.0" prefHeight="26.0" prefWidth="224.0" promptText="Name">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="lastNameTextField" alignment="CENTER" layoutX="282.0" layoutY="219.0" prefHeight="26.0" prefWidth="224.0" promptText="Last name">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="addressTextField" alignment="CENTER" layoutX="282.0" layoutY="271.0" prefHeight="26.0" prefWidth="224.0" promptText="Address">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="emailTextField" alignment="CENTER" layoutX="282.0" layoutY="322.0" prefHeight="26.0" prefWidth="224.0" promptText="Email">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="numberTextField" alignment="CENTER" layoutX="282.0" layoutY="370.0" prefHeight="26.0" prefWidth="224.0" promptText="phoneNumber">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

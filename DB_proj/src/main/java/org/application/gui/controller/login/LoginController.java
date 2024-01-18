@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.application.entity.User;
 import org.application.gui.controller.customer.CustomerMainPageController;
 import org.application.intefaces.ControllerInterface;
 import org.application.services.LoginService;
@@ -36,14 +37,15 @@ public class LoginController implements ControllerInterface {
 
     public void login(ActionEvent actionEvent) {
         System.out.println("login");
-        checkLogin(loginTextField.getText(), actionEvent);
+        checkLogin(loginTextField.getText(), passwordTextField.getText(), actionEvent);
     }
 
-    private void checkLogin(String login, ActionEvent actionEvent) {
+    private void checkLogin(String login, String password, ActionEvent actionEvent) {
         System.out.println("checkLogin");
 
+        User user = loginService.userExistsCustomer(login, password);
 
-        if (loginService.userExists(login)) {
+        if (user != null) {
 
             System.out.println("customer");
 
@@ -56,7 +58,7 @@ public class LoginController implements ControllerInterface {
             }
 
             CustomerMainPageController customerMainPageController = loader.getController();
-            customerMainPageController.setCustomerLogin(login);
+            customerMainPageController.setCustomerLogin(user);
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -64,7 +66,11 @@ public class LoginController implements ControllerInterface {
             stage.show();
 
 
-        } else {
+        }
+
+        user = loginService.userExistsEmployee(login, password);
+
+        if(user != null) {
             System.out.println("admin");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-page.fxml"));
@@ -80,6 +86,7 @@ public class LoginController implements ControllerInterface {
             stage.setScene(scene);
             stage.show();
         }
+
     }
 
     public void registry(ActionEvent actionEvent) {

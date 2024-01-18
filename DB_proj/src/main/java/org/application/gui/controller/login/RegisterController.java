@@ -10,58 +10,94 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.application.entity.User;
+import org.application.services.UserService;
 
 import java.io.IOException;
 
 public class RegisterController {
 
     @FXML
-    PasswordField addressTextField;
+    private TextField addressTextField;
 
     @FXML
-    Button backButton;
+    private Button backButton;
 
     @FXML
-    PasswordField emailTextField;
+    private TextField emailTextField;
 
     @FXML
-    PasswordField lastNameTextField;
+    private TextField lastNameTextField;
 
     @FXML
-    TextField loginTextField;
+    private TextField loginTextField;
 
     @FXML
-    PasswordField nameTextField;
+    private TextField nameTextField;
 
     @FXML
-    PasswordField numberTextField;
+    private TextField numberTextField;
 
     @FXML
-    PasswordField passwordTextField;
+    private PasswordField passwordTextField;
 
     @FXML
-    Button registryButton;
+    private Button registryButton;
+
+    private final UserService userService = UserService.getInstance();
 
 
-     public void back(ActionEvent actionEvent) {
+    public void back(ActionEvent actionEvent) {
 
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/login/login-page.fxml"));
-         Parent root = null;
-         try {
-             root = loader.load();
-         } catch (IOException e) {
-             throw new RuntimeException(e);
-         }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/login/login-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-         Scene scene = new Scene(root);
-         stage.setScene(scene);
-         stage.show();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
-    // @todo save to database
     public void registry(ActionEvent actionEvent) {
+
+        try {
+            User user = userService.addUserCustomer(loginTextField.getText()
+                    , nameTextField.getText()
+                    , lastNameTextField.getText()
+                    , addressTextField.getText()
+                    , emailTextField.getText()
+                    , numberTextField.getText()
+                    , passwordTextField.getText());
+
+            if(user != null){
+
+                System.out.println("User added");
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/login/login-page.fxml"));
+                Parent root;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            }
+            else{
+                System.out.println("Error while adding user");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

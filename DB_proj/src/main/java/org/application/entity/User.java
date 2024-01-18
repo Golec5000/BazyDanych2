@@ -1,29 +1,72 @@
 package org.application.entity;
 
-import org.application.enums.Role;
 
 public class User {
-    private int id;
-    private String username;
+    private String nick;
+    private String name;
+    private String lastName;
     private String password;
-    private Role role;
+    private String phoneNumber;
+    private String email;
+    private String address;
 
-    public int getId() {
-        return id;
+    public User(String nick, String name, String lastName, String password, String phoneNumber, String email, String address) {
+        this.nick = nick;
+        this.name = name;
+        this.lastName = lastName;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getAddress() {
+        return address;
     }
 
-    public String getUsername() {
-        return username;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getNick() {
+        return nick;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public void setNick(String nick)
+    {
+        this.nick=nick;
+    }
     public String getPassword() {
         return password;
     }
@@ -32,18 +75,5 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
-    }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public User(int id, String username, String password, Role role) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
 }
