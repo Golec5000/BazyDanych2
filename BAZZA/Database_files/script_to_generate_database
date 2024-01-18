@@ -52,12 +52,11 @@ CREATE TABLE Pracownicy (
   Haslo            varchar(255) NOT NULL,
   PRIMARY KEY (Id));
 CREATE TABLE Produkty (
-  IdProduktu        int(10) NOT NULL AUTO_INCREMENT,
-  NazwaProduktu     varchar(255) NOT NULL,
-  Cena              float NOT NULL,
-  Opis              varchar(5000) NOT NULL,
-  Kategoria         varchar(255) NOT NULL,
-  MagazynIdMagazynu int(10) NOT NULL,
+  IdProduktu    int(10) NOT NULL AUTO_INCREMENT,
+  NazwaProduktu varchar(255) NOT NULL,
+  Cena          float NOT NULL,
+  Opis          varchar(5000) NOT NULL,
+  Kategoria     varchar(255) NOT NULL,
   PRIMARY KEY (IdProduktu));
 CREATE TABLE Transakcje (
   NumerTransakcji           varchar(10) NOT NULL,
