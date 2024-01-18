@@ -1,0 +1,13 @@
+INSERT INTO Produkty (NazwaProduktu, Cena, Opis, Kategoria) VALUES
+('Produkt3', 271.47, 'Doskonały wybór książki', 'Książki'),
+('Produkt4', 489.65, 'Doskonały wybór odzież', 'Odzież'),
+('Produkt5', 274.09, 'Doskonały wybór odzież', 'Odzież'),
+('Produkt6', 463.07, 'Innowacyjne rozwiązanie książki', 'Książki'),
+('Produkt7', 192.93, 'Innowacyjne rozwiązanie zabawki', 'Zabawki');
+
+INSERT INTO Klienci (nick, Imie, Nazwisko, Adres, Email, NumerTelefonu, Haslo) VALUES
+('klient', 'Barbara', 'Zielinska', 'ul. Parkowa 24', 'barbara.zielinska81@email.com', '225600357', 'haslo'),
+('klient2', 'Adam', 'Szymanski', 'ul. Kwiatowa 95', 'adam.szymanski19@email.com', '223258166', 'haslo2'),
+('klient3', 'Adam', 'Lewandowski', 'ul. Parkowa 26', 'adam.lewandowski1@email.com', '244912138', 'haslo3'),
+('klient4', 'Dorota', 'Dabrowski', 'ul. Leśna 32', 'dorota.dabrowski13@email.com', '533812272', 'haslo4'),
+('klient5', 'Adam', 'Lewandowski', 'ul. Słoneczna 25', 'adam.lewandowski70@email.com', '338335072', 'haslo5');
