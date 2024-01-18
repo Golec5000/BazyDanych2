@@ -3,7 +3,7 @@ package org.application.entity;
 import java.time.LocalDate;
 
 public class Order {
-    private int idZamowienia;
+    private String idZamowienia;
     private LocalDate dataZamowienia;
     private String statusZamowienia;
     private String idKlienta;
@@ -12,18 +12,26 @@ public class Order {
     }
 
 
-    public Order(int idZamowienia, LocalDate dataZamowienia, String statusZamowienia, String idKlienta) {
+    public Order(String idZamowienia, LocalDate dataZamowienia, String statusZamowienia, String idKlienta) {
         this.idZamowienia = idZamowienia;
         this.dataZamowienia = dataZamowienia;
         this.statusZamowienia = statusZamowienia;
         this.idKlienta = idKlienta;
     }
 
-    public int getIdZamowienia() {
+    public Order(String idZamowienia, LocalDate dataZamowienia, String statusZamowienia) {
+        this.idZamowienia = idZamowienia;
+        this.dataZamowienia = dataZamowienia;
+        this.statusZamowienia = statusZamowienia;
+
+    }
+
+
+    public String getIdZamowienia() {
         return idZamowienia;
     }
 
-    public void setIdZamowienia(int idZamowienia) {
+    public void setIdZamowienia(String idZamowienia) {
         this.idZamowienia = idZamowienia;
     }
 
@@ -49,5 +57,15 @@ public class Order {
 
     public void setIdKlienta(String idKlienta) {
         this.idKlienta = idKlienta;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{\n" +
+                "idZamowienia='" + idZamowienia + "\n" +
+                ", dataZamowienia=" + dataZamowienia + "\n" +
+                ", statusZamowienia='" + statusZamowienia + "\n" +
+                ", idKlienta='" + idKlienta + "\n" +
+                '}';
     }
 }

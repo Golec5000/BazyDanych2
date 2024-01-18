@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.application.gui.controller.customer.CustomerMainPageController;
 import org.application.intefaces.ControllerInterface;
 import org.application.services.LoginService;
 
@@ -27,14 +28,17 @@ public class LoginController implements ControllerInterface {
     @FXML
     Button loginButton;
 
-    LoginService loginService = LoginService.getInstance();
+    private final LoginService loginService = LoginService.getInstance();
+
+
+
 
     public void login(ActionEvent actionEvent){
         System.out.println("login");
         checkLogin(loginTextField.getText(), actionEvent);
     }
 
-    private void checkLogin(String login, ActionEvent actionEvent) {
+    private void checkLogin(String login, ActionEvent actionEvent){
         System.out.println("checkLogin");
 
 
@@ -42,26 +46,39 @@ public class LoginController implements ControllerInterface {
 
             System.out.println("customer");
 
-            getNewScene("/org/application/customer/customer-page.fxml", actionEvent);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-page.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            CustomerMainPageController customerMainPageController = loader.getController();
+            customerMainPageController.setCustomerLogin(login);
+
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+
+
         } else {
             System.out.println("admin");
 
-            getNewScene("/org/application/employee/employee-page.fxml", actionEvent);
-        }
-    }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-page.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-    private void getNewScene(String fxmlPath, ActionEvent actionEvent) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        Parent root = null;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         }
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 }

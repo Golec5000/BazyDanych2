@@ -37,36 +37,106 @@ public class CustomerMainPageController implements ControllerInterface {
     @FXML
     Button accountEditButton;
 
-    public void getOrdersList(ActionEvent actionEvent){
+    private String customerLogin = "";
+
+    public void getOrdersList(ActionEvent actionEvent) {
         System.out.println("getOrdersList");
-        getNewScene("/org/application/customer/customer-orders-page.fxml", actionEvent);
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-orders-page.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        CustomerOrdersPageController customerOrdersPageController = loader.getController();
+        customerOrdersPageController.setCustomerLogin(customerLogin);
+        customerOrdersPageController.loadOrders();
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void getOpinionsList(ActionEvent actionEvent){
+    public void getOpinionsList(ActionEvent actionEvent) {
         System.out.println("getOpinionsList");
-        getNewScene("/org/application/customer/customer-opinios-page.fxml", actionEvent);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-opinios-page.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        CustomerOpniosPageController customerOpniosPageController = loader.getController();
+        customerOpniosPageController.setCustomerLogin(customerLogin);
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void logout(ActionEvent actionEvent){
+    public void logout(ActionEvent actionEvent) {
         System.out.println("logout");
-        getNewScene("/org/application/login/login-page.fxml", actionEvent);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/login/login-page.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
-    public void getProducts(ActionEvent actionEvent){
+    public void getProducts(ActionEvent actionEvent) {
         System.out.println("getProducts");
-        getNewScene("/org/application/customer/customer-product-page.fxml", actionEvent);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-product-page.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        CustomerProductsPageController customerProductsPageController = loader.getController();
+        customerProductsPageController.setCustomerLogin(customerLogin);
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
-    public void editAccount(ActionEvent actionEvent){
+    public void editAccount(ActionEvent actionEvent) {
         System.out.println("editAccount");
-        getNewScene("/org/application/customer/customer-account-page.fxml", actionEvent);
-    }
 
-    public void setCustomerLabel(String customerLogin) {
-        customerLabel.setText("Customer: " + customerLogin);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-account-page.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        CustomerAccountPageController customerAccountPageController = loader.getController();
+        customerAccountPageController.setCustomerLogin(customerLogin);
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 
@@ -83,6 +153,13 @@ public class CustomerMainPageController implements ControllerInterface {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+
+    public void setCustomerLogin(String login) {
+        customerLabel.setText("Customer: " + login);
+        this.customerLogin = login;
+        System.out.println("customerLogin: " + customerLogin);
     }
 
 

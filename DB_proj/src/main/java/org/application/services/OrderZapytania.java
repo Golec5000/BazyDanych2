@@ -3,14 +3,10 @@ package org.application.services;
 import org.application.entity.Order;
 import org.application.entity.Product;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
 public class OrderZapytania {
@@ -66,7 +62,7 @@ public class OrderZapytania {
 
             while (rs.next()) {
                 orders.add(new Order(
-                        rs.getInt("idZamowienia"),
+                        rs.getString("idZamowienia"),
                         rs.getDate("dataZamowienia").toLocalDate(),
                         rs.getString("statusZamowienia"),
                         rs.getString("idKlienta")
@@ -87,7 +83,7 @@ public class OrderZapytania {
 
             if (rs.next()) {
                 return new Order(
-                        rs.getInt("idZamowienia"),
+                        rs.getString("idZamowienia"),
                         rs.getDate("dataZamowienia").toLocalDate(),
                         rs.getString("statusZamowienia"),
                         rs.getString("idKlienta")
@@ -117,25 +113,58 @@ public class OrderZapytania {
         int currID = getLastID() + 1;
         String currState = "Nieoplacone";
         String nick = "Entity.User";
-        String products = "";
+        StringBuilder products = new StringBuilder();
         for (int i = 0; i < productList.size(); i++) {
-            products += productList.get(i).getNazwaProduktu();
+            products.append(productList.get(i).getNazwaProduktu());
             if (i < productList.size() - 1)
-                products += ",";
+                products.append(",");
         }
         String query = "INSERT INTO zamowienia(NumerZamowienia,DataTransakcji,StanZamowienia,Nick,produkt)VALUES (?, ?,?,?,?)";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, currID);
+            preparedStatement.setString(1, String.valueOf(currID));
             preparedStatement.setDate(2, data);
             preparedStatement.setString(3, currState);
             preparedStatement.setString(4, nick);
-            preparedStatement.setString(5, products);
+            preparedStatement.setString(5, products.toString());
             preparedStatement.executeUpdate();
-            return new Order(currID, now, currState, nick);
+            return new Order(String.valueOf(currID), now, currState, nick);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return null;
     }
+
+    // pobieranie zamowien po nicku
+    public List<Order> getOrdersByNick(String nick) throws SQLException {
+        List<Order> orders = new ArrayList<>();
+        String query = "SELECT Z.NumerZamowienia, Z.DataTransakcji, Z.StanZamowienia " +
+                "FROM Klienci K " +
+                "JOIN Zamówienia_Transakcje ZT ON K.NumerTransakcji = ZT.TransakcjeNumerTransakcji " +
+                "JOIN Zamówienia Z ON ZT.ZamówieniaNumerZamowienia = Z.NumerZamowienia " +
+                "WHERE K.nick = ?";
+
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
+            pst.setString(1, nick);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+
+                Order order = new Order(
+                        rs.getString("NumerZamowienia"),
+                        rs.getDate(2).toLocalDate(),
+                        rs.getString("StanZamowienia")
+                );
+
+                order.setIdKlienta(nick);
+
+                orders.add(order);
+            }
+        }
+        return orders;
+    }
+
+
 }

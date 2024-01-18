@@ -61,7 +61,9 @@ public class CustomerProductsPageController implements Initializable, Controller
 
     private final ProductService productService = ProductService.getInstance();
 
-    ObservableList<Product> productsObservableList = FXCollections.observableArrayList();
+    private final ObservableList<Product> productsObservableList = FXCollections.observableArrayList();
+
+    private String customerLogin = "";
 
 
     @Override
@@ -104,14 +106,27 @@ public class CustomerProductsPageController implements Initializable, Controller
 
     }
 
-    public void back(ActionEvent actionEvent) throws IOException {
+    public void back(ActionEvent actionEvent){
         System.out.println("back");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-page.fxml"));
-        Parent root = loader.load();
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        CustomerMainPageController customerMainPageController = loader.getController();
+        customerMainPageController.setCustomerLogin(customerLogin);
+
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void setCustomerLogin(String customerLogin) {
+        this.customerLogin = customerLogin;
     }
 }
