@@ -37,7 +37,7 @@ public class CustomerAccountPageController implements ControllerInterface {
         System.out.println("back");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-page.fxml"));
-        Parent root = null;
+        Parent root;
         try {
             root = loader.load();
         } catch (IOException e) {

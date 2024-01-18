@@ -43,7 +43,7 @@ public class CustomerMainPageController implements ControllerInterface {
         System.out.println("getOrdersList");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-orders-page.fxml"));
-        Parent root = null;
+        Parent root;
         try {
             root = loader.load();
         } catch (IOException e) {
@@ -64,7 +64,7 @@ public class CustomerMainPageController implements ControllerInterface {
         System.out.println("getOpinionsList");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-opinios-page.fxml"));
-        Parent root = null;
+        Parent root;
         try {
             root = loader.load();
         } catch (IOException e) {
@@ -84,7 +84,7 @@ public class CustomerMainPageController implements ControllerInterface {
         System.out.println("logout");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/login/login-page.fxml"));
-        Parent root = null;
+        Parent root;
         try {
             root = loader.load();
         } catch (IOException e) {
@@ -102,7 +102,7 @@ public class CustomerMainPageController implements ControllerInterface {
         System.out.println("getProducts");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-product-page.fxml"));
-        Parent root = null;
+        Parent root;
         try {
             root = loader.load();
         } catch (IOException e) {
@@ -123,7 +123,7 @@ public class CustomerMainPageController implements ControllerInterface {
         System.out.println("editAccount");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-account-page.fxml"));
-        Parent root = null;
+        Parent root;
         try {
             root = loader.load();
         } catch (IOException e) {
@@ -138,23 +138,6 @@ public class CustomerMainPageController implements ControllerInterface {
         stage.setScene(scene);
         stage.show();
     }
-
-
-    private void getNewScene(String fxmlPath, ActionEvent actionEvent) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        Parent root = null;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
 
     public void setCustomerLogin(String login) {
         customerLabel.setText("Customer: " + login);

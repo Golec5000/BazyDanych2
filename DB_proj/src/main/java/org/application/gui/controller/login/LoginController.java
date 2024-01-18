@@ -28,17 +28,18 @@ public class LoginController implements ControllerInterface {
     @FXML
     Button loginButton;
 
+    @FXML
+    Button registryButton;
+
     private final LoginService loginService = LoginService.getInstance();
 
 
-
-
-    public void login(ActionEvent actionEvent){
+    public void login(ActionEvent actionEvent) {
         System.out.println("login");
         checkLogin(loginTextField.getText(), actionEvent);
     }
 
-    private void checkLogin(String login, ActionEvent actionEvent){
+    private void checkLogin(String login, ActionEvent actionEvent) {
         System.out.println("checkLogin");
 
 
@@ -47,7 +48,7 @@ public class LoginController implements ControllerInterface {
             System.out.println("customer");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-page.fxml"));
-            Parent root = null;
+            Parent root;
             try {
                 root = loader.load();
             } catch (IOException e) {
@@ -63,12 +64,11 @@ public class LoginController implements ControllerInterface {
             stage.show();
 
 
-
         } else {
             System.out.println("admin");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-page.fxml"));
-            Parent root = null;
+            Parent root;
             try {
                 root = loader.load();
             } catch (IOException e) {
@@ -80,5 +80,23 @@ public class LoginController implements ControllerInterface {
             stage.setScene(scene);
             stage.show();
         }
+    }
+
+    public void registry(ActionEvent actionEvent) {
+        System.out.println("registry");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/login/register-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
     }
 }

@@ -69,26 +69,21 @@ public class CustomerOrdersPageController implements ControllerInterface {
 
             FilteredList<Order> filteredData = new FilteredList<>(ordersObservableList, b -> true);
 
-            searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
-                filteredData.setPredicate(order -> {
+            searchBar.textProperty().addListener((observable, oldValue, newValue) -> filteredData.setPredicate(order -> {
 
-                    if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
-                        return true;
-                    }
+                if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
+                    return true;
+                }
 
-                    String lowerCaseFilter = newValue.toLowerCase();
+                String lowerCaseFilter = newValue.toLowerCase();
 
-                    if (order.getIdZamowienia().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    } else if (order.getIdKlienta().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    } else if (order.getStatusZamowienia().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-            });
+                if (order.getIdZamowienia().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (order.getIdKlienta().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else return order.getStatusZamowienia().toLowerCase().contains(lowerCaseFilter);
+
+            }));
 
             SortedList<Order> sortedData = new SortedList<>(filteredData);
             sortedData.comparatorProperty().bind(tableOrders.comparatorProperty());
@@ -105,7 +100,7 @@ public class CustomerOrdersPageController implements ControllerInterface {
         System.out.println("back");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-page.fxml"));
-        Parent root = null;
+        Parent root;
         try {
             root = loader.load();
         } catch (IOException e) {

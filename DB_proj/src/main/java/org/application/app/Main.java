@@ -17,7 +17,7 @@ public class Main extends Application {
     private final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage){
 
         try (Connection connection = databaseConnection.getConnection();) {
 
@@ -27,7 +27,12 @@ public class Main extends Application {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/application/login/login-page.fxml")));
+        Parent root;
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/application/login/login-page.fxml")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Scene scene = new Scene(root);
         primaryStage.setTitle("Bazy danych - projekt");
         primaryStage.setScene(scene);

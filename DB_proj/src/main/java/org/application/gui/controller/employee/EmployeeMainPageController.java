@@ -77,7 +77,7 @@ public class EmployeeMainPageController implements ControllerInterface {
 
     private void getNewScene(String fxmlPath, ActionEvent actionEvent) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        Parent root = null;
+        Parent root;
         try {
             root = loader.load();
         } catch (IOException e) {

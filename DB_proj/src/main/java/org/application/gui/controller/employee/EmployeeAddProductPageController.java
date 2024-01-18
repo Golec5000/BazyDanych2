@@ -36,11 +36,16 @@ public class EmployeeAddProductPageController implements ControllerInterface {
     TextField productPriceField;
 
 
-    public void back(ActionEvent actionEvent) throws IOException {
+    public void back(ActionEvent actionEvent){
         System.out.println("back");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-product-page.fxml"));
-        Parent root = loader.load();
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

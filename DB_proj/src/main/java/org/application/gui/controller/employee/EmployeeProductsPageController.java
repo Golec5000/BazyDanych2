@@ -53,33 +53,48 @@ public class EmployeeProductsPageController implements ControllerInterface {
     @FXML
     Spinner<Integer> valueSpinner;
 
-    public void back(ActionEvent actionEvent) throws IOException {
+    public void back(ActionEvent actionEvent){
         System.out.println("back");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-page.fxml"));
-        Parent root = loader.load();
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void getOpinions(ActionEvent actionEvent) throws IOException {
+    public void getOpinions(ActionEvent actionEvent){
         System.out.println("getOpinions");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-opinios-page.fxml"));
-        Parent root = loader.load();
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void addProduct(ActionEvent actionEvent) throws IOException {
+    public void addProduct(ActionEvent actionEvent){
         System.out.println("addProduct");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-add-product-page.fxml"));
-        Parent root = loader.load();
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
