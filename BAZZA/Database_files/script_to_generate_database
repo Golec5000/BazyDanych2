@@ -1,8 +1,8 @@
 CREATE TABLE Dostawcy (
-  IdDostawcy    int(10) NOT NULL AUTO_INCREMENT,
+  IdDostawcy    int(10) NOT NULL,
+  IdMagazynu    int(10) NOT NULL,
   NazwaDostawcy varchar(255) NOT NULL,
   NumerTelefonu varchar(10) NOT NULL,
-  IdMagazynu    int(10) NOT NULL,
   PRIMARY KEY (IdDostawcy));
 CREATE TABLE Klienci (
   KlientId      int(11) NOT NULL AUTO_INCREMENT,
@@ -21,13 +21,9 @@ CREATE TABLE ListaAdministratorow (
   DataZatrudnienia date NOT NULL,
   PRIMARY KEY (AdministratorId));
 CREATE TABLE ListaDostawcow (
-  IdDostawcy int(10) NOT NULL,
-  IdMagazynu int(10) NOT NULL);
-CREATE TABLE ListaDostawcow_Dostawcy (
-  DostawcyIdDostawcy int(10) NOT NULL,
-  IdMagazynu         int(10) NOT NULL,
-  PRIMARY KEY (DostawcyIdDostawcy,
-  IdMagazynu));
+  IdDostawcy int(10) NOT NULL AUTO_INCREMENT,
+  IdMagazynu int(10) NOT NULL,
+  PRIMARY KEY (IdDostawcy));
 CREATE TABLE ListaMagazynow (
   IdMagazynu      int(10) NOT NULL AUTO_INCREMENT,
   Adres           varchar(50) NOT NULL,
@@ -76,13 +72,13 @@ CREATE TABLE Zamowienia (
   KlientId        int(11) NOT NULL,
   Produkt         varchar(255) NOT NULL,
   PRIMARY KEY (NumerZamowienia));
+ALTER TABLE Dostawcy ADD CONSTRAINT FKDostawcy626501 FOREIGN KEY (IdDostawcy) REFERENCES ListaDostawcow (IdDostawcy);
 ALTER TABLE OpinieKlientow ADD CONSTRAINT FKOpinieKlie250607 FOREIGN KEY (KlientId) REFERENCES Klienci (KlientId);
 ALTER TABLE Magazyn ADD CONSTRAINT FKMagazyn299317 FOREIGN KEY (IdProduktu) REFERENCES Produkty (IdProduktu);
 ALTER TABLE Zamowienia ADD CONSTRAINT FKZamowienia281009 FOREIGN KEY (KlientId) REFERENCES Klienci (KlientId);
 ALTER TABLE Transakcje ADD CONSTRAINT FKTransakcje371147 FOREIGN KEY (NumerZamowienia) REFERENCES Zamowienia (NumerZamowienia);
 ALTER TABLE OpinieKlientow ADD CONSTRAINT FKOpinieKlie85286 FOREIGN KEY (IdProduktu) REFERENCES Produkty (IdProduktu);
 ALTER TABLE Magazyn ADD CONSTRAINT FKMagazyn106861 FOREIGN KEY (IdMagazynu) REFERENCES ListaMagazynow (IdMagazynu);
-ALTER TABLE ListaDostawcow_Dostawcy ADD CONSTRAINT FKListaDosta775197 FOREIGN KEY (DostawcyIdDostawcy) REFERENCES Dostawcy (IdDostawcy);
 ALTER TABLE Pracownicy ADD CONSTRAINT FKPracownicy675238 FOREIGN KEY (AdministratorId) REFERENCES ListaAdministratorow (AdministratorId);
 ALTER TABLE ListaMagazynow ADD CONSTRAINT FKListaMagaz601202 FOREIGN KEY (AdministratorId) REFERENCES ListaAdministratorow (AdministratorId);
 ALTER TABLE ListaDostawcow ADD CONSTRAINT FKListaDosta431852 FOREIGN KEY (IdMagazynu) REFERENCES ListaMagazynow (IdMagazynu);
