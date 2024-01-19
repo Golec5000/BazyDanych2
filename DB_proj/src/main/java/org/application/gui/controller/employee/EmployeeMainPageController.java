@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.application.entity.Employee;
 import org.application.intefaces.ControllerInterface;
 
 import java.io.IOException;
@@ -35,9 +36,6 @@ public class EmployeeMainPageController implements ControllerInterface {
     Button ordersListButton;
 
     @FXML
-    Button categoriesListButton;
-
-    @FXML
     Button logoutButton;
 
     @FXML
@@ -46,18 +44,49 @@ public class EmployeeMainPageController implements ControllerInterface {
     @FXML
     Button editButton;
 
+    private Employee employee;
+
     public void getProductsList(ActionEvent actionEvent){
         System.out.println("getProductsList");
 
-        getNewScene("/org/application/employee/employee-product-page.fxml", actionEvent);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-product-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        EmployeeProductsPageController employeeProductPageController = loader.getController();
+        employeeProductPageController.setEmployeeLogin(employee);
+        employeeProductPageController.loadProducts();
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
     }
 
     public void getOrdersList(ActionEvent actionEvent){
         System.out.println("getOrdersList");
-    }
 
-    public void getCategoriesList(ActionEvent actionEvent){
-        System.out.println("getCategoriesList");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-orders-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        EmployeeOrdersPageController employeeOrdersPageController = loader.getController();
+        employeeOrdersPageController.setEmployee(employee);
+        employeeOrdersPageController.loadOrders();
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void logout(ActionEvent actionEvent){
@@ -88,6 +117,13 @@ public class EmployeeMainPageController implements ControllerInterface {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void setEmployeeLogin(Employee employee) {
+        this.employee = employee;
+        nameLabel.setText("Imie: " + employee.getName());
+        lastNameLabel.setText("Nazwisko: " + employee.getLastName());
+        positionLabel.setText("Stanowisko: " + employee.getPosition());
     }
 
 

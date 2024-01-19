@@ -8,7 +8,6 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,23 +15,22 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.application.entity.Product;
-import org.application.entity.User;
+import org.application.entity.Customer;
 import org.application.intefaces.ControllerInterface;
 import org.application.services.ProductService;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class CustomerProductsPageController implements Initializable, ControllerInterface {
+public class CustomerProductsPageController implements ControllerInterface {
 
     @FXML
     private Button backButton;
 
     @FXML
-    private ComboBox<?> categoryList;
+    private ComboBox<String> categoryList;
 
     @FXML
     private TableColumn<Product, Float> cena;
@@ -53,6 +51,9 @@ public class CustomerProductsPageController implements Initializable, Controller
     private TableColumn<Product, String> ocena;
 
     @FXML
+    private TableColumn<Product, String> categoryTable;
+
+    @FXML
     private Button orderProductButton;
 
     @FXML
@@ -65,11 +66,63 @@ public class CustomerProductsPageController implements Initializable, Controller
 
     private final ObservableList<Product> productsObservableList = FXCollections.observableArrayList();
 
-    private User user;
+    private Customer customer;
 
+    public void setKategorie() {
+        ArrayList<String> kategorie=new ArrayList<>();
+        try {
+            kategorie.add("Kategorie");
+            kategorie.addAll(productService.getKategorie());
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+            categoryList.setItems(FXCollections.observableArrayList(kategorie));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void back(ActionEvent actionEvent) {
+        System.out.println("back");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        CustomerMainPageController customerMainPageController = loader.getController();
+        customerMainPageController.setCustomerLogin(customer);
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void oderProduct(ActionEvent actionEvent) {
+        System.out.println("oderProduct");
+
+        Product basket = productsTable.getSelectionModel().getSelectedItem();
+        if (basket != null) {
+            try {
+                productService.order(basket, customer.getKlientId());
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error while ordering product");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }
+        }
+    }
+
+    public void setCustomerLogin(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void loadProducts() {
 
         try {
             List<Product> productServiceAllProducts = productService.getAllProducts();
@@ -79,11 +132,13 @@ public class CustomerProductsPageController implements Initializable, Controller
             nazwaProduktu.setCellValueFactory(new PropertyValueFactory<>("nazwaProduktu"));
             cena.setCellValueFactory(new PropertyValueFactory<>("cena"));
             ocena.setCellValueFactory(new PropertyValueFactory<>("opis"));
+            categoryTable.setCellValueFactory(new PropertyValueFactory<>("kategoria"));
 
             productsTable.setItems(productsObservableList);
 
             FilteredList<Product> filteredData = new FilteredList<>(productsObservableList, b -> true);
 
+            //@todo do rozbudowy z comboboxem
             searchBar.textProperty().addListener((observable, oldValue, newValue) -> filteredData.setPredicate(product -> {
 
                 if (newValue.isBlank() || newValue.isEmpty() || newValue == null) return true;
@@ -100,47 +155,13 @@ public class CustomerProductsPageController implements Initializable, Controller
             productsTable.setItems(sortedData);
 
         } catch (Exception e) {
-            System.out.println("Error while loading products" + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while getting products list");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
 
-
     }
 
-    public void back(ActionEvent actionEvent){
-        System.out.println("back");
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-page.fxml"));
-        Parent root;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        CustomerMainPageController customerMainPageController = loader.getController();
-        customerMainPageController.setCustomerLogin(user);
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void oderProduct (ActionEvent actionEvent) {
-        System.out.println("oderProduct");
-
-        Product basket= productsTable.getSelectionModel().getSelectedItem();
-        if(basket!=null) {
-            try {
-                productService.order(basket, user.getKlientId());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-
-    public void setCustomerLogin(User user) {
-        this.user = user;
-    }
 }

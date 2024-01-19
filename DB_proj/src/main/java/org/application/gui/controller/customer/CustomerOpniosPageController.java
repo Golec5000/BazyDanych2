@@ -9,10 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import org.application.entity.User;
+import org.application.entity.Customer;
 import org.application.intefaces.ControllerInterface;
+import org.application.services.ProductService;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CustomerOpniosPageController implements ControllerInterface {
 
@@ -22,7 +24,9 @@ public class CustomerOpniosPageController implements ControllerInterface {
     @FXML
     TextArea opiniosArea;
 
-    private User user;
+    private Customer customer;
+
+    private final ProductService productService = ProductService.getInstance();
 
     public void back(ActionEvent actionEvent){
         System.out.println("back");
@@ -36,7 +40,7 @@ public class CustomerOpniosPageController implements ControllerInterface {
         }
 
         CustomerMainPageController customerPageController = loader.getController();
-        customerPageController.setCustomerLogin(user);
+        customerPageController.setCustomerLogin(customer);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -44,7 +48,22 @@ public class CustomerOpniosPageController implements ControllerInterface {
         stage.show();
     }
 
-    public void setCustomerLogin(User user) {
-       this.user = user;
+    public void setCustomerLogin(Customer customer) {
+       this.customer = customer;
+    }
+
+    public void loadOpinions() {
+
+        try {
+            List<String> opinions = productService.getOpinionsByCustomerId(Integer.parseInt(customer.getKlientId()));
+
+            opinions.forEach(opinion -> {
+                opiniosArea.appendText(opinion);
+            });
+
+        } catch (Exception e) {
+            opiniosArea.setText("Brak opinii");
+        }
+
     }
 }

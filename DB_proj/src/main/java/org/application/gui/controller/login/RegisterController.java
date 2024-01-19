@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.application.entity.User;
+import org.application.entity.Customer;
 import org.application.services.UserService;
 
 import java.io.IOException;
@@ -67,7 +67,7 @@ public class RegisterController {
     public void registry(ActionEvent actionEvent) {
 
         try {
-            User user = userService.addUserCustomer(loginTextField.getText()
+            Customer customer = userService.addUserCustomer(loginTextField.getText()
                     , nameTextField.getText()
                     , lastNameTextField.getText()
                     , addressTextField.getText()
@@ -75,9 +75,9 @@ public class RegisterController {
                     , numberTextField.getText()
                     , passwordTextField.getText());
 
-            if(user != null){
+            if(customer != null){
 
-                System.out.println("User added");
+                System.out.println("Customer added");
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/login/login-page.fxml"));
                 Parent root;
@@ -93,7 +93,7 @@ public class RegisterController {
                 stage.show();
             }
             else{
-                System.out.println("Error while adding user");
+                System.out.println("Error while adding customer");
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

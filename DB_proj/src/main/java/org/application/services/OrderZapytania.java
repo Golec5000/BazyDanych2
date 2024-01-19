@@ -62,10 +62,11 @@ public class OrderZapytania {
 
             while (rs.next()) {
                 orders.add(new Order(
-                        rs.getString("idZamowienia"),
-                        rs.getDate("dataZamowienia").toLocalDate(),
-                        rs.getString("statusZamowienia"),
-                        rs.getString("idKlienta")
+                        rs.getString("NumerZamowienia"),
+                        rs.getDate("dataTransakcji").toLocalDate(),
+                        rs.getString("stanZamowienia"),
+                        rs.getString("KlientId"),
+                        rs.getString("Produkt")
                 ));
             }
         }
@@ -83,7 +84,7 @@ public class OrderZapytania {
 
             if (rs.next()) {
                 return new Order(
-                        rs.getString("idZamowienia"),
+                        rs.getString("NumerZamowienia"),
                         rs.getDate("dataZamowienia").toLocalDate(),
                         rs.getString("statusZamowienia"),
                         rs.getString("idKlienta")
@@ -112,7 +113,7 @@ public class OrderZapytania {
         Date data = Date.valueOf(LocalDate.now());
         int currID = getLastID() + 1;
         String currState = "Nieoplacone";
-        String nick = "Entity.User";
+        String nick = "Entity.Customer";
         StringBuilder products = new StringBuilder();
         for (int i = 0; i < productList.size(); i++) {
             products.append(productList.get(i).getNazwaProduktu());
@@ -133,36 +134,6 @@ public class OrderZapytania {
             System.out.println(ex.getMessage());
         }
         return null;
-    }
-
-    // pobieranie zamowien po nicku
-    public List<Order> getOrdersByNick(String nick) throws SQLException {
-        List<Order> orders = new ArrayList<>();
-        String query = "SELECT Z.NumerZamowienia, Z.DataTransakcji, Z.StanZamowienia " +
-                "FROM Klienci K " +
-                "JOIN zamowienia Z ON K.klientId = Z.klientId " +
-                "WHERE K.nick = ?";
-
-        try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query)) {
-
-            pst.setString(1, nick);
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-
-                Order order = new Order(
-                        rs.getString("NumerZamowienia"),
-                        rs.getDate(2).toLocalDate(),
-                        rs.getString("StanZamowienia")
-                );
-
-                order.setIdKlienta(nick);
-
-                orders.add(order);
-            }
-        }
-        return orders;
     }
 
     public List<Order> getOrdersbyId(String KlientId) throws SQLException {

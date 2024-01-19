@@ -1,6 +1,6 @@
 package org.application.services;
 
-import org.application.entity.User;
+import org.application.entity.Customer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ public class UserService {
 
     private final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
-    public User addUserCustomer(String login, String name, String lastName, String address, String email, String phoneNumber, String password) {
+    public Customer addUserCustomer(String login, String name, String lastName, String address, String email, String phoneNumber, String password) {
         String query = "INSERT INTO klienci (nick, Imie, Nazwisko, Adres, Email, NumerTelefonu, Haslo) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = databaseConnection.getConnection();) {
@@ -37,7 +37,7 @@ public class UserService {
 
             pst.executeUpdate();
 
-            return new User(login, name, lastName, password, phoneNumber, email, address);
+            return new Customer(login, name, lastName, password, phoneNumber, email, address);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -45,14 +45,14 @@ public class UserService {
 
     }
 
-    public User updateUserCustomer(User curr_user, String new_login, String email, String password) {
+    public Customer updateUserCustomer(Customer curr_customer, String new_login, String email, String password) {
         if (new_login != null && !new_login.isBlank()) {
             /* Step 1: Identify the rows in the zamowienia table that reference the nick value
             String query = "UPDATE zamowienia SET nick=? WHERE nick=?";
             try (Connection conn = databaseConnection.getConnection();
                  PreparedStatement pst = conn.prepareStatement(query)) {
                 pst.setString(1, new_login);
-                pst.setString(2, curr_user.getNick());
+                pst.setString(2, curr_customer.getNick());
                 pst.executeUpdate();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -64,9 +64,9 @@ public class UserService {
             try (Connection conn = databaseConnection.getConnection();
                  PreparedStatement pst = conn.prepareStatement(query)) {
                 pst.setString(1, new_login);
-                pst.setString(2, curr_user.getNick());
+                pst.setString(2, curr_customer.getNick());
                 pst.executeUpdate();
-                curr_user.setNick(new_login);
+                curr_customer.setNick(new_login);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -76,9 +76,9 @@ public class UserService {
             try (Connection conn = databaseConnection.getConnection();
                  PreparedStatement pst = conn.prepareStatement(query)) {
                 pst.setString(1, email);
-                pst.setString(2, curr_user.getNick());
+                pst.setString(2, curr_customer.getNick());
                 pst.executeUpdate();
-                curr_user.setEmail(email);
+                curr_customer.setEmail(email);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -88,14 +88,14 @@ public class UserService {
             try (Connection conn = databaseConnection.getConnection();
                  PreparedStatement pst = conn.prepareStatement(query)) {
                 pst.setString(1, password);
-                pst.setString(2, curr_user.getNick());
+                pst.setString(2, curr_customer.getNick());
                 pst.executeUpdate();
-                curr_user.setPassword(password);
+                curr_customer.setPassword(password);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-        return curr_user;
+        return curr_customer;
     }
 
 

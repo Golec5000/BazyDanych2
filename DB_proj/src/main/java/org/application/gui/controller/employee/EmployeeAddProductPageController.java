@@ -11,9 +11,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.application.entity.Employee;
+import org.application.entity.Product;
 import org.application.intefaces.ControllerInterface;
+import org.application.services.ProductService;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class EmployeeAddProductPageController implements ControllerInterface {
 
@@ -27,13 +31,17 @@ public class EmployeeAddProductPageController implements ControllerInterface {
     TextArea descryptionArea;
 
     @FXML
-    ComboBox<?> productCategoryBox;
+    TextField categoryTextField;
 
     @FXML
     TextField productNameField;
 
     @FXML
     TextField productPriceField;
+
+    private Employee employee;
+    private final ProductService productService = ProductService.getInstance();
+
 
 
     public void back(ActionEvent actionEvent){
@@ -54,8 +62,39 @@ public class EmployeeAddProductPageController implements ControllerInterface {
 
     public void addProduct(ActionEvent actionEvent) {
         System.out.println("addProduct");
+        try {
+            productService.addProduct(new Product(productService.getLastID()
+                    ,productNameField.getText()
+                    ,Float.parseFloat(productPriceField.getText())
+                    ,descryptionArea.getText()
+                    ,categoryTextField.getText()));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-product-page.fxml"));
+            Parent root;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            EmployeeProductsPageController employeeProductsPageController = loader.getController();
+            employeeProductsPageController.setEmployeeLogin(employee);
+            employeeProductsPageController.loadProducts();
+
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
+    public void setEmployeeLogin(Employee employee) {
+        this.employee = employee;
+
+    }
 
 
 }

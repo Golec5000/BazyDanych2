@@ -6,12 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.application.entity.Customer;
+import org.application.entity.Employee;
 import org.application.entity.User;
 import org.application.gui.controller.customer.CustomerMainPageController;
+import org.application.gui.controller.employee.EmployeeMainPageController;
 import org.application.intefaces.ControllerInterface;
 import org.application.services.LoginService;
 
@@ -58,7 +62,7 @@ public class LoginController implements ControllerInterface {
             }
 
             CustomerMainPageController customerMainPageController = loader.getController();
-            customerMainPageController.setCustomerLogin(user);
+            customerMainPageController.setCustomerLogin((Customer) user);
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -66,6 +70,7 @@ public class LoginController implements ControllerInterface {
             stage.show();
 
 
+            return;
         }
 
         user = loginService.userExistsEmployee(login, password);
@@ -81,11 +86,22 @@ public class LoginController implements ControllerInterface {
                 throw new RuntimeException(e);
             }
 
+            EmployeeMainPageController employeeMainPageController = loader.getController();
+            employeeMainPageController.setEmployeeLogin((Employee) user);
+
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+
+            return;
         }
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Błąd");
+        alert.setHeaderText("Błąd logowania");
+        alert.setContentText("Niepoprawny login lub hasło");
+        alert.showAndWait();
 
     }
 

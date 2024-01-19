@@ -1,5 +1,9 @@
 package org.application.gui.controller.employee;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,10 +11,15 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.application.entity.Employee;
+import org.application.entity.Product;
 import org.application.intefaces.ControllerInterface;
+import org.application.services.ProductService;
 
 import java.io.IOException;
+import java.util.List;
 
 public class EmployeeProductsPageController implements ControllerInterface {
 
@@ -42,7 +51,7 @@ public class EmployeeProductsPageController implements ControllerInterface {
     Button opiniosButton;
 
     @FXML
-    TableView<?> productTable;
+    TableView<Product> productTable;
 
     @FXML
     TextField searchBar;
@@ -52,6 +61,11 @@ public class EmployeeProductsPageController implements ControllerInterface {
 
     @FXML
     Spinner<Integer> valueSpinner;
+    private final ProductService productService = ProductService.getInstance();
+    private final ObservableList<Product> productsObservableList = FXCollections.observableArrayList();
+
+
+    private Employee employee;
 
     public void back(ActionEvent actionEvent){
         System.out.println("back");
@@ -95,9 +109,58 @@ public class EmployeeProductsPageController implements ControllerInterface {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        EmployeeAddProductPageController employeeAddProductPageController = loader.getController();
+        employeeAddProductPageController.setEmployeeLogin(employee);
+
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    public void loadProducts() {
+
+        try {
+            List<Product> productServiceAllProducts = productService.getAllProducts();
+
+            productsObservableList.addAll(productServiceAllProducts);
+
+            nazwa.setCellValueFactory(new PropertyValueFactory<>("nazwaProduktu"));
+            cena.setCellValueFactory(new PropertyValueFactory<>("cena"));
+            ocena.setCellValueFactory(new PropertyValueFactory<>("opis"));
+            kategoria.setCellValueFactory(new PropertyValueFactory<>("kategoria"));
+
+            productTable.setItems(productsObservableList);
+
+            FilteredList<Product> filteredData = new FilteredList<>(productsObservableList, b -> true);
+
+            //@todo do rozbudowy z comboboxem
+            searchBar.textProperty().addListener((observable, oldValue, newValue) -> filteredData.setPredicate(product -> {
+
+                if (newValue.isBlank() || newValue.isEmpty() || newValue == null) return true;
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                return product.getNazwaProduktu().toLowerCase().contains(lowerCaseFilter);
+
+            }));
+
+            SortedList<Product> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().bind(productTable.comparatorProperty());
+
+            productTable.setItems(sortedData);
+
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while getting products list");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+
+    }
+
+    public void setEmployeeLogin(Employee employee) {
+        this.employee = employee;
     }
 }

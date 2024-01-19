@@ -1,56 +1,29 @@
 package org.application.entity;
 
+public abstract class User {
 
-public class User {
+    protected String nick;
+    protected String name;
+    protected String lastName;
+    protected String password;
+    protected String phoneNumber;
+    protected String email;
 
-    private String KlientId;
-    private String nick;
-    private String name;
-    private String lastName;
-    private String password;
-    private String phoneNumber;
-    private String email;
-    private String address;
-
-    public String getKlientId() {
-        return KlientId;
-    }
-
-    public void setKlientId(String klientId) {
-        KlientId = klientId;
-    }
-
-    public User(String nick, String name, String lastName, String password, String phoneNumber, String email, String address) {
+    public User(String nick, String name, String lastName, String password, String phoneNumber, String email) {
         this.nick = nick;
         this.name = name;
         this.lastName = lastName;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.address = address;
-    }
-
-    public User(String klientId, String nick, String name, String lastName, String password, String phoneNumber, String email, String address) {
-        this.KlientId = klientId;
-        this.nick = nick;
-        this.name = name;
-        this.lastName = lastName;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.address = address;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getNick() {
         return nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 
     public String getName() {
@@ -69,25 +42,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-    public void setNick(String nick)
-    {
-        this.nick=nick;
-    }
     public String getPassword() {
         return password;
     }
@@ -96,5 +50,19 @@ public class User {
         this.password = password;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

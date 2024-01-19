@@ -24,6 +24,21 @@ public class ProductService {
 
     private final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
+    public ArrayList<String> getKategorie() throws SQLException {
+        ArrayList<String> listaKategori = new ArrayList<>();
+        String query = "SELECT DISTINCT Kategoria FROM produkty";
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)) {
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                listaKategori.add(rs.getString("Kategoria"));
+            }
+        } catch (Exception exception) {
+
+        }
+        return listaKategori;
+    }
+
     //updatowanie ilosci pod zamowienia, z sprawdzaniem czy dana ilosc jest dostpena
     public boolean updateProductQuantity(int idProduktu, int idMagazynu, int soldQuantity) throws SQLException {
         String query = "UPDATE Magazyn SET Ilosc = Ilosc - ? WHERE IdProduktu = ? AND IdMagazynu = ? AND Ilosc >= ?";
@@ -123,6 +138,7 @@ public class ProductService {
 
     //dodawanie nowego produktu
     public boolean addProduct(Product product) throws SQLException {
+
         String query = "INSERT INTO Produkty (NazwaProduktu, Cena, Opis, Kategoria) VALUES (?, ?, ?, ?)";
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(query)) {
@@ -212,6 +228,7 @@ public class ProductService {
         }
         return null;
     }
+
     public int getLastID() throws SQLException {
         String query = "SELECT MAX(NumerZamowienia) As id FROM zamowienia";
         try (Connection conn = databaseConnection.getConnection();
@@ -219,14 +236,13 @@ public class ProductService {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next())
                 return resultSet.getInt("id");
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             return 1;
         }
         return 0;
     }
-    public Order order(Product product,String KlientId) throws SQLException {
+
+    public Order order(Product product, String KlientId) throws SQLException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
         LocalDate now = LocalDate.now();
         String temp = now.toString();
@@ -255,5 +271,35 @@ public class ProductService {
             return null;
         }
 
+    }
+
+    public List<String> getOpinionsByCustomerId(int customerId) {
+
+        List<String> opinions = new ArrayList<>();
+        String query = "SELECT IdProduktu, Ocena, Komentarz FROM opinieklientow WHERE KlientId = ?";
+
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
+            pst.setInt(1, customerId);
+            ResultSet rs = pst.executeQuery();
+            StringBuilder sb = new StringBuilder();
+
+            while (rs.next()) {
+                sb.append("ID produktu: ").append(rs.getString("IdProduktu"));
+                sb.append("\n");
+                sb.append("Ocena: ").append(rs.getString("Ocena"));
+                sb.append("\n");
+                sb.append("Komentarz: ").append(rs.getString("Komentarz"));
+                sb.append("\n");
+
+                opinions.add(sb.toString());
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return opinions;
     }
 }

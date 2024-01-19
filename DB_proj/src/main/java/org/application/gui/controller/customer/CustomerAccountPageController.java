@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.application.entity.User;
+import org.application.entity.Customer;
 import org.application.intefaces.ControllerInterface;
 import org.application.services.UserService;
 
@@ -33,7 +33,7 @@ public class CustomerAccountPageController implements ControllerInterface {
     @FXML
     PasswordField passwordTextField;
 
-    private User user;
+    private Customer customer;
 
     private final UserService userService = UserService.getInstance();
 
@@ -49,7 +49,7 @@ public class CustomerAccountPageController implements ControllerInterface {
         }
 
         CustomerMainPageController customerPageController = loader.getController();
-        customerPageController.setCustomerLogin(user);
+        customerPageController.setCustomerLogin(customer);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -60,7 +60,7 @@ public class CustomerAccountPageController implements ControllerInterface {
     public void edit(ActionEvent actionEvent) {
         System.out.println("edit");
 
-        user = userService.updateUserCustomer(user, loginTextFild.getText(), emailTextField.getText(), passwordTextField.getText());
+        customer = userService.updateUserCustomer(customer, loginTextFild.getText(), emailTextField.getText(), passwordTextField.getText());
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-page.fxml"));
         Parent root;
@@ -71,7 +71,7 @@ public class CustomerAccountPageController implements ControllerInterface {
         }
 
         CustomerMainPageController customerPageController = loader.getController();
-        customerPageController.setCustomerLogin(user);
+        customerPageController.setCustomerLogin(customer);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -80,8 +80,8 @@ public class CustomerAccountPageController implements ControllerInterface {
 
     }
 
-    public void setCustomerLogin(User user) {
-        this.user = user;
+    public void setCustomerLogin(Customer customer) {
+        this.customer = customer;
     }
 
 }

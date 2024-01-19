@@ -16,7 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.application.entity.Order;
-import org.application.entity.User;
+import org.application.entity.Customer;
 import org.application.intefaces.ControllerInterface;
 import org.application.services.OrderZapytania;
 
@@ -47,23 +47,23 @@ public class CustomerOrdersPageController implements ControllerInterface {
     @FXML
     TableColumn<Order, String> tableStatusZamowienia;
 
-    private User user;
+    private Customer customer;
 
     private final OrderZapytania orderZapytania = OrderZapytania.getInstance();
 
     private final ObservableList<Order> ordersObservableList = FXCollections.observableArrayList();
 
     public void loadOrders() {
-        System.out.println("customerLogin: " + user.getKlientId()+ " " + user.getNick());
+        System.out.println("customerLogin: " + customer.getKlientId()+ " " + customer.getNick());
 
         try {
-            List<Order> orders = orderZapytania.getOrdersbyId(user.getKlientId());
+            List<Order> orders = orderZapytania.getOrdersbyId(customer.getKlientId());
 
             ordersObservableList.addAll(orders);
 
             tableDataZamowienia.setCellValueFactory(new PropertyValueFactory<>("dataZamowienia"));
             tableIdKlienta.setCellValueFactory(new PropertyValueFactory<>("idKlienta"));
-            tableIdZamowienia.setCellValueFactory(new PropertyValueFactory<>("idZamowienia"));
+            tableIdZamowienia.setCellValueFactory(new PropertyValueFactory<>("NumerZamowienia"));
             tableStatusZamowienia.setCellValueFactory(new PropertyValueFactory<>("statusZamowienia"));
 
             tableOrders.setItems(ordersObservableList);
@@ -109,7 +109,7 @@ public class CustomerOrdersPageController implements ControllerInterface {
         }
 
         CustomerMainPageController customerPageController = loader.getController();
-        customerPageController.setCustomerLogin(user);
+        customerPageController.setCustomerLogin(customer);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -118,7 +118,7 @@ public class CustomerOrdersPageController implements ControllerInterface {
 
     }
 
-    public void setCustomerLogin(User user) {
-        this.user = user;
+    public void setCustomerLogin(Customer customer) {
+        this.customer = customer;
     }
 }

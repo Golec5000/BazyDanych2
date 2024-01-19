@@ -1,6 +1,7 @@
 package org.application.services;
 
-import org.application.entity.User;
+import org.application.entity.Customer;
+import org.application.entity.Employee;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +22,7 @@ public class LoginService {
         return instance;
     }
 
-    public User userExistsCustomer(String login, String password) {
+    public Customer userExistsCustomer(String login, String password) {
 
         String query = "SELECT * FROM klienci WHERE nick=? AND Haslo=?";
 
@@ -34,7 +35,7 @@ public class LoginService {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                return new User(rs.getString("KlientId")
+                return new Customer(rs.getString("KlientId")
                         , rs.getString("nick")
                         , rs.getString("Imie")
                         , rs.getString("Nazwisko")
@@ -51,9 +52,9 @@ public class LoginService {
         return null;
     }
 
-    public User userExistsEmployee(String login, String password) {
+    public Employee userExistsEmployee(String login, String password) {
 
-        String query = "SELECT * FROM pracownicy WHERE Imie=? AND Haslo=?";
+        String query = "SELECT * FROM pracownicy WHERE nick=? AND Haslo=?";
 
         try(Connection conn = databaseConnection.getConnection()) {
             PreparedStatement pst = conn.prepareStatement(query);
@@ -64,14 +65,18 @@ public class LoginService {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                return new User(rs.getString("KlientId")
-                        , rs.getString("nick")
+                return new Employee(rs.getString("nick")
                         , rs.getString("Imie")
                         , rs.getString("Nazwisko")
-                        , rs.getString("Adres")
                         , rs.getString("Email")
                         , rs.getString("NumerTelefonu")
-                        , rs.getString("Haslo"));
+                        , rs.getString("Haslo")
+                        , rs.getString("Stanowisko")
+                        , rs.getDate("DataZatrudnienia").toLocalDate()
+                        , rs.getInt("AdministratorId")
+                        , rs.getInt("PracownikId")
+                );
+
             }
 
 

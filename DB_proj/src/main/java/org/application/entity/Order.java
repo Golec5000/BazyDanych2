@@ -8,9 +8,18 @@ public class Order {
     private String statusZamowienia;
     private String idKlienta;
 
+    private String produkt;
+
     public Order() {
     }
 
+    public Order(String idZamowienia, LocalDate dataZamowienia, String statusZamowienia, String idKlienta, String produkt) {
+        this.idZamowienia = idZamowienia;
+        this.dataZamowienia = dataZamowienia;
+        this.statusZamowienia = statusZamowienia;
+        this.idKlienta = idKlienta;
+        this.produkt = produkt;
+    }
 
     public Order(String idZamowienia, LocalDate dataZamowienia, String statusZamowienia, String idKlienta) {
         this.idZamowienia = idZamowienia;
@@ -57,6 +66,14 @@ public class Order {
 
     public void setIdKlienta(String idKlienta) {
         this.idKlienta = idKlienta;
+    }
+
+    public String getProdukt() {
+        return produkt;
+    }
+
+    public void setProdukt(String produkt) {
+        this.produkt = produkt;
     }
 
     @Override
