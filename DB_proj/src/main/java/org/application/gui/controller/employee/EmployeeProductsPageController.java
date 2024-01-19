@@ -30,7 +30,7 @@ public class EmployeeProductsPageController implements ControllerInterface {
     Button backButton;
 
     @FXML
-    ComboBox<?> categoryBox;
+    ComboBox<String> categoryBox;
 
     @FXML
     TableColumn<?, ?> cena;
@@ -134,16 +134,20 @@ public class EmployeeProductsPageController implements ControllerInterface {
 
             FilteredList<Product> filteredData = new FilteredList<>(productsObservableList, b -> true);
 
-            //@todo do rozbudowy z comboboxem
-            searchBar.textProperty().addListener((observable, oldValue, newValue) -> filteredData.setPredicate(product -> {
-
-                if (newValue.isBlank() || newValue.isEmpty() || newValue == null) return true;
-
+            searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
                 String lowerCaseFilter = newValue.toLowerCase();
+                filteredData.setPredicate(product -> {
+                    if (newValue.isBlank() || newValue.isEmpty() || newValue == null) return true;
+                    return product.getNazwaProduktu().toLowerCase().contains(lowerCaseFilter);
+                });
+            });
 
-                return product.getNazwaProduktu().toLowerCase().contains(lowerCaseFilter);
-
-            }));
+            categoryBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+                filteredData.setPredicate(product -> {
+                    if (newValue.isBlank() || newValue.isEmpty() || newValue == null || newValue.equals("Kategorie")) return true;
+                    return product.getKategoria().equals(newValue);
+                });
+            });
 
             SortedList<Product> sortedData = new SortedList<>(filteredData);
             sortedData.comparatorProperty().bind(productTable.comparatorProperty());

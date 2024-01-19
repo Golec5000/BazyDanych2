@@ -63,7 +63,7 @@ public class CustomerOrdersPageController implements ControllerInterface {
 
             tableDataZamowienia.setCellValueFactory(new PropertyValueFactory<>("dataZamowienia"));
             tableIdKlienta.setCellValueFactory(new PropertyValueFactory<>("idKlienta"));
-            tableIdZamowienia.setCellValueFactory(new PropertyValueFactory<>("NumerZamowienia"));
+            tableIdZamowienia.setCellValueFactory(new PropertyValueFactory<>("idZamowienia"));
             tableStatusZamowienia.setCellValueFactory(new PropertyValueFactory<>("statusZamowienia"));
 
             tableOrders.setItems(ordersObservableList);
