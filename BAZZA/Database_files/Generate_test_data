@@ -36,14 +36,25 @@ INSERT INTO ListaMagazynow (Adres, AdministratorId) VALUES
 ('Magazynowa 1', 1),
 ('Magazynowa 2', 2);
 
-
-
-INSERT INTO Dostawcy (NazwaDostawcy, NumerTelefonu, IdMagazynu) VALUES
-('Dostawca A', '123456789', 1),
-('Dostawca B', '987654321', 2),
-('Dostawca C', '112233445', 3);
-
-
 INSERT INTO OpinieKlientow (Ocena, Komentarz, klientid, IdProduktu) VALUES
 (5, 'Bardzo dobry produkt!', '1', 1),
 (4, 'Dobry, ale mogłoby być lepiej.', '2', 2);
+
+INSERT INTO ListaDostawcow (IdMagazynu) VALUES
+(101),
+(102),
+(103),
+(104),
+(105);
+INSERT INTO Dostawcy (IdDostawcy, IdMagazynu, NazwaDostawcy, NumerTelefonu) VALUES
+(1, 101, 'Dostawca A', '1234567890'),
+(2, 102, 'Dostawca B', '2345678901'),
+(3, 103, 'Dostawca C', '3456789012'),
+(4, 104, 'Dostawca D', '4567890123'),
+(5, 105, 'Dostawca E', '5678901234');
+
+INSERT INTO ListaMagazynow (IdMagazynu, Adres, AdministratorId) VALUES (1, 'Haven', 1);
+INSERT INTO ListaMagazynow (IdMagazynu, Adres, AdministratorId) VALUES (2, 'Corner', 2);
+
+INSERT INTO ListaDostawcow (IdDostawcy, IdMagazynu) VALUES (2, 1);
+INSERT INTO ListaDostawcow (IdDostawcy, IdMagazynu) VALUES (1, 2);
