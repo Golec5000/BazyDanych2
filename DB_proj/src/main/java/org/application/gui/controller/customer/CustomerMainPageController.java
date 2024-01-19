@@ -143,8 +143,8 @@ public class CustomerMainPageController implements ControllerInterface {
     public void setCustomerLogin(User user) {
 
         this.user = user;
-        customerLabel.setText("Customer: " + user.getName());
-        IDLabel.setText("ID: " + user.getNick());
+        customerLabel.setText("Customer: " + user.getName() + " " + user.getLastName());
+        IDLabel.setText("Nick: " + user.getNick());
 
     }
 

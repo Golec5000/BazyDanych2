@@ -54,10 +54,10 @@ public class CustomerOrdersPageController implements ControllerInterface {
     private final ObservableList<Order> ordersObservableList = FXCollections.observableArrayList();
 
     public void loadOrders() {
-        System.out.println("customerLogin: " + user.getNick());
+        System.out.println("customerLogin: " + user.getKlientId()+ " " + user.getNick());
 
         try {
-            List<Order> orders = orderZapytania.getOrdersByNick(user.getNick());
+            List<Order> orders = orderZapytania.getOrdersbyId(user.getKlientId());
 
             ordersObservableList.addAll(orders);
 

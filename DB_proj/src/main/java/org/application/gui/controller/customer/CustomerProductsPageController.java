@@ -128,11 +128,14 @@ public class CustomerProductsPageController implements Initializable, Controller
 
     public void oderProduct (ActionEvent actionEvent) {
         System.out.println("oderProduct");
+
         Product basket= productsTable.getSelectionModel().getSelectedItem();
-        try {
-            productService.order(basket,user.getNick());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if(basket!=null) {
+            try {
+                productService.order(basket, user.getKlientId());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

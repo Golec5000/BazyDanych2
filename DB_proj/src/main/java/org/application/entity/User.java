@@ -2,6 +2,8 @@ package org.application.entity;
 
 
 public class User {
+
+    private String KlientId;
     private String nick;
     private String name;
     private String lastName;
@@ -10,7 +12,26 @@ public class User {
     private String email;
     private String address;
 
+    public String getKlientId() {
+        return KlientId;
+    }
+
+    public void setKlientId(String klientId) {
+        KlientId = klientId;
+    }
+
     public User(String nick, String name, String lastName, String password, String phoneNumber, String email, String address) {
+        this.nick = nick;
+        this.name = name;
+        this.lastName = lastName;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+    }
+
+    public User(String klientId, String nick, String name, String lastName, String password, String phoneNumber, String email, String address) {
+        this.KlientId = klientId;
         this.nick = nick;
         this.name = name;
         this.lastName = lastName;

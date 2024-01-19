@@ -226,7 +226,7 @@ public class ProductService {
         }
         return 0;
     }
-    public Order order(Product product,String nick) throws SQLException {
+    public Order order(Product product,String KlientId) throws SQLException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
         LocalDate now = LocalDate.now();
         String temp = now.toString();
@@ -239,16 +239,17 @@ public class ProductService {
 //            if (i < productList.size() - 1)
 //                products.append(",");
 //        }
-        String query = "INSERT INTO zamowienia(NumerZamowienia,DataTransakcji,StanZamowienia,nick,Produkt)VALUES (?, ?,?,?,?)";
+        String query = "INSERT INTO zamowienia(NumerZamowienia,DataTransakcji,StanZamowienia,KlientId,Produkt)VALUES (?, ?,?,?,?)";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setString(1, String.valueOf(currID));
             preparedStatement.setDate(2, data);
             preparedStatement.setString(3, currState);
-            preparedStatement.setString(4, nick);
+            preparedStatement.setString(4, KlientId);
             preparedStatement.setString(5, product.getNazwaProduktu());
             preparedStatement.executeUpdate();
-            return new Order(String.valueOf(currID), now, currState, nick);
+            return new Order(String.valueOf(currID), now, currState, KlientId);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return null;

@@ -165,5 +165,38 @@ public class OrderZapytania {
         return orders;
     }
 
+    public List<Order> getOrdersbyId(String KlientId) throws SQLException {
+        System.out.println("getorderbyid");
+        System.out.println(KlientId);
+
+        List<Order> orders = new ArrayList<>();
+
+        String query = "SELECT Z.NumerZamowienia, Z.DataTransakcji, Z.StanZamowienia " +
+                "FROM Klienci K " +
+                "JOIN zamowienia Z ON K.klientId = Z.klientId " +
+                "WHERE K.klientId = ?";
+
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
+            pst.setString(1, KlientId);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+
+                Order order = new Order(
+                        rs.getString("NumerZamowienia"),
+                        rs.getDate(2).toLocalDate(),
+                        rs.getString("StanZamowienia")
+                );
+
+                order.setIdKlienta(KlientId);
+
+                orders.add(order);
+            }
+        }
+        return orders;
+    }
+
 
 }

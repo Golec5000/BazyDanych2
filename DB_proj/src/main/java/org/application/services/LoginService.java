@@ -34,7 +34,8 @@ public class LoginService {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                return new User(rs.getString("nick")
+                return new User(rs.getString("KlientId")
+                        , rs.getString("nick")
                         , rs.getString("Imie")
                         , rs.getString("Nazwisko")
                         , rs.getString("Adres")
@@ -63,13 +64,14 @@ public class LoginService {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                return new User(rs.getString("Nick")
+                return new User(rs.getString("KlientId")
+                        , rs.getString("nick")
                         , rs.getString("Imie")
                         , rs.getString("Nazwisko")
-                        , rs.getString("Haslo")
-                        , rs.getString("Telefon")
+                        , rs.getString("Adres")
                         , rs.getString("Email")
-                        , rs.getString("Adres"));
+                        , rs.getString("NumerTelefonu")
+                        , rs.getString("Haslo"));
             }
 
 
