@@ -10,11 +10,40 @@ INSERT INTO Klienci (nick, Imie, Nazwisko, Adres, Email, NumerTelefonu, Haslo) V
 ('klient2', 'Adam', 'Szymanski', 'ul. Kwiatowa 95', 'adam.szymanski19@email.com', '223258166', 'haslo2'),
 ('klient3', 'Adam', 'Lewandowski', 'ul. Parkowa 26', 'adam.lewandowski1@email.com', '244912138', 'haslo3'),
 ('klient4', 'Dorota', 'Dabrowski', 'ul. Leśna 32', 'dorota.dabrowski13@email.com', '533812272', 'haslo4'),
+('1', '1', '1', '1', '1', '1', '1'),
 ('klient5', 'Adam', 'Lewandowski', 'ul. Słoneczna 25', 'adam.lewandowski70@email.com', '338335072', 'haslo5');
 
-INSERT INTO Dostawcy (NazwaDostawcy, NumerTelefonu, IdMagazynu) VALUES ('ABC Logistics', '123456789', 1);
-INSERT INTO Dostawcy (NazwaDostawcy, NumerTelefonu, IdMagazynu) VALUES ('XYZ Transport', '987654321', 2);
 
-INSERT INTO Zamowienia (NumerZamowienia, DataTransakcji, StanZamowienia, nick, Produkt) VALUES
-('Z123456789', '2024-01-18', 'W trakcie realizacji', 'klient', 'Smartfon XYZ Model 1'),
-('Z987654321', '2024-01-18', 'Zrealizowane', 'klient2', 'Laptop ABC Pro');
+INSERT INTO Zamowienia (NumerZamowienia, DataTransakcji, StanZamowienia, Klientid, Produkt) VALUES
+('12', '2024-01-18', 'W trakcie realizacji', '1', 'Smartfon XYZ Model 1'),
+('14', '2024-01-18', 'Zrealizowane', '2', 'Laptop ABC Pro'),
+('15', '2024-01-18', 'W trakcie realizacji', '3', 'Laptop'),
+('16', '2024-01-18', 'W trakcie realizacji', '4', 'Smartfon XYZ Model 1');
+
+INSERT INTO ListaAdministratorow (Imie, Nazwisko, DataZatrudnienia) VALUES
+('Adam', 'Kowal', '2023-01-01'),
+('Ewa', 'Nowak', '2023-02-01'),
+('Ola', 'Wiśnia', '2023-03-01');
+
+INSERT INTO Pracownicy (nick, Haslo, Imie, Nazwisko, NumerTelefonu, email, Stanowisko, DataZatrudnienia, AdministratorId)
+VALUES
+('janKowalski', 'haslo123', 'Jan', 'Kowalski', '123-456-789', 'jan.kowalski', 'Programista', '2023-01-01', 1),
+('annaNowak', 'haslo456', 'Anna', 'Nowak', '987-654-321', 'anna.nowak', 'Analityk', '2023-01-02', 2),
+('pawelZiolkowski', 'haslo789', 'Paweł', 'Ziolkowski', '567-890-123', 'pawel.ziolkowski', 'Menadżer', '2023-01-03', 3),
+('1', '1', 'Jan', 'Kowalski', '123-456-789', 'jan.kowalski', 'Programista', '2023-01-01', 3);
+
+INSERT INTO ListaMagazynow (Adres, AdministratorId) VALUES
+('Magazynowa 1', 1),
+('Magazynowa 2', 2);
+
+
+
+INSERT INTO Dostawcy (NazwaDostawcy, NumerTelefonu, IdMagazynu) VALUES
+('Dostawca A', '123456789', 1),
+('Dostawca B', '987654321', 2),
+('Dostawca C', '112233445', 3);
+
+
+INSERT INTO OpinieKlientow (Ocena, Komentarz, klientid, IdProduktu) VALUES
+(5, 'Bardzo dobry produkt!', '1', 1),
+(4, 'Dobry, ale mogłoby być lepiej.', '2', 2);
