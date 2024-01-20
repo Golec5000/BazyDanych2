@@ -87,4 +87,9 @@ BEGIN
     VALUES (NumerZamowienia_param, DataTransakcji_param, StanZamowienia_param, KlientId_param, NazwaProduktu_param);
 END$$
 
+CREATE PROCEDURE getOpinionsByCustomerId(IN KlientId_param INT)
+BEGIN
+    SELECT IdProduktu, Ocena, Komentarz FROM opinieklientow WHERE KlientId = KlientId_param;
+END$$
+
 DELIMITER ;
