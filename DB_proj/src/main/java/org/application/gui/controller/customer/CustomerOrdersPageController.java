@@ -57,7 +57,7 @@ public class CustomerOrdersPageController implements ControllerInterface {
         System.out.println("customerLogin: " + customer.getKlientId()+ " " + customer.getNick());
 
         try {
-            List<Order> orders = orderZapytania.getOrdersbyId(customer.getKlientId());
+            List<Order> orders = orderZapytania.getOrdersByKlientId(customer.getKlientId());
 
             ordersObservableList.addAll(orders);
 

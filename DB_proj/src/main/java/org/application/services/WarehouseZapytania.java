@@ -2,10 +2,7 @@ package org.application.services;
 
 import org.application.entity.Warehouse;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +23,12 @@ public class WarehouseZapytania {
     //wyswietlanie dostepnych magazynow
     public List<Warehouse> getAllWarehouses() throws SQLException {
         List<Warehouse> warehouses = new ArrayList<>();
-        String query = "SELECT * FROM ListaMagazynow";
+        //String query = "SELECT * FROM ListaMagazynow";
 
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query)) {
+             CallableStatement cstmt = conn.prepareCall("{CALL getAllWarehouses()}")) {
 
-            ResultSet resultSet = pst.executeQuery();
+            ResultSet resultSet = cstmt.executeQuery();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("IdMagazynu");

@@ -24,29 +24,29 @@ public class OrderZapytania {
     private final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
     // aktualizacja statusu zamowienia
-    public boolean updateOrderStatus(int idZamowienia, String newStatus) throws SQLException {
-        String query = "UPDATE Zamowienia SET statusZamowienia = ? WHERE idZamowienia = ?";
+    public boolean updateOrderStatus(int NumerZamowienia, String newStatus) throws SQLException {
+        //String query = "UPDATE Zamowienia SET statusZamowienia = ? WHERE NumerZamowienia = ?";
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query)) {
+             CallableStatement cstmt = conn.prepareCall("{CALL updateOrderStatus(?, ?)}")) {
 
-            pst.setString(1, newStatus);
-            pst.setInt(2, idZamowienia);
+            cstmt.setString(1, newStatus);
+            cstmt.setInt(2, NumerZamowienia);
 
-            int affectedRows = pst.executeUpdate();
+            int affectedRows = cstmt.executeUpdate();
 
             return affectedRows > 0;
         }
     }
 
     // usuwanie zamówienia
-    public boolean deleteOrder(int idZamowienia) throws SQLException {
-        String query = "DELETE FROM Zamowienia WHERE idZamowienia = ?";
+    public boolean deleteOrder(int NumerZamowienia) throws SQLException {
+        //String query = "DELETE FROM Zamowienia WHERE NumerZamowienia = ?";
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query)) {
+             CallableStatement cstmt = conn.prepareCall("{CALL deleteOrder(?)}")){
 
-            pst.setInt(1, idZamowienia);
+            cstmt.setInt(1, NumerZamowienia);
 
-            int affectedRows = pst.executeUpdate();
+            int affectedRows = cstmt.executeUpdate();
 
             return affectedRows > 0;
         }
@@ -55,10 +55,10 @@ public class OrderZapytania {
     // pobieranie wszystkich zamowien
     public List<Order> getAllOrders() throws SQLException {
         List<Order> orders = new ArrayList<>();
-        String query = "SELECT * FROM Zamowienia";
+        //String query = "SELECT * FROM Zamowienia";
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query);
-             ResultSet rs = pst.executeQuery()) {
+             CallableStatement cstmt = conn.prepareCall("{CALL getAllOrders()}");
+             ResultSet rs = cstmt.executeQuery()) {
 
             while (rs.next()) {
                 orders.add(new Order(
@@ -74,12 +74,12 @@ public class OrderZapytania {
     }
 
     // pobieranie zwmowien po ID
-    public Order getOrderById(int idZamowienia) throws SQLException {
-        String query = "SELECT * FROM Zamowienia WHERE idZamowienia = ?";
+    public Order getOrderById(int NumerZamowienia) throws SQLException {
+        String query = "SELECT * FROM Zamowienia WHERE NumerZamowienia = ?";
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setInt(1, idZamowienia);
+            pstmt.setInt(1, NumerZamowienia);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -95,10 +95,10 @@ public class OrderZapytania {
     }
 
     public int getLastID() throws SQLException {
-        String query = "SELECT MAX(NumerZamowienia) As id FROM zamowienia";
+        //String query = "SELECT MAX(NumerZamowienia) As id FROM zamowienia";
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
+             CallableStatement cstmt = conn.prepareCall("{CALL getLastID()}")) {
+            ResultSet resultSet = cstmt.executeQuery();
             if (resultSet.next())
                 return resultSet.getInt("id");
         }
@@ -136,22 +136,22 @@ public class OrderZapytania {
         return null;
     }
 
-    public List<Order> getOrdersbyId(String KlientId) throws SQLException {
+    public List<Order> getOrdersByKlientId(String KlientId) throws SQLException {
         System.out.println("getorderbyid");
         System.out.println(KlientId);
 
         List<Order> orders = new ArrayList<>();
 
-        String query = "SELECT Z.NumerZamowienia, Z.DataTransakcji, Z.StanZamowienia " +
-                "FROM Klienci K " +
-                "JOIN zamowienia Z ON K.klientId = Z.klientId " +
-                "WHERE K.klientId = ?";
+       // String query = "SELECT Z.NumerZamowienia, Z.DataTransakcji, Z.StanZamowienia " +
+       //         "FROM Klienci K " +
+       //         "JOIN zamowienia Z ON K.klientId = Z.klientId " +
+       //         "WHERE K.klientId = ?";
 
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query)) {
+             CallableStatement cstmt = conn.prepareCall("{CALL getOrdersById(?)}")) {
 
-            pst.setString(1, KlientId);
-            ResultSet rs = pst.executeQuery();
+            cstmt.setString(1, KlientId);
+            ResultSet rs = cstmt.executeQuery();
 
             while (rs.next()) {
 
@@ -168,6 +168,4 @@ public class OrderZapytania {
         }
         return orders;
     }
-
-
 }

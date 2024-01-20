@@ -1,0 +1,77 @@
+DELIMITER $$
+
+CREATE PROCEDURE getOrdersById(IN klientId_param int(11))
+BEGIN
+    SELECT Z.NumerZamowienia, Z.DataTransakcji, Z.StanZamowienia
+    FROM Klienci K
+    JOIN zamowienia Z ON K.klientId = Z.klientId
+    WHERE K.klientId = klientId_param;
+END$$
+
+CREATE PROCEDURE getLastID()
+BEGIN
+    SELECT MAX(NumerZamowienia) AS id FROM zamowienia;
+END$$
+
+CREATE PROCEDURE getAllOrders()
+BEGIN
+    SELECT * FROM Zamowienia;
+END$$
+
+CREATE PROCEDURE deleteOrder(IN NumerZamowienia_param INT)
+BEGIN
+    DELETE FROM Zamowienia WHERE NumerZamowienia = NumerZamowienia_param;
+END$$
+
+CREATE PROCEDURE updateOrderStatus(IN NumerZamowienia_param INT, IN newStatus_param VARCHAR(255))
+BEGIN
+    UPDATE Zamowienia SET stanZamowienia = newStatus_param WHERE NumerZamowienia = NumerZamowienia_param;
+END$$
+
+CREATE PROCEDURE getKategorie()
+BEGIN
+    SELECT DISTINCT Kategoria FROM produkty;
+END$$
+
+CREATE PROCEDURE addProduct(
+    IN NazwaProduktu_param VARCHAR(255),
+    IN Cena_param FLOAT,
+    IN Opis_param TEXT,
+    IN Kategoria_param VARCHAR(255)
+)
+BEGIN
+    INSERT INTO Produkty (NazwaProduktu, Cena, Opis, Kategoria)
+    VALUES (NazwaProduktu_param, Cena_param, Opis_param, Kategoria_param);
+END$$
+
+CREATE PROCEDURE getAllProducts()
+BEGIN
+    SELECT * FROM Produkty;
+END$$
+
+CREATE PROCEDURE updateProduct(
+    IN IdProduktu_param INT,
+    IN NazwaProduktu_param VARCHAR(255),
+    IN Cena_param FLOAT,
+    IN Opis_param TEXT,
+    IN Kategoria_param VARCHAR(255)
+)
+BEGIN
+    UPDATE Produkty
+    SET NazwaProduktu = NazwaProduktu_param,
+        Cena = Cena_param,
+        Opis = Opis_param,
+        Kategoria = Kategoria_param
+    WHERE IdProduktu = IdProduktu_param;
+END$$
+
+CREATE PROCEDURE deleteProduct(IN IdProduktu_param INT)
+BEGIN
+    DELETE FROM Produkty WHERE IdProduktu = IdProduktu_param;
+END$$
+
+CREATE PROCEDURE getAllWarehouses()
+BEGIN
+    SELECT * FROM ListaMagazynow;
+END$$
+DELIMITER ;

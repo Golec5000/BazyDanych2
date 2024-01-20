@@ -26,10 +26,10 @@ public class ProductService {
 
     public ArrayList<String> getKategorie() throws SQLException {
         ArrayList<String> listaKategori = new ArrayList<>();
-        String query = "SELECT DISTINCT Kategoria FROM produkty";
+        //String query = "SELECT DISTINCT Kategoria FROM produkty";
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query)) {
-            ResultSet rs = pst.executeQuery();
+             CallableStatement cstmt = conn.prepareCall("{CALL getKategorie()}")) {
+            ResultSet rs = cstmt.executeQuery();
             while (rs.next()) {
                 listaKategori.add(rs.getString("Kategoria"));
             }
@@ -139,16 +139,16 @@ public class ProductService {
     //dodawanie nowego produktu
     public boolean addProduct(Product product) throws SQLException {
 
-        String query = "INSERT INTO Produkty (NazwaProduktu, Cena, Opis, Kategoria) VALUES (?, ?, ?, ?)";
+        //String query = "INSERT INTO Produkty (NazwaProduktu, Cena, Opis, Kategoria) VALUES (?, ?, ?, ?)";
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query)) {
+             CallableStatement cstmt = conn.prepareCall("{CALL addProduct(?, ?, ?, ?)}")){
 
-            pst.setString(1, product.getNazwaProduktu());
-            pst.setFloat(2, product.getCena());
-            pst.setString(3, product.getOpis());
-            pst.setString(4, product.getKategoria());
+            cstmt.setString(1, product.getNazwaProduktu());
+            cstmt.setFloat(2, product.getCena());
+            cstmt.setString(3, product.getOpis());
+            cstmt.setString(4, product.getKategoria());
 
-            int affectedRows = pst.executeUpdate();
+            int affectedRows = cstmt.executeUpdate();
 
             return affectedRows > 0;
         }
@@ -156,17 +156,17 @@ public class ProductService {
 
     //aktualizowanie istniejącego produktu
     public boolean updateProduct(Product product) throws SQLException {
-        String query = "UPDATE Produkty SET NazwaProduktu = ?, Cena = ?, Opis = ?, Kategoria = ? WHERE IdProduktu = ?";
+        //String query = "UPDATE Produkty SET NazwaProduktu = ?, Cena = ?, Opis = ?, Kategoria = ? WHERE IdProduktu = ?";
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query)) {
+             CallableStatement cstmt = conn.prepareCall("{CALL updateProduct(?, ?, ?, ?, ?)}")) {
 
-            pst.setString(1, product.getNazwaProduktu());
-            pst.setFloat(2, product.getCena());
-            pst.setString(3, product.getOpis());
-            pst.setString(4, product.getKategoria());
-            pst.setInt(5, product.getIdProduktu());
+            cstmt.setString(1, product.getNazwaProduktu());
+            cstmt.setFloat(2, product.getCena());
+            cstmt.setString(3, product.getOpis());
+            cstmt.setString(4, product.getKategoria());
+            cstmt.setInt(5, product.getIdProduktu());
 
-            int affectedRows = pst.executeUpdate();
+            int affectedRows = cstmt.executeUpdate();
 
             return affectedRows > 0;
         }
@@ -174,13 +174,13 @@ public class ProductService {
 
     //usuwanie produktu
     public boolean deleteProduct(int productId) throws SQLException {
-        String query = "DELETE FROM Produkty WHERE IdProduktu = ?";
+        //String query = "DELETE FROM Produkty WHERE IdProduktu = ?";
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query)) {
+             CallableStatement cstmt = conn.prepareCall("{CALL deleteProduct(?)}")) {
 
-            pst.setInt(1, productId);
+            cstmt.setInt(1, productId);
 
-            int affectedRows = pst.executeUpdate();
+            int affectedRows = cstmt.executeUpdate();
 
             return affectedRows > 0;
         }
@@ -189,10 +189,10 @@ public class ProductService {
     //pobieranie wszystkich produktow
     public List<Product> getAllProducts() throws SQLException {
         List<Product> products = new ArrayList<>();
-        String query = "SELECT * FROM Produkty";
+        //String query = "SELECT * FROM Produkty";
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query);
-             ResultSet rs = pst.executeQuery()) {
+             CallableStatement cstmt = conn.prepareCall("{CALL getAllProducts()}")) {
+            ResultSet rs = cstmt.executeQuery();
 
             while (rs.next()) {
                 products.add(new Product(
@@ -230,10 +230,10 @@ public class ProductService {
     }
 
     public int getLastID() throws SQLException {
-        String query = "SELECT MAX(NumerZamowienia) As id FROM zamowienia";
+        //String query = "SELECT MAX(NumerZamowienia) As id FROM zamowienia";
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
+             CallableStatement cstmt = conn.prepareCall("{CALL getLastID()}")) {
+            ResultSet resultSet = cstmt.executeQuery();
             if (resultSet.next())
                 return resultSet.getInt("id");
         } catch (Exception ex) {
@@ -255,16 +255,16 @@ public class ProductService {
 //            if (i < productList.size() - 1)
 //                products.append(",");
 //        }
-        String query = "INSERT INTO zamowienia(NumerZamowienia,DataTransakcji,StanZamowienia,KlientId,Produkt)VALUES (?, ?,?,?,?)";
+        //String query = "INSERT INTO zamowienia(NumerZamowienia,DataTransakcji,StanZamowienia,KlientId,Produkt)VALUES (?, ?,?,?,?)";
         try (Connection connection = databaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             CallableStatement cstmt = connection.prepareCall("{CALL orderProduct(?, ?, ?, ?, ?)}")) {
 
-            preparedStatement.setString(1, String.valueOf(currID));
-            preparedStatement.setDate(2, data);
-            preparedStatement.setString(3, currState);
-            preparedStatement.setString(4, KlientId);
-            preparedStatement.setString(5, product.getNazwaProduktu());
-            preparedStatement.executeUpdate();
+            cstmt.setString(1, String.valueOf(currID));
+            cstmt.setDate(2, data);
+            cstmt.setString(3, currState);
+            cstmt.setString(4, KlientId);
+            cstmt.setString(5, product.getNazwaProduktu());
+            cstmt.executeUpdate();
             return new Order(String.valueOf(currID), now, currState, KlientId);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -276,13 +276,13 @@ public class ProductService {
     public List<String> getOpinionsByCustomerId(int customerId) {
 
         List<String> opinions = new ArrayList<>();
-        String query = "SELECT IdProduktu, Ocena, Komentarz FROM opinieklientow WHERE KlientId = ?";
+        //String query = "SELECT IdProduktu, Ocena, Komentarz FROM opinieklientow WHERE KlientId = ?";
 
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query)) {
+             CallableStatement cstmt = conn.prepareCall("{CALL getOpinionsByCustomerId(?)}")) {
 
-            pst.setInt(1, customerId);
-            ResultSet rs = pst.executeQuery();
+            cstmt.setInt(1, customerId);
+            ResultSet rs = cstmt.executeQuery();
             StringBuilder sb = new StringBuilder();
 
             while (rs.next()) {
