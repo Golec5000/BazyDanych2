@@ -19,10 +19,10 @@ import java.util.List;
 public class CustomerOpniosPageController implements ControllerInterface {
 
     @FXML
-    Button backButton;
+    private Button backButton;
 
     @FXML
-    TextArea opiniosArea;
+    private TextArea opiniosArea;
 
     private Customer customer;
 

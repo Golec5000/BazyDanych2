@@ -19,19 +19,19 @@ import java.io.IOException;
 public class CustomerAccountPageController implements ControllerInterface {
 
     @FXML
-    Button backButton;
+    private Button backButton;
 
     @FXML
-    Button comfirmButton;
+    private Button comfirmButton;
 
     @FXML
-    TextField loginTextFild;
+    private TextField loginTextField;
 
     @FXML
-    TextField emailTextField;
+    private TextField emailTextField;
 
     @FXML
-    PasswordField passwordTextField;
+    private PasswordField passwordTextField;
 
     private Customer customer;
 
@@ -60,7 +60,7 @@ public class CustomerAccountPageController implements ControllerInterface {
     public void edit(ActionEvent actionEvent) {
         System.out.println("edit");
 
-        customer = userService.updateUserCustomer(customer, loginTextFild.getText(), emailTextField.getText(), passwordTextField.getText());
+        customer = userService.updateUserCustomer(customer, loginTextField.getText(), emailTextField.getText(), passwordTextField.getText());
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/customer/customer-page.fxml"));
         Parent root;

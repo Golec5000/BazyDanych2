@@ -22,22 +22,22 @@ import java.sql.SQLException;
 public class EmployeeAddProductPageController implements ControllerInterface {
 
     @FXML
-    Button addProductButton;
+    private Button addProductButton;
 
     @FXML
-    Button backButton;
+    private Button backButton;
 
     @FXML
-    TextArea descryptionArea;
+    private TextArea descryptionArea;
 
     @FXML
-    TextField categoryTextField;
+    private TextField categoryTextField;
 
     @FXML
-    TextField productNameField;
+    private TextField productNameField;
 
     @FXML
-    TextField productPriceField;
+    private TextField productPriceField;
 
     private Employee employee;
     private final ProductService productService = ProductService.getInstance();
@@ -79,6 +79,7 @@ public class EmployeeAddProductPageController implements ControllerInterface {
 
             EmployeeProductsPageController employeeProductsPageController = loader.getController();
             employeeProductsPageController.setEmployeeLogin(employee);
+            employeeProductsPageController.loadProducts();
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);

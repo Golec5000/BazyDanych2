@@ -25,7 +25,7 @@ public class OrderZapytania {
 
     // aktualizacja statusu zamowienia
     public boolean updateOrderStatus(int NumerZamowienia, String newStatus) throws SQLException {
-        //String query = "UPDATE Zamowienia SET statusZamowienia = ? WHERE NumerZamowienia = ?";
+
         try (Connection conn = databaseConnection.getConnection();
              CallableStatement cstmt = conn.prepareCall("{CALL updateOrderStatus(?, ?)}")) {
 
@@ -40,7 +40,7 @@ public class OrderZapytania {
 
     // usuwanie zamówienia
     public boolean deleteOrder(int NumerZamowienia) throws SQLException {
-        //String query = "DELETE FROM Zamowienia WHERE NumerZamowienia = ?";
+
         try (Connection conn = databaseConnection.getConnection();
              CallableStatement cstmt = conn.prepareCall("{CALL deleteOrder(?)}")){
 
@@ -55,7 +55,7 @@ public class OrderZapytania {
     // pobieranie wszystkich zamowien
     public List<Order> getAllOrders() throws SQLException {
         List<Order> orders = new ArrayList<>();
-        //String query = "SELECT * FROM Zamowienia";
+
         try (Connection conn = databaseConnection.getConnection();
              CallableStatement cstmt = conn.prepareCall("{CALL getAllOrders()}");
              ResultSet rs = cstmt.executeQuery()) {
@@ -95,7 +95,7 @@ public class OrderZapytania {
     }
 
     public int getLastID() throws SQLException {
-        //String query = "SELECT MAX(NumerZamowienia) As id FROM zamowienia";
+
         try (Connection conn = databaseConnection.getConnection();
              CallableStatement cstmt = conn.prepareCall("{CALL getLastID()}")) {
             ResultSet resultSet = cstmt.executeQuery();
@@ -107,9 +107,8 @@ public class OrderZapytania {
 
     //TWORZENIE NOWEGO ZAMOWIENIA
     public Order createOrder(List<Product> productList) throws SQLException {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+
         LocalDate now = LocalDate.now();
-        String temp = now.toString();
         Date data = Date.valueOf(LocalDate.now());
         int currID = getLastID() + 1;
         String currState = "Nieoplacone";
@@ -142,11 +141,6 @@ public class OrderZapytania {
 
         List<Order> orders = new ArrayList<>();
 
-       // String query = "SELECT Z.NumerZamowienia, Z.DataTransakcji, Z.StanZamowienia " +
-       //         "FROM Klienci K " +
-       //         "JOIN zamowienia Z ON K.klientId = Z.klientId " +
-       //         "WHERE K.klientId = ?";
-
         try (Connection conn = databaseConnection.getConnection();
              CallableStatement cstmt = conn.prepareCall("{CALL getOrdersById(?)}")) {
 
@@ -155,15 +149,13 @@ public class OrderZapytania {
 
             while (rs.next()) {
 
-                Order order = new Order(
+                orders.add(new Order(
                         rs.getString("NumerZamowienia"),
                         rs.getDate(2).toLocalDate(),
-                        rs.getString("StanZamowienia")
-                );
+                        rs.getString("StanZamowienia"),
+                        KlientId
+                ));
 
-                order.setIdKlienta(KlientId);
-
-                orders.add(order);
             }
         }
         return orders;

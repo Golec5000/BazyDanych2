@@ -18,25 +18,25 @@ import java.io.IOException;
 public class CustomerMainPageController implements ControllerInterface {
 
     @FXML
-    Label customerLabel;
+    private Label customerLabel;
 
     @FXML
-    Label IDLabel;
+    private Label IDLabel;
 
     @FXML
-    Button ordersListButton;
+    private Button ordersListButton;
 
     @FXML
-    Button opinionsListButton;
+    private Button opinionsListButton;
 
     @FXML
-    Button loguotBotton;
+    private Button loguotBotton;
 
     @FXML
-    Button productsButton;
+    private Button productsButton;
 
     @FXML
-    Button accountEditButton;
+    private Button accountEditButton;
 
     private Customer customer;
 
@@ -113,8 +113,8 @@ public class CustomerMainPageController implements ControllerInterface {
 
         CustomerProductsPageController customerProductsPageController = loader.getController();
         customerProductsPageController.setCustomerLogin(customer);
+        customerProductsPageController.setBasicProperty();
         customerProductsPageController.loadProducts();
-        customerProductsPageController.setKategorie();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -150,7 +150,6 @@ public class CustomerMainPageController implements ControllerInterface {
         IDLabel.setText("Nick: " + customer.getNick());
 
     }
-
 
 
 

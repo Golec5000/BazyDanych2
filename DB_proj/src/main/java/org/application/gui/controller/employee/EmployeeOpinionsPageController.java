@@ -6,9 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import org.application.entity.Employee;
+import org.application.entity.Product;
 import org.application.intefaces.ControllerInterface;
 import org.application.services.ProductService;
 
@@ -23,29 +26,9 @@ public class EmployeeOpinionsPageController implements ControllerInterface {
     @FXML
     private TextArea opiniosArea;
 
-    private int productId;
-    private ProductService productService = ProductService.getInstance();
+    private Employee employee;
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-        loadOpinions();
-    }
-
-
-    private void loadOpinions() {
-
-        try {
-            List<String> opinions = productService.getOpinionsByProductId(productId);
-
-            opinions.forEach(opinion -> {
-                opiniosArea.appendText(opinion);
-            });
-
-        } catch (Exception e) {
-            opiniosArea.setText("Brak opinii");
-        }
-
-    }
+    private final ProductService productService = ProductService.getInstance();
 
     @FXML
     void back(ActionEvent actionEvent){
@@ -58,10 +41,45 @@ public class EmployeeOpinionsPageController implements ControllerInterface {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        EmployeeProductsPageController employeeProductsPageController = loader.getController();
+        employeeProductsPageController.setEmployeeLogin(employee);
+        employeeProductsPageController.setBasicProperty();
+        employeeProductsPageController.loadProducts();
+
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void loadOpinions(){
+
+        try {
+            //@todo do dorobiennia pozyskanie nick klienta do opinii
+            List<Product> opinions = productService.getAllProducts();
+
+            opinions.forEach(opinion -> {
+                StringBuilder sb = new StringBuilder();
+
+                sb.append("Nazwa: ").append(opinion.getNazwaProduktu()). append("\n");
+                sb.append("Opinia: ").append(opinion.getOpis()).append("\n").append("\n");
+
+                opiniosArea.appendText(sb.toString());
+            });
+
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while loading opinions");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+
+    }
+
+    public void setEmployeeLogin(Employee employee) {
+        this.employee = employee;
     }
 
 }

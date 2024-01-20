@@ -19,59 +19,52 @@ import org.application.intefaces.ControllerInterface;
 import org.application.services.ProductService;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeProductsPageController implements ControllerInterface {
 
     @FXML
-    Button addProductButton;
+    private Button addProductButton;
 
     @FXML
-    Button backButton;
+    private Button backButton;
 
     @FXML
-    ComboBox<String> categoryBox;
+    private ComboBox<String> categoryBox;
 
     @FXML
-    TableColumn<?, ?> cena;
+    private TableColumn<Product, Float> cena;
 
     @FXML
-    TableColumn<?, ?> id;
+    private TableColumn<Product, String> kategoria;
 
     @FXML
-     TableColumn<?, ?> kategoria;
+    private TableColumn<Product, String> nazwa;
 
     @FXML
-    TableColumn<?, ?> nazwa;
+    private TableColumn<Product, String> ocena;
 
     @FXML
-    TableColumn<?, ?> ocena;
+    private Button opiniosButton;
 
     @FXML
-    Button opiniosButton;
+    private TableView<Product> productTable;
 
     @FXML
-    TableView<Product> productTable;
+    private TextField searchBar;
 
     @FXML
-    TextField searchBar;
+    private Button deleteProduktButton;
 
-    @FXML
-    TableColumn<?, ?> stan;
-
-    @FXML
-    Spinner<Integer> valueSpinner;
     private final ProductService productService = ProductService.getInstance();
     private final ObservableList<Product> productsObservableList = FXCollections.observableArrayList();
 
 
     private Employee employee;
-    @FXML
-    public void initialize() {
-        loadProducts();
-    }
 
-    public void back(ActionEvent actionEvent){
+    public void back(ActionEvent actionEvent) {
         System.out.println("back");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-page.fxml"));
@@ -81,24 +74,32 @@ public class EmployeeProductsPageController implements ControllerInterface {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        EmployeeMainPageController employeePageController = loader.getController();
+        employeePageController.setEmployeeLogin(employee);
+
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void getOpinions(ActionEvent actionEvent){
-        System.out.println("getOpinions");
+    public void setBasicProperty() {
+        List<String> kategorie = new ArrayList<>();
+        try {
+            kategorie.add("Kategorie");
+            kategorie.addAll(productService.getKategorie());
 
-        Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
-        if (selectedProduct == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Brak wyboru produktu");
-            alert.setHeaderText(null);
-            alert.setContentText("Proszę wybrać produkt z listy.");
-            alert.showAndWait();
-            return;
+            categoryBox.setItems(FXCollections.observableArrayList(kategorie));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
+    }
+
+    public void getOpinions(ActionEvent actionEvent) {
+        System.out.println("getOpinions");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-opinios-page.fxml"));
         Parent root;
@@ -108,16 +109,16 @@ public class EmployeeProductsPageController implements ControllerInterface {
             throw new RuntimeException(e);
         }
 
-        EmployeeOpinionsPageController controller = loader.getController();
-        controller.setProductId(selectedProduct.getIdProduktu());
-
+        EmployeeOpinionsPageController employeeOpinionsPageController = loader.getController();
+        employeeOpinionsPageController.setEmployeeLogin(employee);
+        employeeOpinionsPageController.loadOpinions();
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void addProduct(ActionEvent actionEvent){
+    public void addProduct(ActionEvent actionEvent) {
         System.out.println("addProduct");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-add-product-page.fxml"));
@@ -136,6 +137,7 @@ public class EmployeeProductsPageController implements ControllerInterface {
         stage.setScene(scene);
         stage.show();
     }
+
     public void loadProducts() {
 
         try {
@@ -162,7 +164,8 @@ public class EmployeeProductsPageController implements ControllerInterface {
 
             categoryBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
                 filteredData.setPredicate(product -> {
-                    if (newValue.isBlank() || newValue.isEmpty() || newValue == null || newValue.equals("Kategorie")) return true;
+                    if (newValue.isBlank() || newValue.isEmpty() || newValue == null || newValue.equals("Kategorie"))
+                        return true;
                     return product.getKategoria().equals(newValue);
                 });
             });
@@ -176,6 +179,33 @@ public class EmployeeProductsPageController implements ControllerInterface {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error while getting products list");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+
+    }
+
+    public void removeProduct(ActionEvent actionEvent) {
+        System.out.println("removeProduct");
+
+        Product product = productTable.getSelectionModel().getSelectedItem();
+
+        if (product == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while removing product");
+            alert.setContentText("You have to select product to remove");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            productService.deleteProduct(product.getIdProduktu());
+            productsObservableList.remove(product);
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while removing product");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }

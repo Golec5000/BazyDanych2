@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import org.application.entity.Product;
 import org.application.entity.Customer;
 import org.application.intefaces.ControllerInterface;
@@ -68,8 +69,8 @@ public class CustomerProductsPageController implements ControllerInterface {
 
     private Customer customer;
 
-    public void setKategorie() {
-        ArrayList<String> kategorie=new ArrayList<>();
+    public void setBasicProperty() {
+        List<String> kategorie = new ArrayList<>();
         try {
             kategorie.add("Kategorie");
             kategorie.addAll(productService.getKategorie());
@@ -79,6 +80,29 @@ public class CustomerProductsPageController implements ControllerInterface {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        minPrice.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 0));
+        maxPrice.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 10000));
+
+
+        TextFormatter<Integer> minPriceFormatter = new TextFormatter<>(new IntegerStringConverter(), 0, change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("-?\\d*")) {
+                return change;
+            }
+            return null;
+        });
+
+        TextFormatter<Integer> maxPriceFormatter = new TextFormatter<>(new IntegerStringConverter(), 10000, change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("-?\\d*")) {
+                return change;
+            }
+            return null;
+        });
+
+        minPrice.getEditor().setTextFormatter(minPriceFormatter);
+        maxPrice.getEditor().setTextFormatter(maxPriceFormatter);
     }
 
     public void back(ActionEvent actionEvent) {
@@ -115,12 +139,6 @@ public class CustomerProductsPageController implements ControllerInterface {
                 alert.setContentText(e.getMessage());
                 alert.showAndWait();
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Brak wyboru produktu");
-            alert.setHeaderText(null);
-            alert.setContentText("Proszę wybrać produkt z listy.");
-            alert.showAndWait();
         }
     }
 
@@ -132,7 +150,6 @@ public class CustomerProductsPageController implements ControllerInterface {
 
         try {
             List<Product> productServiceAllProducts = productService.getAllProducts();
-
             productsObservableList.addAll(productServiceAllProducts);
 
             nazwaProduktu.setCellValueFactory(new PropertyValueFactory<>("nazwaProduktu"));
@@ -140,25 +157,12 @@ public class CustomerProductsPageController implements ControllerInterface {
             ocena.setCellValueFactory(new PropertyValueFactory<>("opis"));
             categoryTable.setCellValueFactory(new PropertyValueFactory<>("kategoria"));
 
-            productsTable.setItems(productsObservableList);
-
             FilteredList<Product> filteredData = new FilteredList<>(productsObservableList, b -> true);
 
-
-            searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
-                String lowerCaseFilter = newValue.toLowerCase();
-                filteredData.setPredicate(product -> {
-                    if (newValue.isBlank() || newValue.isEmpty() || newValue == null) return true;
-                    return product.getNazwaProduktu().toLowerCase().contains(lowerCaseFilter);
-                });
-            });
-
-            categoryList.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-                filteredData.setPredicate(product -> {
-                    if (newValue.isBlank() || newValue.isEmpty() || newValue == null || newValue.equals("Kategorie")) return true;
-                    return product.getKategoria().equals(newValue);
-                });
-            });
+            searchBar.textProperty().addListener((observable, oldValue, newValue) -> updateFilter(filteredData));
+            categoryList.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> updateFilter(filteredData));
+            minPrice.valueProperty().addListener((observable, oldValue, newValue) -> updateFilter(filteredData));
+            maxPrice.valueProperty().addListener((observable, oldValue, newValue) -> updateFilter(filteredData));
 
             SortedList<Product> sortedData = new SortedList<>(filteredData);
             sortedData.comparatorProperty().bind(productsTable.comparatorProperty());
@@ -174,5 +178,62 @@ public class CustomerProductsPageController implements ControllerInterface {
         }
 
     }
+
+    public void getDescription(ActionEvent actionEvent) {
+        System.out.println("getDescription");
+
+        Product product = productsTable.getSelectionModel().getSelectedItem();
+        if (product != null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Description");
+            alert.setHeaderText(product.getNazwaProduktu());
+            alert.setContentText(product.getOpis());
+            alert.showAndWait();
+        }
+    }
+
+    private void updateFilter(FilteredList<Product> filteredData) {
+        String searchText = searchBar.getText();
+        String selectedCategory = categoryList.getSelectionModel().getSelectedItem();
+
+        Integer min = minPrice.getValue();
+        Integer max = maxPrice.getValue();
+
+        if (min > max) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while getting products list");
+            alert.setContentText("Min price cannot be greater than max price");
+            alert.showAndWait();
+
+            minPrice.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 0));
+            maxPrice.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 10000));
+
+            return;
+        }
+
+        filteredData.setPredicate(product -> {
+            if (product == null) {
+                return false;
+            }
+            if (searchText != null && !searchText.isBlank() && !product.getNazwaProduktu().toLowerCase().contains(searchText.toLowerCase())) {
+                return false;
+            }
+            if (selectedCategory != null && !selectedCategory.isBlank() && !selectedCategory.equals("Kategorie") && !product.getKategoria().equals(selectedCategory)) {
+                return false;
+            }
+            if (min != null && product.getCena() < min) {
+                return false;
+            }
+            if (max != null && product.getCena() > max) {
+                return false;
+            }
+            return true;
+        });
+
+
+
+    }
+
 
 }

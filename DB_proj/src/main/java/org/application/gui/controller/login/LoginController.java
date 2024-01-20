@@ -25,16 +25,16 @@ import java.io.IOException;
 public class LoginController implements ControllerInterface {
 
     @FXML
-    TextField loginTextField;
+    private TextField loginTextField;
 
     @FXML
-    PasswordField passwordTextField;
+    private PasswordField passwordTextField;
 
     @FXML
-    Button loginButton;
+    private Button loginButton;
 
     @FXML
-    Button registryButton;
+    private Button registryButton;
 
     private final LoginService loginService = LoginService.getInstance();
 

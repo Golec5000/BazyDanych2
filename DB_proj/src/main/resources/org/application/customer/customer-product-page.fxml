@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="735.0" style="-fx-background-color: #111111;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gui.controller.customer.CustomerProductsPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="735.0" style="-fx-background-color: #111111;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gui.controller.customer.CustomerProductsPageController">
    <children>
       <TableView fx:id="productsTable" prefHeight="534.0" prefWidth="467.0">
         <columns>
@@ -44,9 +38,9 @@
             <Font name="Lucida Console" size="20.0" />
          </font>
       </Label>
-      <Spinner fx:id="minPrice" layoutX="537.0" layoutY="209.0" prefHeight="25.0" prefWidth="175.0" />
-      <Spinner fx:id="maxPrice" layoutX="537.0" layoutY="265.0" prefHeight="25.0" prefWidth="175.0" />
-      <Button fx:id="getdDescriptionButton" layoutX="517.0" layoutY="327.0" mnemonicParsing="false" style="-fx-background-color: #3a6131;" text="Wyświetl opis" textFill="#fcfcfc">
+      <Spinner fx:id="minPrice" editable="true" layoutX="537.0" layoutY="209.0" prefHeight="25.0" prefWidth="175.0" />
+      <Spinner fx:id="maxPrice" editable="true" layoutX="537.0" layoutY="265.0" prefHeight="25.0" prefWidth="175.0" />
+      <Button fx:id="getdDescriptionButton" layoutX="517.0" layoutY="327.0" mnemonicParsing="false" onAction="#getDescription" style="-fx-background-color: #3a6131;" text="Wyświetl opis" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="20.0" />
          </font>

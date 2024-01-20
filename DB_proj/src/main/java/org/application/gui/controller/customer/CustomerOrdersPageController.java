@@ -27,25 +27,25 @@ import java.util.List;
 public class CustomerOrdersPageController implements ControllerInterface {
 
     @FXML
-    Button backButton;
+    private Button backButton;
 
     @FXML
-    TextField searchBar;
+    private TextField searchBar;
 
     @FXML
-    TableView<Order> tableOrders;
+    private TableView<Order> tableOrders;
 
     @FXML
-    TableColumn<Order, LocalDate> tableDataZamowienia;
+    private TableColumn<Order, LocalDate> tableDataZamowienia;
 
     @FXML
-    TableColumn<Order, String> tableIdKlienta;
+    private TableColumn<Order, String> tableIdKlienta;
 
     @FXML
-    TableColumn<Order, String> tableIdZamowienia;
+    private TableColumn<Order, String> tableIdZamowienia;
 
     @FXML
-    TableColumn<Order, String> tableStatusZamowienia;
+    private TableColumn<Order, String> tableStatusZamowienia;
 
     private Customer customer;
 

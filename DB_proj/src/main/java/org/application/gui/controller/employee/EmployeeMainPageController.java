@@ -18,35 +18,35 @@ import java.io.IOException;
 public class EmployeeMainPageController implements ControllerInterface {
 
     @FXML
-    Label nameLabel;
+    private Label nameLabel;
 
     @FXML
-    Label lastNameLabel;
+    private Label lastNameLabel;
 
     @FXML
-    Label positionLabel;
+    private Label positionLabel;
 
     @FXML
-    Label magazineLabel;
+    private Label magazineLabel;
 
     @FXML
-    Button productsListButton;
+    private Button productsListButton;
 
     @FXML
-    Button ordersListButton;
+    private Button ordersListButton;
 
     @FXML
-    Button logoutButton;
+    private Button logoutButton;
 
     @FXML
-    Button suppliersListButton;
+    private Button suppliersListButton;
 
     @FXML
-    Button editButton;
+    private Button editButton;
 
     private Employee employee;
 
-    public void getProductsList(ActionEvent actionEvent){
+    public void getProductsList(ActionEvent actionEvent) {
         System.out.println("getProductsList");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-product-page.fxml"));
@@ -59,6 +59,8 @@ public class EmployeeMainPageController implements ControllerInterface {
 
         EmployeeProductsPageController employeeProductPageController = loader.getController();
         employeeProductPageController.setEmployeeLogin(employee);
+        employeeProductPageController.setBasicProperty();
+        employeeProductPageController.loadProducts();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -67,7 +69,7 @@ public class EmployeeMainPageController implements ControllerInterface {
 
     }
 
-    public void getOrdersList(ActionEvent actionEvent){
+    public void getOrdersList(ActionEvent actionEvent) {
         System.out.println("getOrdersList");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-orders-page.fxml"));
@@ -88,23 +90,10 @@ public class EmployeeMainPageController implements ControllerInterface {
         stage.show();
     }
 
-    public void logout(ActionEvent actionEvent){
+    public void logout(ActionEvent actionEvent) {
         System.out.println("logout");
-        getNewScene("/org/application/login/login-page.fxml", actionEvent);
-    }
 
-    public void getSuppliersList(ActionEvent actionEvent){
-        System.out.println("getSuppliersList");
-
-        getNewScene("/org/application/employee/employee-delivers-page.fxml", actionEvent);
-    }
-
-    public void edit(ActionEvent actionEvent){
-        System.out.println("remove");
-    }
-
-    private void getNewScene(String fxmlPath, ActionEvent actionEvent) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/login/login-page.fxml"));
         Parent root;
         try {
             root = loader.load();
@@ -118,11 +107,54 @@ public class EmployeeMainPageController implements ControllerInterface {
         stage.show();
     }
 
+    public void getSuppliersList(ActionEvent actionEvent) {
+        System.out.println("getSuppliersList");
+
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-delivers-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        EmployeeDeliversPageController employeeDeliversPageController = loader.getController();
+        employeeDeliversPageController.setEmployeeLogin(employee);
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void edit(ActionEvent actionEvent) {
+        System.out.println("remove");
+
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource(""));
+//        Parent root;
+//        try {
+//            root = loader.load();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+    }
+
+
     public void setEmployeeLogin(Employee employee) {
         this.employee = employee;
         nameLabel.setText("Imie: " + employee.getName());
         lastNameLabel.setText("Nazwisko: " + employee.getLastName());
         positionLabel.setText("Stanowisko: " + employee.getPosition());
+    }
+
+    public void setBasicProperty() {
+        //@TODO do rozbudowy, celem tej funkcji jest umożliwienie dostepu do edycji praconika tylko dla admina
     }
 
 
