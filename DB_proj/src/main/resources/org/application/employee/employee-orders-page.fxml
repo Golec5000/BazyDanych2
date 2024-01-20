@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="561.0" prefWidth="955.0" style="-fx-background-color: #111111;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gui.controller.employee.EmployeeOrdersPageController">
    <children>
       <TableView fx:id="ordersTable" layoutY="-3.0" prefHeight="564.0" prefWidth="623.0">
@@ -32,7 +31,7 @@
             <Font name="Lucida Console" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="getdStatusButton" layoutX="719.0" layoutY="93.0" mnemonicParsing="false" style="-fx-background-color: #3a6131;" text="Zmień status" textFill="#fcfcfc">
+      <Button fx:id="getdStatusButton" layoutX="719.0" layoutY="93.0" mnemonicParsing="false" onAction="#changeStatus" style="-fx-background-color: #3a6131;" text="Zmień status" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="20.0" />
          </font>

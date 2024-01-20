@@ -47,7 +47,12 @@
             <Font name="Lucida Console" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="editButton" layoutX="364.0" layoutY="295.0" mnemonicParsing="false" onAction="#edit" prefHeight="91.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Edytuj użytkownika" textFill="#fcfcfc">
+      <Button fx:id="addUserButton" layoutX="364.0" layoutY="295.0" mnemonicParsing="false" onAction="#addUser" prefHeight="37.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Dodaj użytkownika" textFill="#fcfcfc">
+         <font>
+            <Font name="Lucida Console" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="editButton" layoutX="364.0" layoutY="349.0" mnemonicParsing="false" onAction="#edit" prefHeight="37.0" prefWidth="294.0" style="-fx-background-color: #3a6131;" text="Edytuj użytkownika" textFill="#fcfcfc">
          <font>
             <Font name="Lucida Console" size="15.0" />
          </font>

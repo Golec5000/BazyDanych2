@@ -50,6 +50,9 @@ public class EmployeeProductsPageController implements ControllerInterface {
     private Button opiniosButton;
 
     @FXML
+    private Button editProdutButton;
+
+    @FXML
     private TableView<Product> productTable;
 
     @FXML
@@ -212,7 +215,38 @@ public class EmployeeProductsPageController implements ControllerInterface {
 
     }
 
-    public void setEmployeeLogin(Employee employee) {
+        public void editProduct(ActionEvent actionEvent) {
+        System.out.println("editProduct");
+
+        Product product = productTable.getSelectionModel().getSelectedItem();
+
+        if (product == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while editing product");
+            alert.setContentText("You have to select product to edit");
+            alert.showAndWait();
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-edit-product-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        EmployeeEditProductPageController employeeEditProductPageController = loader.getController();
+        employeeEditProductPageController.setEmployeeLogin(employee);
+        employeeEditProductPageController.setProduct(product);
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }  public void setEmployeeLogin(Employee employee) {
         this.employee = employee;
     }
 }

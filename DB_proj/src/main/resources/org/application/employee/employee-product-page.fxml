@@ -47,5 +47,10 @@
             <Font name="Lucida Console" size="20.0" />
          </font>
       </Button>
+      <Button fx:id="editProdutButton" layoutX="559.0" layoutY="399.0" mnemonicParsing="false" onAction="#editProduct" prefHeight="35.0" prefWidth="207.0" style="-fx-background-color: #3a6131;" text="Edytuj produkt" textFill="#fcfcfc">
+         <font>
+            <Font name="Lucida Console" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

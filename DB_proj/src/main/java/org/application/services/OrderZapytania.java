@@ -24,13 +24,13 @@ public class OrderZapytania {
     private final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
     // aktualizacja statusu zamowienia
-    public boolean updateOrderStatus(int NumerZamowienia, String newStatus) throws SQLException {
+    public boolean updateOrderStatus(String NumerZamowienia, String newStatus) throws SQLException {
 
         try (Connection conn = databaseConnection.getConnection();
              CallableStatement cstmt = conn.prepareCall("{CALL updateOrderStatus(?, ?)}")) {
 
-            cstmt.setString(1, newStatus);
-            cstmt.setInt(2, NumerZamowienia);
+            cstmt.setString(2, newStatus);
+            cstmt.setInt(1, Integer.parseInt(NumerZamowienia));
 
             int affectedRows = cstmt.executeUpdate();
 
@@ -71,68 +71,6 @@ public class OrderZapytania {
             }
         }
         return orders;
-    }
-
-    // pobieranie zwmowien po ID
-    public Order getOrderById(int NumerZamowienia) throws SQLException {
-        String query = "SELECT * FROM Zamowienia WHERE NumerZamowienia = ?";
-        try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, NumerZamowienia);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                return new Order(
-                        rs.getString("NumerZamowienia"),
-                        rs.getDate("dataZamowienia").toLocalDate(),
-                        rs.getString("statusZamowienia"),
-                        rs.getString("idKlienta")
-                );
-            }
-        }
-        return null;
-    }
-
-    public int getLastID() throws SQLException {
-
-        try (Connection conn = databaseConnection.getConnection();
-             CallableStatement cstmt = conn.prepareCall("{CALL getLastID()}")) {
-            ResultSet resultSet = cstmt.executeQuery();
-            if (resultSet.next())
-                return resultSet.getInt("id");
-        }
-        return 0;
-    }
-
-    //TWORZENIE NOWEGO ZAMOWIENIA
-    public Order createOrder(List<Product> productList) throws SQLException {
-
-        LocalDate now = LocalDate.now();
-        Date data = Date.valueOf(LocalDate.now());
-        int currID = getLastID() + 1;
-        String currState = "Nieoplacone";
-        String nick = "Entity.Customer";
-        StringBuilder products = new StringBuilder();
-        for (int i = 0; i < productList.size(); i++) {
-            products.append(productList.get(i).getNazwaProduktu());
-            if (i < productList.size() - 1)
-                products.append(",");
-        }
-        String query = "INSERT INTO zamowienia(NumerZamowienia,DataTransakcji,StanZamowienia,Nick,produkt)VALUES (?, ?,?,?,?)";
-        try (Connection connection = databaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, String.valueOf(currID));
-            preparedStatement.setDate(2, data);
-            preparedStatement.setString(3, currState);
-            preparedStatement.setString(4, nick);
-            preparedStatement.setString(5, products.toString());
-            preparedStatement.executeUpdate();
-            return new Order(String.valueOf(currID), now, currState, nick);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
     }
 
     public List<Order> getOrdersByKlientId(String KlientId) throws SQLException {

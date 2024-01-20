@@ -1,6 +1,7 @@
 package org.application.entity;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Employee extends User{
 
@@ -24,6 +25,23 @@ public class Employee extends User{
         this.adminId = adminId;
         this.ProcownikId = ProcownikId;
     }
+
+    public Employee(String nick, String name, String lastName, String phoneNumber, String email, String position, LocalDate hireDate, int adminId, int ProcownikId) {
+        super(nick, name, lastName, phoneNumber, email);
+
+        this.position = position;
+        this.hireDate = hireDate;
+        this.adminId = adminId;
+        this.ProcownikId = ProcownikId;
+    }
+
+    public Employee(String nick, String name, String lastName, String password, String phoneNumber, String email, String position, LocalDate hireDate) {
+        super(nick, name, lastName, password, phoneNumber, email);
+
+        this.position = position;
+        this.hireDate = hireDate;
+    }
+
 
     public int getProcownikId() {
         return ProcownikId;

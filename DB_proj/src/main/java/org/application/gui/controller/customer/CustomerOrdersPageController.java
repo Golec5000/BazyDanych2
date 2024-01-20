@@ -17,11 +17,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.application.entity.Order;
 import org.application.entity.Customer;
+import org.application.enums.OrderStatus;
 import org.application.intefaces.ControllerInterface;
 import org.application.services.OrderZapytania;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerOrdersPageController implements ControllerInterface {
@@ -48,6 +50,7 @@ public class CustomerOrdersPageController implements ControllerInterface {
     private TableColumn<Order, String> tableStatusZamowienia;
 
     private Customer customer;
+
 
     private final OrderZapytania orderZapytania = OrderZapytania.getInstance();
 

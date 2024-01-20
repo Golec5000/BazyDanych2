@@ -33,10 +33,19 @@ public class EmployeeOrdersPageController {
     private Button backButton;
 
     @FXML
-    private TableColumn<Order, LocalDate> dateTable;
+    private Button getdStatusButton;
 
     @FXML
-    private Button getdStatusButton;
+    private TableView<Order> ordersTable;
+
+    @FXML
+    private TableColumn<Order, String> statusTable;
+
+    @FXML
+    private TableColumn<Product, String> produktTable;
+
+    @FXML
+    private TableColumn<Order, LocalDate> dateTable;
 
     @FXML
     private TableColumn<Customer, String> idCustomerTable;
@@ -45,24 +54,13 @@ public class EmployeeOrdersPageController {
     private TableColumn<Order, String> idOrderTable;
 
     @FXML
-    private TableView<Order> ordersTable;
-
-    @FXML
     private TextField searchBar;
-
-    @FXML
-    private TableColumn<Order, String> statusTable;
-
-    @FXML
-    private TableColumn<Product, String> produktTable;
 
     private Employee employee;
     private final OrderZapytania orderZapytania = OrderZapytania.getInstance();
     private final ObservableList<Order> ordersObservableList = FXCollections.observableArrayList();
 
-
-    @FXML
-    void back(ActionEvent actionEvent) {
+    public void back(ActionEvent actionEvent) {
         System.out.println("back");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-page.fxml"));
@@ -130,6 +128,27 @@ public class EmployeeOrdersPageController {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public void changeStatus(ActionEvent actionEvent){
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-order-status-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        EmployeeOrderStatusPageController employeeOrderStatusPageController = loader.getController();
+        employeeOrderStatusPageController.setEmployee(employee);
+        employeeOrderStatusPageController.setOrder(ordersTable.getSelectionModel().getSelectedItem());
+        employeeOrderStatusPageController.SetComboBox();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
     }
 
 

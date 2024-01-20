@@ -18,6 +18,14 @@ public abstract class User {
         this.email = email;
     }
 
+    public User(String nick, String name, String lastName, String phoneNumber, String email) {
+        this.nick = nick;
+        this.name = name;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
     public String getNick() {
         return nick;
     }

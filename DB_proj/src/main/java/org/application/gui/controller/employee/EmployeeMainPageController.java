@@ -42,6 +42,9 @@ public class EmployeeMainPageController implements ControllerInterface {
     private Button suppliersListButton;
 
     @FXML
+    private Button addUserButton;
+
+    @FXML
     private Button editButton;
 
     private Employee employee;
@@ -129,20 +132,42 @@ public class EmployeeMainPageController implements ControllerInterface {
     }
 
     public void edit(ActionEvent actionEvent) {
-        System.out.println("remove");
+        System.out.println("edit");
 
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource(""));
-//        Parent root;
-//        try {
-//            root = loader.load();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-edit-user-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        EmployeeEditUsersPageController employeeEditUsersPageController = loader.getController();
+        employeeEditUsersPageController.setEmployee(employee);
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    public void addUser(ActionEvent actionEvent) {
+        System.out.println("addUser");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-add-user-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
     }
 
 
@@ -155,6 +180,7 @@ public class EmployeeMainPageController implements ControllerInterface {
 
     public void setBasicProperty() {
         //@TODO do rozbudowy, celem tej funkcji jest umożliwienie dostepu do edycji praconika tylko dla admina
+
     }
 
 

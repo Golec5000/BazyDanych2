@@ -6,7 +6,6 @@ import org.application.entity.Product;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +23,9 @@ public class ProductService {
 
     private final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
-    public ArrayList<String> getKategorie() throws SQLException {
-        ArrayList<String> listaKategori = new ArrayList<>();
-        //String query = "SELECT DISTINCT Kategoria FROM produkty";
+    public List<String> getKategorie() throws SQLException {
+        List<String> listaKategori = new ArrayList<>();
+
         try (Connection conn = databaseConnection.getConnection();
              CallableStatement cstmt = conn.prepareCall("{CALL getKategorie()}")) {
             ResultSet rs = cstmt.executeQuery();
@@ -57,6 +56,7 @@ public class ProductService {
     }
 
     //restockowanie produktu pod zamowienia
+    //to triger jakis czy cos
     public boolean restockProduct(int idProduktu, int idMagazynu, int addedQuantity) throws SQLException {
         String query = "UPDATE Magazyn SET Ilosc = Ilosc + ? WHERE IdProduktu = ? AND IdMagazynu = ?";
         try (Connection conn = databaseConnection.getConnection();
@@ -72,7 +72,7 @@ public class ProductService {
         }
     }
 
-    //dodawanie produktu i ilosci do magazynu, jezeli juz produkt jest to updatowanie ilosci
+    //dodawanie produktu i ilosci do magazynu, jezeli juz produkt jest to updatowanie ilosci :<
     public void addProductToWarehouse(int warehouseId, int productId, int quantityToAdd) throws SQLException {
         String checkQuery = "SELECT Ilosc FROM Magazyn WHERE IdMagazynu = ? AND IdProduktu = ?";
         String insertQuery = "INSERT INTO Magazyn (IdMagazynu, IdProduktu, Ilosc) VALUES (?, ?, ?)";
@@ -155,16 +155,17 @@ public class ProductService {
     }
 
     //aktualizowanie istniejącego produktu
+
     public boolean updateProduct(Product product) throws SQLException {
 
         try (Connection conn = databaseConnection.getConnection();
              CallableStatement cstmt = conn.prepareCall("{CALL updateProduct(?, ?, ?, ?, ?)}")) {
 
-            cstmt.setString(1, product.getNazwaProduktu());
-            cstmt.setFloat(2, product.getCena());
-            cstmt.setString(3, product.getOpis());
-            cstmt.setString(4, product.getKategoria());
-            cstmt.setInt(5, product.getIdProduktu());
+            cstmt.setString(2, product.getNazwaProduktu());
+            cstmt.setFloat(3, product.getCena());
+            cstmt.setString(4, product.getOpis());
+            cstmt.setString(5, product.getKategoria());
+            cstmt.setInt(1, product.getIdProduktu());
 
             int affectedRows = cstmt.executeUpdate();
 
@@ -173,6 +174,7 @@ public class ProductService {
     }
 
     //usuwanie produktu
+    //todo problem z foreign key
     public boolean deleteProduct(int productId) throws SQLException {
 
         try (Connection conn = databaseConnection.getConnection();
