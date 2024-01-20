@@ -74,4 +74,17 @@ CREATE PROCEDURE getAllWarehouses()
 BEGIN
     SELECT * FROM ListaMagazynow;
 END$$
+
+CREATE PROCEDURE orderProduct(
+    IN NumerZamowienia_param INT,
+    IN DataTransakcji_param DATE,
+    IN StanZamowienia_param VARCHAR(255),
+    IN KlientId_param VARCHAR(255),
+    IN NazwaProduktu_param VARCHAR(255)
+)
+BEGIN
+    INSERT INTO zamowienia (NumerZamowienia, DataTransakcji, StanZamowienia, KlientId, Produkt)
+    VALUES (NumerZamowienia_param, DataTransakcji_param, StanZamowienia_param, KlientId_param, NazwaProduktu_param);
+END$$
+
 DELIMITER ;
