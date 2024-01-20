@@ -66,6 +66,10 @@ public class EmployeeProductsPageController implements ControllerInterface {
 
 
     private Employee employee;
+    @FXML
+    public void initialize() {
+        loadProducts();
+    }
 
     public void back(ActionEvent actionEvent){
         System.out.println("back");

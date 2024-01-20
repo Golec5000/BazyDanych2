@@ -59,7 +59,6 @@ public class EmployeeMainPageController implements ControllerInterface {
 
         EmployeeProductsPageController employeeProductPageController = loader.getController();
         employeeProductPageController.setEmployeeLogin(employee);
-        employeeProductPageController.loadProducts();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
