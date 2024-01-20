@@ -115,6 +115,12 @@ public class CustomerProductsPageController implements ControllerInterface {
                 alert.setContentText(e.getMessage());
                 alert.showAndWait();
             }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Brak wyboru produktu");
+            alert.setHeaderText(null);
+            alert.setContentText("Proszę wybrać produkt z listy.");
+            alert.showAndWait();
         }
     }
 

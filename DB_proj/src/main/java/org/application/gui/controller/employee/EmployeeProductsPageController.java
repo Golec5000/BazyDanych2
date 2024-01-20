@@ -90,6 +90,16 @@ public class EmployeeProductsPageController implements ControllerInterface {
     public void getOpinions(ActionEvent actionEvent){
         System.out.println("getOpinions");
 
+        Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
+        if (selectedProduct == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Brak wyboru produktu");
+            alert.setHeaderText(null);
+            alert.setContentText("Proszę wybrać produkt z listy.");
+            alert.showAndWait();
+            return;
+        }
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-opinios-page.fxml"));
         Parent root;
         try {
@@ -97,6 +107,10 @@ public class EmployeeProductsPageController implements ControllerInterface {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        EmployeeOpinionsPageController controller = loader.getController();
+        controller.setProductId(selectedProduct.getIdProduktu());
+
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

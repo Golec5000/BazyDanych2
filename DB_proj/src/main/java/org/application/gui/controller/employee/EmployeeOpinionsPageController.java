@@ -10,8 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import org.application.intefaces.ControllerInterface;
+import org.application.services.ProductService;
 
 import java.io.IOException;
+import java.util.List;
 
 public class EmployeeOpinionsPageController implements ControllerInterface {
 
@@ -20,6 +22,30 @@ public class EmployeeOpinionsPageController implements ControllerInterface {
 
     @FXML
     private TextArea opiniosArea;
+
+    private int productId;
+    private ProductService productService = ProductService.getInstance();
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+        loadOpinions();
+    }
+
+
+    private void loadOpinions() {
+
+        try {
+            List<String> opinions = productService.getOpinionsByProductId(productId);
+
+            opinions.forEach(opinion -> {
+                opiniosArea.appendText(opinion);
+            });
+
+        } catch (Exception e) {
+            opiniosArea.setText("Brak opinii");
+        }
+
+    }
 
     @FXML
     void back(ActionEvent actionEvent){

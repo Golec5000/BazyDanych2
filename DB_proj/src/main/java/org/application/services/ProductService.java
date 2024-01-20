@@ -302,4 +302,33 @@ public class ProductService {
         }
         return opinions;
     }
+
+    public List<String> getOpinionsByProductId(int productId) {
+
+        List<String> opinions = new ArrayList<>();
+
+        try (Connection conn = databaseConnection.getConnection();
+             CallableStatement cstmt = conn.prepareCall("{CALL getOpinionsByProductId(?)}")) {
+
+            cstmt.setInt(1, productId);
+            ResultSet rs = cstmt.executeQuery();
+            StringBuilder sb = new StringBuilder();
+
+            while (rs.next()) {
+                sb.append("ID produktu: ").append(rs.getString("IdProduktu"));
+                sb.append("\n");
+                sb.append("Ocena: ").append(rs.getString("Ocena"));
+                sb.append("\n");
+                sb.append("Komentarz: ").append(rs.getString("Komentarz"));
+                sb.append("\n");
+
+                opinions.add(sb.toString());
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return opinions;
+    }
 }

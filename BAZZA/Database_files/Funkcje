@@ -92,4 +92,9 @@ BEGIN
     SELECT IdProduktu, Ocena, Komentarz FROM opinieklientow WHERE KlientId = KlientId_param;
 END$$
 
+CREATE PROCEDURE getOpinionsByProductId(IN ProduktId_param INT)
+BEGIN
+    SELECT IdProduktu, Ocena, Komentarz FROM opinieklientow WHERE IdProduktu = ProduktId_param;
+END$$
+
 DELIMITER ;
