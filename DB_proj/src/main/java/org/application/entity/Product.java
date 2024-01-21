@@ -1,53 +1,53 @@
 package org.application.entity;
 
 public class Product {
-    private int idProduktu;
-    private String nazwaProduktu;
-    private float cena;
-    private String opis;
+    private int productId;
+    private String productName;
+    private float price;
+    private String description;
     private String kategoria;
 
-    public Product(int idProduktu, String nazwaProduktu, float cena, String opis, String kategoria) {
-        this.idProduktu = idProduktu;
-        this.nazwaProduktu = nazwaProduktu;
-        this.cena = cena;
-        this.opis = opis;
+    public Product(int productId, String productName, float price, String description, String kategoria) {
+        this.productId = productId;
+        this.productName = productName;
+        this.price = price;
+        this.description = description;
         this.kategoria = kategoria;
     }
 
     public Product(int productId, String productName, float price, int quantity) {
     }
 
-    public int getIdProduktu() {
-        return idProduktu;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setIdProduktu(int idProduktu) {
-        this.idProduktu = idProduktu;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public String getNazwaProduktu() {
-        return nazwaProduktu;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setNazwaProduktu(String nazwaProduktu) {
-        this.nazwaProduktu = nazwaProduktu;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public float getCena() {
-        return cena;
+    public float getPrice() {
+        return price;
     }
 
-    public void setCena(float cena) {
-        this.cena = cena;
+    public void setPrice(float price) {
+        this.price = price;
     }
 
-    public String getOpis() {
-        return opis;
+    public String getDescription() {
+        return description;
     }
 
-    public void setOpis(String opis) {
-        this.opis = opis;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getKategoria() {

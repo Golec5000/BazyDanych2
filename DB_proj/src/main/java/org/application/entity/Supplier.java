@@ -2,60 +2,60 @@ package org.application.entity;
 
 public class Supplier {
 
-    private int idDostawcy;
-    private int idMagazynu;
-    private String nazwaDostawcy;
-    private String numerTelefonu;
-    private int listaDostawcowIdDostawcy;
+    private int supplierId;
+    private int warehouseId;
+    private String supplierName;
+    private String phoneNumber;
+    private int listaDostawcowIdDostawcy;// XD
 
-    public Supplier(int idDostawcy, int idMagazynu, String nazwaDostawcy, String numerTelefonu, int listaDostawcowIdDostawcy) {
-        this.idDostawcy = idDostawcy;
-        this.idMagazynu = idMagazynu;
-        this.nazwaDostawcy = nazwaDostawcy;
-        this.numerTelefonu = numerTelefonu;
+    public Supplier(int supplierId, int warehouseId, String supplierName, String phoneNumber, int listaDostawcowIdDostawcy) {
+        this.supplierId = supplierId;
+        this.warehouseId = warehouseId;
+        this.supplierName = supplierName;
+        this.phoneNumber = phoneNumber;
         this.listaDostawcowIdDostawcy = listaDostawcowIdDostawcy;
     }
     @Override
     public String toString() {
         return "Supplier{" +
-                "idDostawcy=" + idDostawcy +
-                ", idMagazynu=" + idMagazynu +
-                ", nazwaDostawcy='" + nazwaDostawcy + '\'' +
-                ", numerTelefonu='" + numerTelefonu + '\'' +
+                "idDostawcy=" + supplierId +
+                ", idMagazynu=" + warehouseId +
+                ", nazwaDostawcy='" + supplierName + '\'' +
+                ", numerTelefonu='" + phoneNumber + '\'' +
                 ", listaDostawcowIdDostawcy=" + listaDostawcowIdDostawcy +
                 '}';
     }
 
-    public int getIdDostawcy() {
-        return idDostawcy;
+    public int getSupplierId() {
+        return supplierId;
     }
 
-    public void setIdDostawcy(int idDostawcy) {
-        this.idDostawcy = idDostawcy;
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
 
-    public int getIdMagazynu() {
-        return idMagazynu;
+    public int getWarehouseId() {
+        return warehouseId;
     }
 
-    public void setIdMagazynu(int idMagazynu) {
-        this.idMagazynu = idMagazynu;
+    public void setWarehouseId(int warehouseId) {
+        this.warehouseId = warehouseId;
     }
 
-    public String getNazwaDostawcy() {
-        return nazwaDostawcy;
+    public String getSupplierName() {
+        return supplierName;
     }
 
-    public void setNazwaDostawcy(String nazwaDostawcy) {
-        this.nazwaDostawcy = nazwaDostawcy;
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
 
-    public String getNumerTelefonu() {
-        return numerTelefonu;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setNumerTelefonu(String numerTelefonu) {
-        this.numerTelefonu = numerTelefonu;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public int getListaDostawcowIdDostawcy() {

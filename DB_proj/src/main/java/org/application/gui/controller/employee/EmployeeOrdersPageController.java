@@ -87,11 +87,11 @@ public class EmployeeOrdersPageController {
 
             ordersObservableList.addAll(orders);
 
-            dateTable.setCellValueFactory(new PropertyValueFactory<>("dataZamowienia"));
-            idCustomerTable.setCellValueFactory(new PropertyValueFactory<>("idKlienta"));
-            idOrderTable.setCellValueFactory(new PropertyValueFactory<>("idZamowienia"));
-            statusTable.setCellValueFactory(new PropertyValueFactory<>("statusZamowienia"));
-            produktTable.setCellValueFactory(new PropertyValueFactory<>("produkt"));
+            dateTable.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+            idCustomerTable.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+            idOrderTable.setCellValueFactory(new PropertyValueFactory<>("orderId"));
+            statusTable.setCellValueFactory(new PropertyValueFactory<>("orderStatus"));
+            produktTable.setCellValueFactory(new PropertyValueFactory<>("product"));
 
             ordersTable.setItems(ordersObservableList);
 
@@ -105,13 +105,13 @@ public class EmployeeOrdersPageController {
 
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (order.getIdZamowienia().toLowerCase().contains(lowerCaseFilter)) {
+                if (order.getOrderId().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (order.getIdKlienta().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (order.getCustomerId().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (order.getStatusZamowienia().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (order.getOrderStatus().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else return order.getProdukt().toLowerCase().contains(lowerCaseFilter);
+                } else return order.getProduct().toLowerCase().contains(lowerCaseFilter);
 
             }));
 

@@ -1,11 +1,10 @@
 package org.application.entity;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Employee extends User{
 
-    private int ProcownikId;
+    private int employeeId;
 
     private String position;
 
@@ -17,22 +16,22 @@ public class Employee extends User{
         super(nick, name, lastName, password, phoneNumber, email);
     }
 
-    public Employee(String nick, String name, String lastName, String password, String phoneNumber, String email, String position, LocalDate hireDate, int adminId, int ProcownikId) {
+    public Employee(String nick, String name, String lastName, String password, String phoneNumber, String email, String position, LocalDate hireDate, int adminId, int EmployeeId) {
         super(nick, name, lastName, password, phoneNumber, email);
 
         this.position = position;
         this.hireDate = hireDate;
         this.adminId = adminId;
-        this.ProcownikId = ProcownikId;
+        this.employeeId = EmployeeId;
     }
 
-    public Employee(String nick, String name, String lastName, String phoneNumber, String email, String position, LocalDate hireDate, int adminId, int ProcownikId) {
+    public Employee(String nick, String name, String lastName, String phoneNumber, String email, String position, LocalDate hireDate, int adminId, int EmployeeId) {
         super(nick, name, lastName, phoneNumber, email);
 
         this.position = position;
         this.hireDate = hireDate;
         this.adminId = adminId;
-        this.ProcownikId = ProcownikId;
+        this.employeeId = EmployeeId;
     }
 
     public Employee(String nick, String name, String lastName, String password, String phoneNumber, String email, String position, LocalDate hireDate) {
@@ -43,12 +42,12 @@ public class Employee extends User{
     }
 
 
-    public int getProcownikId() {
-        return ProcownikId;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
-    public void setProcownikId(int procownikId) {
-        ProcownikId = procownikId;
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getPosition() {

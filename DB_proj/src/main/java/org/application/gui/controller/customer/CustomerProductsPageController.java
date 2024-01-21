@@ -152,9 +152,9 @@ public class CustomerProductsPageController implements ControllerInterface {
             List<Product> productServiceAllProducts = productService.getAllProducts();
             productsObservableList.addAll(productServiceAllProducts);
 
-            nazwaProduktu.setCellValueFactory(new PropertyValueFactory<>("nazwaProduktu"));
-            cena.setCellValueFactory(new PropertyValueFactory<>("cena"));
-            ocena.setCellValueFactory(new PropertyValueFactory<>("opis"));
+            nazwaProduktu.setCellValueFactory(new PropertyValueFactory<>("productName"));
+            cena.setCellValueFactory(new PropertyValueFactory<>("price"));
+            ocena.setCellValueFactory(new PropertyValueFactory<>("description"));
             categoryTable.setCellValueFactory(new PropertyValueFactory<>("kategoria"));
 
             FilteredList<Product> filteredData = new FilteredList<>(productsObservableList, b -> true);
@@ -186,8 +186,8 @@ public class CustomerProductsPageController implements ControllerInterface {
         if (product != null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Description");
-            alert.setHeaderText(product.getNazwaProduktu());
-            alert.setContentText(product.getOpis());
+            alert.setHeaderText(product.getProductName());
+            alert.setContentText(product.getDescription());
             alert.showAndWait();
         }
     }
@@ -216,16 +216,16 @@ public class CustomerProductsPageController implements ControllerInterface {
             if (product == null) {
                 return false;
             }
-            if (searchText != null && !searchText.isBlank() && !product.getNazwaProduktu().toLowerCase().contains(searchText.toLowerCase())) {
+            if (searchText != null && !searchText.isBlank() && !product.getProductName().toLowerCase().contains(searchText.toLowerCase())) {
                 return false;
             }
             if (selectedCategory != null && !selectedCategory.isBlank() && !selectedCategory.equals("Kategorie") && !product.getKategoria().equals(selectedCategory)) {
                 return false;
             }
-            if (min != null && product.getCena() < min) {
+            if (min != null && product.getPrice() < min) {
                 return false;
             }
-            if (max != null && product.getCena() > max) {
+            if (max != null && product.getPrice() > max) {
                 return false;
             }
             return true;

@@ -17,13 +17,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.application.entity.Order;
 import org.application.entity.Customer;
-import org.application.enums.OrderStatus;
 import org.application.intefaces.ControllerInterface;
 import org.application.services.OrderZapytania;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerOrdersPageController implements ControllerInterface {
@@ -64,10 +62,10 @@ public class CustomerOrdersPageController implements ControllerInterface {
 
             ordersObservableList.addAll(orders);
 
-            tableDataZamowienia.setCellValueFactory(new PropertyValueFactory<>("dataZamowienia"));
-            tableIdKlienta.setCellValueFactory(new PropertyValueFactory<>("idKlienta"));
-            tableIdZamowienia.setCellValueFactory(new PropertyValueFactory<>("idZamowienia"));
-            tableStatusZamowienia.setCellValueFactory(new PropertyValueFactory<>("statusZamowienia"));
+            tableDataZamowienia.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+            tableIdKlienta.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+            tableIdZamowienia.setCellValueFactory(new PropertyValueFactory<>("orderId"));
+            tableStatusZamowienia.setCellValueFactory(new PropertyValueFactory<>("orderStatus"));
 
             tableOrders.setItems(ordersObservableList);
 
@@ -81,11 +79,11 @@ public class CustomerOrdersPageController implements ControllerInterface {
 
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (order.getIdZamowienia().toLowerCase().contains(lowerCaseFilter)) {
+                if (order.getOrderId().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (order.getIdKlienta().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (order.getCustomerId().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else return order.getStatusZamowienia().toLowerCase().contains(lowerCaseFilter);
+                } else return order.getOrderStatus().toLowerCase().contains(lowerCaseFilter);
 
             }));
 

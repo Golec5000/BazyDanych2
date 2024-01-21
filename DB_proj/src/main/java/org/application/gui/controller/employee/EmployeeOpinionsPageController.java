@@ -60,8 +60,8 @@ public class EmployeeOpinionsPageController implements ControllerInterface {
             opinions.forEach(opinion -> {
                 StringBuilder sb = new StringBuilder();
 
-                sb.append("Nazwa: ").append(opinion.getNazwaProduktu()). append("\n");
-                sb.append("Opinia: ").append(opinion.getOpis()).append("\n").append("\n");
+                sb.append("Nazwa: ").append(opinion.getProductName()). append("\n");
+                sb.append("Opinia: ").append(opinion.getDescription()).append("\n").append("\n");
 
                 opiniosArea.appendText(sb.toString());
             });

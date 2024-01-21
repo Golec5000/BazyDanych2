@@ -93,10 +93,10 @@ public class EmployeeEditProductPageController implements ControllerInterface {
                 return;
             }
 
-            product.setNazwaProduktu(productNameField.getText());
-            product.setCena(Float.parseFloat(productPriceField.getText()));
+            product.setProductName(productNameField.getText());
+            product.setPrice(Float.parseFloat(productPriceField.getText()));
             product.setKategoria(categoryTextField.getText());
-            product.setOpis(descryptionArea.getText());
+            product.setDescription(descryptionArea.getText());
 
             productService.updateProduct(product);
 

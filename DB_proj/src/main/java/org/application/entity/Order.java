@@ -3,86 +3,86 @@ package org.application.entity;
 import java.time.LocalDate;
 
 public class Order {
-    private String idZamowienia;
-    private LocalDate dataZamowienia;
-    private String statusZamowienia;
-    private String idKlienta;
+    private String orderId;
+    private LocalDate orderDate;
+    private String orderStatus;
+    private String customerId;
 
-    private String produkt;
+    private String product;
 
     public Order() {
     }
 
-    public Order(String idZamowienia, LocalDate dataZamowienia, String statusZamowienia, String idKlienta, String produkt) {
-        this.idZamowienia = idZamowienia;
-        this.dataZamowienia = dataZamowienia;
-        this.statusZamowienia = statusZamowienia;
-        this.idKlienta = idKlienta;
-        this.produkt = produkt;
+    public Order(String orderId, LocalDate orderDate, String orderStatus, String customerId, String product) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
+        this.customerId = customerId;
+        this.product = product;
     }
 
-    public Order(String idZamowienia, LocalDate dataZamowienia, String statusZamowienia, String idKlienta) {
-        this.idZamowienia = idZamowienia;
-        this.dataZamowienia = dataZamowienia;
-        this.statusZamowienia = statusZamowienia;
-        this.idKlienta = idKlienta;
+    public Order(String orderId, LocalDate orderDate, String orderStatus, String customerId) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
+        this.customerId = customerId;
     }
 
-    public Order(String idZamowienia, LocalDate dataZamowienia, String statusZamowienia) {
-        this.idZamowienia = idZamowienia;
-        this.dataZamowienia = dataZamowienia;
-        this.statusZamowienia = statusZamowienia;
+    public Order(String orderId, LocalDate orderDate, String orderStatus) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
 
     }
 
 
-    public String getIdZamowienia() {
-        return idZamowienia;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setIdZamowienia(String idZamowienia) {
-        this.idZamowienia = idZamowienia;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
-    public LocalDate getDataZamowienia() {
-        return dataZamowienia;
+    public LocalDate getOrderDate() {
+        return orderDate;
     }
 
-    public void setDataZamowienia(LocalDate dataZamowienia) {
-        this.dataZamowienia = dataZamowienia;
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
     }
 
-    public String getStatusZamowienia() {
-        return statusZamowienia;
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setStatusZamowienia(String statusZamowienia) {
-        this.statusZamowienia = statusZamowienia;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public String getIdKlienta() {
-        return idKlienta;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setIdKlienta(String idKlienta) {
-        this.idKlienta = idKlienta;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
-    public String getProdukt() {
-        return produkt;
+    public String getProduct() {
+        return product;
     }
 
-    public void setProdukt(String produkt) {
-        this.produkt = produkt;
+    public void setProduct(String product) {
+        this.product = product;
     }
 
     @Override
     public String toString() {
         return "Order{\n" +
-                "idZamowienia='" + idZamowienia + "\n" +
-                ", dataZamowienia=" + dataZamowienia + "\n" +
-                ", statusZamowienia='" + statusZamowienia + "\n" +
-                ", idKlienta='" + idKlienta + "\n" +
+                "idZamowienia='" + orderId + "\n" +
+                ", dataZamowienia=" + orderDate + "\n" +
+                ", statusZamowienia='" + orderStatus + "\n" +
+                ", idKlienta='" + customerId + "\n" +
                 '}';
     }
 }

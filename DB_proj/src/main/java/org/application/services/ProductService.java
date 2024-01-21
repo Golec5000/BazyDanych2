@@ -143,9 +143,9 @@ public class ProductService {
         try (Connection conn = databaseConnection.getConnection();
              CallableStatement cstmt = conn.prepareCall("{CALL addProduct(?, ?, ?, ?)}")){
 
-            cstmt.setString(1, product.getNazwaProduktu());
-            cstmt.setFloat(2, product.getCena());
-            cstmt.setString(3, product.getOpis());
+            cstmt.setString(1, product.getProductName());
+            cstmt.setFloat(2, product.getPrice());
+            cstmt.setString(3, product.getDescription());
             cstmt.setString(4, product.getKategoria());
 
             int affectedRows = cstmt.executeUpdate();
@@ -161,11 +161,11 @@ public class ProductService {
         try (Connection conn = databaseConnection.getConnection();
              CallableStatement cstmt = conn.prepareCall("{CALL updateProduct(?, ?, ?, ?, ?)}")) {
 
-            cstmt.setString(2, product.getNazwaProduktu());
-            cstmt.setFloat(3, product.getCena());
-            cstmt.setString(4, product.getOpis());
+            cstmt.setString(2, product.getProductName());
+            cstmt.setFloat(3, product.getPrice());
+            cstmt.setString(4, product.getDescription());
             cstmt.setString(5, product.getKategoria());
-            cstmt.setInt(1, product.getIdProduktu());
+            cstmt.setInt(1, product.getProductId());
 
             int affectedRows = cstmt.executeUpdate();
 
@@ -258,7 +258,7 @@ public class ProductService {
             cstmt.setDate(2, data);
             cstmt.setString(3, currState);
             cstmt.setString(4, KlientId);
-            cstmt.setString(5, product.getNazwaProduktu());
+            cstmt.setString(5, product.getProductName());
             cstmt.executeUpdate();
             return new Order(String.valueOf(currID), now, currState, KlientId);
         } catch (SQLException ex) {

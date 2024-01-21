@@ -91,11 +91,11 @@ public class EmployeeOrderStatusPageController implements ControllerInterface {
     {
         ordersObservableList.addAll(order);
 
-        dateTable.setCellValueFactory(new PropertyValueFactory<>("dataZamowienia"));
-        idCustomerTable.setCellValueFactory(new PropertyValueFactory<>("idKlienta"));
-        idOrderTable.setCellValueFactory(new PropertyValueFactory<>("idZamowienia"));
-        statusTable.setCellValueFactory(new PropertyValueFactory<>("statusZamowienia"));
-        produktTable.setCellValueFactory(new PropertyValueFactory<>("produkt"));
+        dateTable.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+        idCustomerTable.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        idOrderTable.setCellValueFactory(new PropertyValueFactory<>("orderId"));
+        statusTable.setCellValueFactory(new PropertyValueFactory<>("orderStatus"));
+        produktTable.setCellValueFactory(new PropertyValueFactory<>("product"));
         ordersTable.setItems(ordersObservableList);
     }
     public void changeStatus(ActionEvent actionEvent) {
@@ -108,7 +108,7 @@ public class EmployeeOrderStatusPageController implements ControllerInterface {
                 alert.showAndWait();
                 return;
             }
-            orderZapytania.updateOrderStatus(ordersTable.getItems().getFirst().getIdZamowienia(),statusBox.getValue().toString());
+            orderZapytania.updateOrderStatus(ordersTable.getItems().getFirst().getOrderId(),statusBox.getValue().toString());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

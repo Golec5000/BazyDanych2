@@ -151,9 +151,9 @@ public class EmployeeProductsPageController implements ControllerInterface, Init
 
             productsObservableList.addAll(productServiceAllProducts);
 
-            nazwa.setCellValueFactory(new PropertyValueFactory<>("nazwaProduktu"));
-            cena.setCellValueFactory(new PropertyValueFactory<>("cena"));
-            ocena.setCellValueFactory(new PropertyValueFactory<>("opis"));
+            nazwa.setCellValueFactory(new PropertyValueFactory<>("productName"));
+            cena.setCellValueFactory(new PropertyValueFactory<>("price"));
+            ocena.setCellValueFactory(new PropertyValueFactory<>("description"));
             kategoria.setCellValueFactory(new PropertyValueFactory<>("kategoria"));
 
             productTable.setItems(productsObservableList);
@@ -164,7 +164,7 @@ public class EmployeeProductsPageController implements ControllerInterface, Init
                 String lowerCaseFilter = newValue.toLowerCase();
                 filteredData.setPredicate(product -> {
                     if (newValue.isBlank() || newValue.isEmpty() || newValue == null) return true;
-                    return product.getNazwaProduktu().toLowerCase().contains(lowerCaseFilter);
+                    return product.getProductName().toLowerCase().contains(lowerCaseFilter);
                 });
             });
 
@@ -206,7 +206,7 @@ public class EmployeeProductsPageController implements ControllerInterface, Init
         }
 
         try {
-            productService.deleteProduct(product.getIdProduktu());
+            productService.deleteProduct(product.getProductId());
             productsObservableList.remove(product);
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
