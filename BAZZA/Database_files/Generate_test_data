@@ -30,7 +30,21 @@ VALUES
 ('janKowalski', 'haslo123', 'Jan', 'Kowalski', '123-456-789', 'jan.kowalski', 'Programista', '2023-01-01', 1),
 ('annaNowak', 'haslo456', 'Anna', 'Nowak', '987-654-321', 'anna.nowak', 'Analityk', '2023-01-02', 2),
 ('pawelZiolkowski', 'haslo789', 'Paweł', 'Ziolkowski', '567-890-123', 'pawel.ziolkowski', 'Menadżer', '2023-01-03', 3),
-('1', '1', 'Jan', 'Kowalski', '123-456-789', 'jan.kowalski', 'Programista', '2023-01-01', 3);
+('3', '3', 'Jan', 'Kowalski', '123-456-789', 'jan.kowalski', 'Programista', '2023-01-01', 3);
+
+
+INSERT INTO Dostawcy (IdDostawcy, IdMagazynu, NazwaDostawcy, NumerTelefonu, ListaDostawcowIdDostawcy)
+VALUES
+(1, 63, 'Fundacja Dyś', '577 36', 2),
+(2, 64, 'Wesoły Sp.j.', '723 2', 2),
+(3, 94, 'Michnik-Bas Sp.k.', '601 2', 8),
+(4, 35, 'PPUH Szmurło-Gryka s.c.', '535 2', 7),
+(5, 36, 'FPUH Świech', '516 9', 3),
+(6, 79, 'Spółdzielnia Hyjek-Kruś s.c.', '519 97', 6),
+(7, 10, 'Łacina-Lizoń i syn s.c.', '504 3', 8),
+(8, 59, 'Węgrzynek-Mazepa i syn s.c.', '+48 693 8', 5),
+(9, 33, 'Gabinety Pasich s.c.', '696 ', 1),
+(10, 27, 'Gabinety Godyń S.A.', '534 55', 6);
 
 INSERT INTO ListaMagazynow (Adres, AdministratorId) VALUES
 ('Magazynowa 1', 1),
