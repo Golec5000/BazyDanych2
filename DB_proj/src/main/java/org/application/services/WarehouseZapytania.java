@@ -1,5 +1,6 @@
 package org.application.services;
 
+import org.application.entity.Supplier;
 import org.application.entity.Warehouse;
 
 import java.sql.*;
@@ -45,4 +46,33 @@ public class WarehouseZapytania {
 
         return warehouses;
     }
+
+    public List<Supplier> getAllSuppliers() throws SQLException {
+        List<Supplier> suppliers = new ArrayList<>();
+        String query = "SELECT * FROM Dostawcy";
+
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            ResultSet resultSet = pstmt.executeQuery();
+
+            while (resultSet.next()) {
+                int idDostawcy = resultSet.getInt("IdDostawcy");
+                int idMagazynu = resultSet.getInt("IdMagazynu");
+                String nazwaDostawcy = resultSet.getString("NazwaDostawcy");
+                String numerTelefonu = resultSet.getString("NumerTelefonu");
+                int listaDostawcowIdDostawcy = resultSet.getInt("ListaDostawcowIdDostawcy");
+
+                Supplier supplier = new Supplier(idDostawcy, idMagazynu, nazwaDostawcy, numerTelefonu, listaDostawcowIdDostawcy);
+                suppliers.add(supplier);
+            }
+        }
+
+        for (Supplier supplier : suppliers) {
+            System.out.println(supplier);
+        }
+
+        return suppliers;
+    }
+
 }
