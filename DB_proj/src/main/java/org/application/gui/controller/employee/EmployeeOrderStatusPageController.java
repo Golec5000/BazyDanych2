@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.application.entity.Customer;
@@ -72,7 +69,7 @@ public class EmployeeOrderStatusPageController implements ControllerInterface {
         }
 
         EmployeeOrdersPageController employeeOrdersPageController = loader.getController();
-        employeeOrdersPageController.setEmployee(employee);
+        employeeOrdersPageController.setEmployeeLogin(employee);
         employeeOrdersPageController.loadOrders();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -103,6 +100,14 @@ public class EmployeeOrderStatusPageController implements ControllerInterface {
     }
     public void changeStatus(ActionEvent actionEvent) {
         try {
+            if (statusBox.getValue() == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Błąd");
+                alert.setHeaderText("Nie wybrano statusu");
+                alert.setContentText("Proszę wybrać status z listy rozwijanej.");
+                alert.showAndWait();
+                return;
+            }
             orderZapytania.updateOrderStatus(ordersTable.getItems().getFirst().getIdZamowienia(),statusBox.getValue().toString());
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -112,10 +117,8 @@ public class EmployeeOrderStatusPageController implements ControllerInterface {
 
     }
 
-
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
-
 
 }

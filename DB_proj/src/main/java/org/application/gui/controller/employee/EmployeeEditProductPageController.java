@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import org.application.entity.Employee;
 import org.application.entity.Product;
@@ -56,8 +57,7 @@ public class EmployeeEditProductPageController implements ControllerInterface {
 
         EmployeeProductsPageController employeeProductsPageController = loader.getController();
         employeeProductsPageController.setEmployeeLogin(employee);
-        employeeProductsPageController.setBasicProperty();
-        employeeProductsPageController.loadProducts();
+
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -66,10 +66,32 @@ public class EmployeeEditProductPageController implements ControllerInterface {
 
     }
 
-    //@todo zabezpieczyć przed pustymi polami
+    //bo to by mozna bylo zrobic edycje w zaleznosci od podanego parametru ale to trzeba funkcje na stringbuildera przerobic i duzo zabawy wiec todo esa xD
     public void editProduct(ActionEvent actionEvent) {
 
         try{
+            String errorMessage = "";
+            if (productNameField.getText().isBlank()) {
+                errorMessage += "Nazwa produktu nie może być pusta.\n";
+            }
+            if (productPriceField.getText().isBlank()) {
+                errorMessage += "Cena produktu nie może być pusta.\n";
+            }
+            if (categoryTextField.getText().isBlank()) {
+                errorMessage += "Kategoria produktu nie może być pusta.\n";
+            }
+            if (descryptionArea.getText().isBlank()) {
+                errorMessage += "Opis produktu nie może być pusty.\n";
+            }
+
+            if (!errorMessage.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Błąd walidacji");
+                alert.setHeaderText("Nie można zaktualizować produktu");
+                alert.setContentText(errorMessage);
+                alert.showAndWait();
+                return;
+            }
 
             product.setNazwaProduktu(productNameField.getText());
             product.setCena(Float.parseFloat(productPriceField.getText()));
@@ -93,8 +115,6 @@ public class EmployeeEditProductPageController implements ControllerInterface {
 
         EmployeeProductsPageController employeeProductsPageController = loader.getController();
         employeeProductsPageController.setEmployeeLogin(employee);
-        employeeProductsPageController.setBasicProperty();
-        employeeProductsPageController.loadProducts();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

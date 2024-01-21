@@ -126,10 +126,6 @@ public class EmployeeOrdersPageController {
         }
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
     public void changeStatus(ActionEvent actionEvent){
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-order-status-page.fxml"));
@@ -151,5 +147,7 @@ public class EmployeeOrdersPageController {
 
     }
 
-
+    public void setEmployeeLogin(Employee employee) {
+        this.employee = employee;
+    }
 }

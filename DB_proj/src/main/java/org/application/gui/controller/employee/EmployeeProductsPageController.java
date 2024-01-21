@@ -7,6 +7,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,11 +20,13 @@ import org.application.intefaces.ControllerInterface;
 import org.application.services.ProductService;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class EmployeeProductsPageController implements ControllerInterface {
+public class EmployeeProductsPageController implements ControllerInterface, Initializable {
 
     @FXML
     private Button addProductButton;
@@ -248,5 +251,11 @@ public class EmployeeProductsPageController implements ControllerInterface {
 
     }  public void setEmployeeLogin(Employee employee) {
         this.employee = employee;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadProducts();
+        setBasicProperty();
     }
 }

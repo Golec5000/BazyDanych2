@@ -55,18 +55,34 @@ public class EmployeeEditUsersPageController implements ControllerInterface {
 
 
     public void back(ActionEvent event) {
+        System.out.println("back");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        EmployeeMainPageController employeeMainPageController = loader.getController();
+        employeeMainPageController.setEmployeeLogin(employee);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
     public void setTable()
     {
-        ArrayList<Employee> employeeList;
-        employeeList = userService.getAllEmployees();
-        employeesObservableList.addAll(employeeList);
+        ArrayList<Employee> employeeList = userService.getAllEmployees();
+        employeesObservableList.setAll(employeeList);
 
-        NameTable.setCellValueFactory(new PropertyValueFactory<>("?"));
-        lastNameTable.setCellValueFactory(new PropertyValueFactory<>("idKlienta"));
-        nickTable.setCellValueFactory(new PropertyValueFactory<>("?"));
-        positionTable.setCellValueFactory(new PropertyValueFactory<>("produkt"));
+        NameTable.setCellValueFactory(new PropertyValueFactory<>("name"));
+        lastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        nickTable.setCellValueFactory(new PropertyValueFactory<>("nick"));
+        positionTable.setCellValueFactory(new PropertyValueFactory<>("position"));
 
         employeesTable.setItems(employeesObservableList);
 
@@ -91,7 +107,7 @@ public class EmployeeEditUsersPageController implements ControllerInterface {
         stage.show();
     }
 
-    public void setEmployee(Employee employee)
+    public void setEmployeeLogin(Employee employee)
     {
         this.employee = employee;
     }

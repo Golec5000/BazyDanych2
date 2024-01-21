@@ -44,8 +44,6 @@ public class EmployeeOpinionsPageController implements ControllerInterface {
 
         EmployeeProductsPageController employeeProductsPageController = loader.getController();
         employeeProductsPageController.setEmployeeLogin(employee);
-        employeeProductsPageController.setBasicProperty();
-        employeeProductsPageController.loadProducts();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

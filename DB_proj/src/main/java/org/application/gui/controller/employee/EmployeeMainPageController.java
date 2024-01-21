@@ -62,8 +62,6 @@ public class EmployeeMainPageController implements ControllerInterface {
 
         EmployeeProductsPageController employeeProductPageController = loader.getController();
         employeeProductPageController.setEmployeeLogin(employee);
-        employeeProductPageController.setBasicProperty();
-        employeeProductPageController.loadProducts();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -84,7 +82,7 @@ public class EmployeeMainPageController implements ControllerInterface {
         }
 
         EmployeeOrdersPageController employeeOrdersPageController = loader.getController();
-        employeeOrdersPageController.setEmployee(employee);
+        employeeOrdersPageController.setEmployeeLogin(employee);
         employeeOrdersPageController.loadOrders();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -143,7 +141,8 @@ public class EmployeeMainPageController implements ControllerInterface {
         }
 
         EmployeeEditUsersPageController employeeEditUsersPageController = loader.getController();
-        employeeEditUsersPageController.setEmployee(employee);
+        employeeEditUsersPageController.setEmployeeLogin(employee);
+        employeeEditUsersPageController.setTable();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -162,6 +161,9 @@ public class EmployeeMainPageController implements ControllerInterface {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        EmployeeAddUserPageController employeeAddUserPageController = loader.getController();
+        employeeAddUserPageController.setEmployeeLogin(employee);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

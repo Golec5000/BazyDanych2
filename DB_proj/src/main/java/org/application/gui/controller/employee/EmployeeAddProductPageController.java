@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.application.entity.Employee;
 import org.application.entity.Product;
@@ -54,6 +51,10 @@ public class EmployeeAddProductPageController implements ControllerInterface {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        EmployeeProductsPageController employeeProductsPageController = loader.getController();
+        employeeProductsPageController.setEmployeeLogin(employee);
+
+
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -63,6 +64,30 @@ public class EmployeeAddProductPageController implements ControllerInterface {
     public void addProduct(ActionEvent actionEvent) {
         System.out.println("addProduct");
         try {
+
+            String errorMessage = "";
+            if (productNameField.getText().isBlank()) {
+                errorMessage += "Nazwa produktu jest wymagana.\n";
+            }
+            if (productPriceField.getText().isBlank()) {
+                errorMessage += "Cena produktu jest wymagana.\n";
+            }
+            if (descryptionArea.getText().isBlank()) {
+                errorMessage += "Opis produktu jest wymagany.\n";
+            }
+            if (categoryTextField.getText().isBlank()) {
+                errorMessage += "Kategoria produktu jest wymagana.\n";
+            }
+
+            if (!errorMessage.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Błąd walidacji");
+                alert.setHeaderText("Nie można dodać produktu");
+                alert.setContentText(errorMessage);
+                alert.showAndWait();
+                return;
+            }
+
             productService.addProduct(new Product(productService.getLastID()
                     ,productNameField.getText()
                     ,Float.parseFloat(productPriceField.getText())
@@ -79,7 +104,6 @@ public class EmployeeAddProductPageController implements ControllerInterface {
 
             EmployeeProductsPageController employeeProductsPageController = loader.getController();
             employeeProductsPageController.setEmployeeLogin(employee);
-            employeeProductsPageController.loadProducts();
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);

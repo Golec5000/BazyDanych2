@@ -46,6 +46,7 @@ public class UserService {
     }
 
     public ArrayList<Employee> getAllEmployees() {
+        System.out.println("dupa");
         ArrayList<Employee> employees = new ArrayList<>();
         //TODO zrobienia funkcja
         String query = "SELECT * FROM Pracownicy";
@@ -76,23 +77,21 @@ public class UserService {
         return employees;
     }
 
-
-    public Employee addUserEmployee(String nick, String name, String lastName, String position, String email, String phoneNumber, String password, LocalDate hireDate) {
-        String query = "INSERT INTO pracownicy (nick, Imie, Nazwisko, ProcownikId, position, Email, NumerTelefonu, Haslo, hireDate) VALUES (?, ?, ?, ?, ?, ?, ?. ?)";
+    public Employee addUserEmployee(String nick, String name, String lastName, String password, String email, String phoneNumber, String position, LocalDate hireDate) {
+        String query = "INSERT INTO pracownicy (nick, Haslo, Imie, Nazwisko, NumerTelefonu, Email, Stanowisko, DataZatrudnienia) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = databaseConnection.getConnection();) {
 
             PreparedStatement pst = conn.prepareStatement(query);
 
             pst.setString(1, nick);
-            pst.setString(2, name);
-            pst.setString(3, lastName);
-            pst.setString(4, position);
-            pst.setString(5, email);
-            pst.setString(6, phoneNumber);
-            pst.setString(7, password);
+            pst.setString(2, password);
+            pst.setString(3, name);
+            pst.setString(4, lastName);
+            pst.setString(7, position);
+            pst.setString(6, email);
+            pst.setString(5, phoneNumber);
             pst.setDate(8, Date.valueOf(hireDate));
-
 
             pst.executeUpdate();
 
@@ -174,10 +173,62 @@ public class UserService {
         return curr_customer;
     }
 
+    public Employee updateUserEmployee(Employee curr_employee, String new_nick, String new_name, String new_lastName, String new_email, String new_phoneNumber, String new_password) {
+        StringBuilder queryBuilder = new StringBuilder("UPDATE pracownicy SET ");
+        List<Object> parameters = new ArrayList<>();
 
-    //mail, imie, login, numer, haslo, nazwisko
-   // public void editEmployee(Employee employee) {//MAKIELAKKURWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ROB MI TA METODE musze pomyslec esa
+        if (new_nick != null && !new_nick.isBlank()) {
+            queryBuilder.append("nick = ?, ");
+            parameters.add(new_nick);
+            curr_employee.setNick(new_nick);
+        }
+        if (new_name != null && !new_name.isBlank()) {
+            queryBuilder.append("Imie = ?, ");
+            parameters.add(new_name);
+            curr_employee.setName(new_name);
+        }
+        if (new_lastName != null && !new_lastName.isBlank()) {
+            queryBuilder.append("Nazwisko = ?, ");
+            parameters.add(new_lastName);
+            curr_employee.setLastName(new_lastName);
+        }
+        if (new_email != null && !new_email.isBlank()) {
+            queryBuilder.append("Email = ?, ");
+            parameters.add(new_email);
+            curr_employee.setEmail(new_email);
+        }
+        if (new_phoneNumber != null && !new_phoneNumber.isBlank()) {
+            queryBuilder.append("NumerTelefonu = ?, ");
+            parameters.add(new_phoneNumber);
+            curr_employee.setPhoneNumber(new_phoneNumber);
+        }
+        if (new_password != null && !new_password.isBlank()) {
+            queryBuilder.append("Haslo = ?, ");
+            parameters.add(new_password);
+            curr_employee.setPassword(new_password);
+        }
 
+        if (!parameters.isEmpty()) {
+            queryBuilder.setLength(queryBuilder.length() - 2);
+            queryBuilder.append(" WHERE nick = ?");
+            parameters.add(curr_employee.getNick());
 
-    //}
+            String query = queryBuilder.toString();
+
+            try (Connection conn = databaseConnection.getConnection();
+                 PreparedStatement pst = conn.prepareStatement(query)) {
+
+                for (int i = 0; i < parameters.size(); i++) {
+                    pst.setObject(i + 1, parameters.get(i));
+                }
+
+                pst.executeUpdate();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return curr_employee;
+    }
 }
