@@ -70,28 +70,9 @@ public class EmployeeEditProductPageController implements ControllerInterface {
     public void editProduct(ActionEvent actionEvent) {
 
         try{
-            String errorMessage = "";
-            if (productNameField.getText().isBlank()) {
-                errorMessage += "Nazwa produktu nie może być pusta.\n";
-            }
-            if (productPriceField.getText().isBlank()) {
-                errorMessage += "Cena produktu nie może być pusta.\n";
-            }
-            if (categoryTextField.getText().isBlank()) {
-                errorMessage += "Kategoria produktu nie może być pusta.\n";
-            }
-            if (descryptionArea.getText().isBlank()) {
-                errorMessage += "Opis produktu nie może być pusty.\n";
-            }
 
-            if (!errorMessage.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Błąd walidacji");
-                alert.setHeaderText("Nie można zaktualizować produktu");
-                alert.setContentText(errorMessage);
-                alert.showAndWait();
-                return;
-            }
+            String errorMessage = "";
+            if (extracted(errorMessage)) return;
 
             product.setProductName(productNameField.getText());
             product.setPrice(Float.parseFloat(productPriceField.getText()));
@@ -105,22 +86,33 @@ public class EmployeeEditProductPageController implements ControllerInterface {
             throw new RuntimeException(e);
         }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-product-page.fxml"));
-        Parent root;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        back(actionEvent);
+
+    }
+
+    private boolean extracted(String errorMessage) {
+        if (productNameField.getText().isBlank()) {
+            errorMessage += "Nazwa produktu nie może być pusta.\n";
+        }
+        if (productPriceField.getText().isBlank()) {
+            errorMessage += "Cena produktu nie może być pusta.\n";
+        }
+        if (categoryTextField.getText().isBlank()) {
+            errorMessage += "Kategoria produktu nie może być pusta.\n";
+        }
+        if (descryptionArea.getText().isBlank()) {
+            errorMessage += "Opis produktu nie może być pusty.\n";
         }
 
-        EmployeeProductsPageController employeeProductsPageController = loader.getController();
-        employeeProductsPageController.setEmployeeLogin(employee);
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
+        if (!errorMessage.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Błąd walidacji");
+            alert.setHeaderText("Nie można zaktualizować produktu");
+            alert.setContentText(errorMessage);
+            alert.showAndWait();
+            return true;
+        }
+        return false;
     }
 
 

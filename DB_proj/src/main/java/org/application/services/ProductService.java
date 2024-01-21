@@ -55,8 +55,8 @@ public class ProductService {
         }
     }
 
-    //restockowanie produktu pod zamowienia
-    //to triger jakis czy cos
+    //@todo restockowanie produktu pod zamowienia
+    //@todo to triger jakis czy cos
     public boolean restockProduct(int idProduktu, int idMagazynu, int addedQuantity) throws SQLException {
         String query = "UPDATE Magazyn SET Ilosc = Ilosc + ? WHERE IdProduktu = ? AND IdMagazynu = ?";
         try (Connection conn = databaseConnection.getConnection();
@@ -72,7 +72,7 @@ public class ProductService {
         }
     }
 
-    //dodawanie produktu i ilosci do magazynu, jezeli juz produkt jest to updatowanie ilosci :<
+    //@todo dodawanie produktu i ilosci do magazynu, jezeli juz produkt jest to updatowanie ilosci :<
     public void addProductToWarehouse(int warehouseId, int productId, int quantityToAdd) throws SQLException {
         String checkQuery = "SELECT Ilosc FROM Magazyn WHERE IdMagazynu = ? AND IdProduktu = ?";
         String insertQuery = "INSERT INTO Magazyn (IdMagazynu, IdProduktu, Ilosc) VALUES (?, ?, ?)";
@@ -109,7 +109,7 @@ public class ProductService {
         }
     }
 
-    //wyswietlanie wszsystkich produktow z danego magazynu + ich ilosci
+    //@todo wyswietlanie wszsystkich produktow z danego magazynu + ich ilosci
     public List<Product> displayProductsForWarehouse(int warehouseId) throws SQLException {
         List<Product> products = new ArrayList<>();
         String query = "SELECT p.IdProduktu, p.NazwaProduktu, p.Cena, m.Ilosc " +
@@ -207,28 +207,6 @@ public class ProductService {
             }
         }
         return products;
-    }
-
-    //pobieranie produktu po ID
-    public Product getProductById(int productId) throws SQLException {
-        String query = "SELECT * FROM Produkty WHERE IdProduktu = ?";
-        try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pst = conn.prepareStatement(query)) {
-
-            pst.setInt(1, productId);
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    return new Product(
-                            rs.getInt("IdProduktu"),
-                            rs.getString("NazwaProduktu"),
-                            rs.getFloat("Cena"),
-                            rs.getString("Opis"),
-                            rs.getString("Kategoria")
-                    );
-                }
-            }
-        }
-        return null;
     }
 
     public int getLastID() throws SQLException {

@@ -2,6 +2,7 @@ package org.application.services;
 
 import org.application.entity.Customer;
 import org.application.entity.Employee;
+import org.application.enums.Positions;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,7 +57,7 @@ public class LoginService {
 
         String query = "SELECT * FROM pracownicy WHERE nick=? AND Haslo=?";
 
-        try(Connection conn = databaseConnection.getConnection()) {
+        try (Connection conn = databaseConnection.getConnection()) {
             PreparedStatement pst = conn.prepareStatement(query);
 
             pst.setString(1, login);
@@ -71,19 +72,54 @@ public class LoginService {
                         , rs.getString("Email")
                         , rs.getString("NumerTelefonu")
                         , rs.getString("Haslo")
-                        , rs.getString("Stanowisko")
+                        , Positions.valueOf(rs.getString("Stanowisko"))
                         , rs.getDate("DataZatrudnienia").toLocalDate()
                         , rs.getInt("AdministratorId")
                         , rs.getInt("PracownikId")
                 );
 
             }
-
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         return null;
     }
+
+    public String getPermissions(String login) {
+        String result = "";
+        String query = "SELECT Stanowisko FROM pracownicy WHERE nick=?";
+        try (Connection conn = databaseConnection.getConnection()) {
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.setString(1, login);
+            ResultSet resultSet = pst.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getString("Stanowisko");
+            }
+            return result;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getMagazineLabel(String login) {
+        String result = "";
+        String query = "SELECT listamagazynow.IdMagazynu FROM listamagazynow " +
+                "INNER JOIN listaadministratorow ON listaadministratorow.AdministratorId=listamagazynow.IdMagazynu " +
+                "INNER JOIN pracownicy ON pracownicy.AdministratorId=listaadministratorow.AdministratorId " +
+                "WHERE pracownicy.nick=?";
+        try (Connection conn = databaseConnection.getConnection()) {
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.setString(1, login);
+            ResultSet resultSet = pst.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getString("IdMagazynu");
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

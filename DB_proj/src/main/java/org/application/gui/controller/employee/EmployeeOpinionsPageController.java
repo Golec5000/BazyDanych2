@@ -54,16 +54,14 @@ public class EmployeeOpinionsPageController implements ControllerInterface {
     public void loadOpinions(){
 
         try {
-            //@todo do dorobiennia pozyskanie nick klienta do opinii
             List<Product> opinions = productService.getAllProducts();
 
             opinions.forEach(opinion -> {
-                StringBuilder sb = new StringBuilder();
 
-                sb.append("Nazwa: ").append(opinion.getProductName()). append("\n");
-                sb.append("Opinia: ").append(opinion.getDescription()).append("\n").append("\n");
+                String sb = "Nazwa: " + opinion.getProductName() + "\n" +
+                        "Opinia: " + opinion.getDescription() + "\n" + "\n";
 
-                opiniosArea.appendText(sb.toString());
+                opiniosArea.appendText(sb);
             });
 
         } catch (Exception e) {

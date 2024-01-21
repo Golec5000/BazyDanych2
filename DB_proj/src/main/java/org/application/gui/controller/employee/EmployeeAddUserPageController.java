@@ -135,19 +135,8 @@ public class EmployeeAddUserPageController implements ControllerInterface {
             if (employee != null) {
 
                 System.out.println("Employee added");
+                back(actionEvent);
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-page.fxml"));
-                Parent root;
-                try {
-                    root = loader.load();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
             } else {
                 System.out.println("Error while adding customer");
             }

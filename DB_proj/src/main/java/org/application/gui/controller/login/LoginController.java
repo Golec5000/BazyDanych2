@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import org.application.entity.Customer;
 import org.application.entity.Employee;
 import org.application.entity.User;
+import org.application.enums.Positions;
 import org.application.gui.controller.customer.CustomerMainPageController;
 import org.application.gui.controller.employee.EmployeeMainPageController;
 import org.application.intefaces.ControllerInterface;
@@ -76,8 +77,7 @@ public class LoginController implements ControllerInterface {
         user = loginService.userExistsEmployee(login, password);
 
         if(user != null) {
-            System.out.println("admin");
-
+            System.out.println("pracownik");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-page.fxml"));
             Parent root;
             try {
@@ -87,8 +87,10 @@ public class LoginController implements ControllerInterface {
             }
 
             EmployeeMainPageController employeeMainPageController = loader.getController();
-            employeeMainPageController.setEmployeeLogin((Employee) user);
-
+            Employee temporaryEmployee = (Employee)user;
+            temporaryEmployee.setPosition(Positions.valueOf(loginService.getPermissions(login)));
+            employeeMainPageController.setEmployeeLogin(temporaryEmployee);
+            employeeMainPageController.setMagazineLabel(loginService.getMagazineLabel(login));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);

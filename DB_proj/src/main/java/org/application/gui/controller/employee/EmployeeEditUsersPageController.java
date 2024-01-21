@@ -2,19 +2,19 @@ package org.application.gui.controller.employee;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.application.entity.Employee;
+import org.application.entity.Product;
 import org.application.intefaces.ControllerInterface;
 import org.application.services.UserService;
 
@@ -74,8 +74,8 @@ public class EmployeeEditUsersPageController implements ControllerInterface {
         stage.show();
 
     }
-    public void setTable()
-    {
+
+    public void setTable() {
         List<Employee> employeeList = userService.getAllEmployees();
         employeesObservableList.setAll(employeeList);
 
@@ -84,12 +84,47 @@ public class EmployeeEditUsersPageController implements ControllerInterface {
         nickTable.setCellValueFactory(new PropertyValueFactory<>("nick"));
         positionTable.setCellValueFactory(new PropertyValueFactory<>("position"));
 
-        employeesTable.setItems(employeesObservableList);
+        FilteredList<Employee> filteredList = new FilteredList<>(employeesObservableList, b -> true);
+
+        searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(employee -> {
+                if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (employee.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (employee.getLastName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (employee.getNick().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else return employee.getPosition().toString().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+
+        SortedList<Employee> sortedData = new SortedList<>(filteredList);
+        sortedData.comparatorProperty().bind(employeesTable.comparatorProperty());
+
+        employeesTable.setItems(sortedData);
 
     }
+
     public void editEmployee(ActionEvent actionEvent) {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/gui/controller/employee/employee-user-page.fxml"));
+        Employee selectedEmployee = employeesTable.getSelectionModel().getSelectedItem();
+
+        if (selectedEmployee == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Błąd");
+            alert.setHeaderText("Nie wybrano pracownika");
+            alert.setContentText("Wybierz pracownika z tabeli");
+            alert.showAndWait();
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-user.fxml"));
         Parent root;
         try {
             root = loader.load();
@@ -98,8 +133,9 @@ public class EmployeeEditUsersPageController implements ControllerInterface {
         }
 
         EmployeeUserPageController employeeUserPageController = loader.getController();
-        employeeUserPageController.setEmployee(employeesTable.getSelectionModel().getSelectedItem());
+        employeeUserPageController.setEmployee(selectedEmployee);
         employeeUserPageController.setComboBox();
+        employeeUserPageController.setAllFields();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -107,8 +143,7 @@ public class EmployeeEditUsersPageController implements ControllerInterface {
         stage.show();
     }
 
-    public void setEmployeeLogin(Employee employee)
-    {
+    public void setEmployeeLogin(Employee employee) {
         this.employee = employee;
     }
 

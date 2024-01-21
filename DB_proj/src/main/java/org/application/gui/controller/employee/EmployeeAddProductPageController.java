@@ -40,7 +40,6 @@ public class EmployeeAddProductPageController implements ControllerInterface {
     private final ProductService productService = ProductService.getInstance();
 
 
-
     public void back(ActionEvent actionEvent){
         System.out.println("back");
 
@@ -94,21 +93,8 @@ public class EmployeeAddProductPageController implements ControllerInterface {
                     ,descryptionArea.getText()
                     ,categoryTextField.getText()));
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-product-page.fxml"));
-            Parent root;
-            try {
-                root = loader.load();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            back(actionEvent);
 
-            EmployeeProductsPageController employeeProductsPageController = loader.getController();
-            employeeProductsPageController.setEmployeeLogin(employee);
-
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

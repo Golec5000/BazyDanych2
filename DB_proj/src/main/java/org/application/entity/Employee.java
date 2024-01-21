@@ -1,12 +1,14 @@
 package org.application.entity;
 
+import org.application.enums.Positions;
+
 import java.time.LocalDate;
 
 public class Employee extends User{
 
     private int employeeId;
 
-    private String position;
+    private Positions position;
 
     private LocalDate hireDate;
 
@@ -16,7 +18,7 @@ public class Employee extends User{
         super(nick, name, lastName, password, phoneNumber, email);
     }
 
-    public Employee(String nick, String name, String lastName, String password, String phoneNumber, String email, String position, LocalDate hireDate, int adminId, int EmployeeId) {
+    public Employee(String nick, String name, String lastName, String password, String phoneNumber, String email, Positions position, LocalDate hireDate, int adminId, int EmployeeId) {
         super(nick, name, lastName, password, phoneNumber, email);
 
         this.position = position;
@@ -25,7 +27,7 @@ public class Employee extends User{
         this.employeeId = EmployeeId;
     }
 
-    public Employee(String nick, String name, String lastName, String phoneNumber, String email, String position, LocalDate hireDate, int adminId, int EmployeeId) {
+    public Employee(String nick, String name, String lastName, String phoneNumber, String email, Positions position, LocalDate hireDate, int adminId, int EmployeeId) {
         super(nick, name, lastName, phoneNumber, email);
 
         this.position = position;
@@ -34,13 +36,12 @@ public class Employee extends User{
         this.employeeId = EmployeeId;
     }
 
-    public Employee(String nick, String name, String lastName, String password, String phoneNumber, String email, String position, LocalDate hireDate) {
+    public Employee(String nick, String name, String lastName, String password, String phoneNumber, String email, Positions position, LocalDate hireDate) {
         super(nick, name, lastName, password, phoneNumber, email);
 
         this.position = position;
         this.hireDate = hireDate;
     }
-
 
     public int getEmployeeId() {
         return employeeId;
@@ -50,11 +51,11 @@ public class Employee extends User{
         this.employeeId = employeeId;
     }
 
-    public String getPosition() {
+    public Positions getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(Positions position) {
         this.position = position;
     }
 

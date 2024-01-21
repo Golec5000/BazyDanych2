@@ -69,7 +69,7 @@ public class RegisterController {
 
         try {
 
-            if(userService.isNickOccupied(loginTextField.getText())){
+            if (userService.isNickOccupied(loginTextField.getText())) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Błąd walidacji");
                 alert.setHeaderText("Nie można zarejestrować użytkownika");
@@ -86,22 +86,10 @@ public class RegisterController {
                     , numberTextField.getText()
                     , passwordTextField.getText());
 
-            if(customer != null){
+            if (customer != null) {
 
                 System.out.println("Customer added");
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/login/login-page.fxml"));
-                Parent root;
-                try {
-                    root = loader.load();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+                back(actionEvent);
             }
 
         } catch (Exception e) {

@@ -1,6 +1,11 @@
 package org.application.gui.controller.employee;
 
 import javafx.collections.FXCollections;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.application.entity.Employee;
 import org.application.enums.OrderStatus;
 import org.application.enums.Positions;
@@ -13,6 +18,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.application.services.UserService;
+
+import java.io.IOException;
 
 public class EmployeeUserPageController implements ControllerInterface {
 
@@ -44,21 +51,43 @@ public class EmployeeUserPageController implements ControllerInterface {
 
     @FXML
     private ComboBox<Positions> positionBox;
-    UserService userService=UserService.getInstance();
+    UserService userService = UserService.getInstance();
 
     public void back(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-edit-user-page.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        EmployeeEditUsersPageController employeeEditUsersPageController = loader.getController();
+        employeeEditUsersPageController.setEmployeeLogin(employee);
+        employeeEditUsersPageController.setTable();
 
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void setComboBox()
-    {
+    public void setAllFields() {
+        emailTextField.setText(employee.getEmail());
+        lastNameTextField.setText(employee.getLastName());
+        loginTextField.setText(employee.getNick());
+        nameTextField.setText(employee.getName());
+        numberTextField.setText(employee.getPhoneNumber());
+        passwordTextField.setText(employee.getPassword());
+    }
+
+    public void setComboBox() {
         positionBox.setItems(FXCollections.observableArrayList(Positions.values()));
     }
 
     public void edit(ActionEvent event) {
-    //userService.editEmployee(employee,new Employee(rzeczytusa));
-
-    back(event);
+        userService.updateUserEmployee(employee,loginTextField.getText(),nameTextField.getText(),lastNameTextField.getText(),emailTextField.getText(), numberTextField.getText(),passwordTextField.getText());
+        back(event);
 
     }
 

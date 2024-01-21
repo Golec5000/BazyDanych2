@@ -2,6 +2,7 @@ package org.application.services;
 
 import org.application.entity.Customer;
 import org.application.entity.Employee;
+import org.application.enums.Positions;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -48,7 +49,6 @@ public class UserService {
     public List<Employee> getAllEmployees() {
 
         List<Employee> employees = new ArrayList<>();
-        //TODO zrobienia funkcja
         String query = "SELECT * FROM Pracownicy";
 
         try (Connection conn = databaseConnection.getConnection();
@@ -62,7 +62,7 @@ public class UserService {
                 String lastName = rs.getString("Nazwisko");
                 String phoneNumber = rs.getString("NumerTelefonu");
                 String email = rs.getString("email");
-                String position = rs.getString("Stanowisko");
+                Positions position = Positions.valueOf(rs.getString("Stanowisko"));
                 LocalDate hireDate = rs.getDate("DataZatrudnienia").toLocalDate();
                 int adminId = rs.getInt("AdministratorId");
 

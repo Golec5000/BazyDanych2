@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.application.entity.Employee;
+import org.application.enums.Positions;
 import org.application.intefaces.ControllerInterface;
 
 import java.io.IOException;
@@ -68,6 +69,10 @@ public class EmployeeMainPageController implements ControllerInterface {
         stage.setScene(scene);
         stage.show();
 
+    }
+    public void setMagazineLabel(String Label)
+    {
+        magazineLabel.setText("Magazyn nr.: " + Label);
     }
 
     public void getOrdersList(ActionEvent actionEvent) {
@@ -178,10 +183,36 @@ public class EmployeeMainPageController implements ControllerInterface {
         nameLabel.setText("Imie: " + employee.getName());
         lastNameLabel.setText("Nazwisko: " + employee.getLastName());
         positionLabel.setText("Stanowisko: " + employee.getPosition());
+        setBasicProperty(employee.getPosition());
     }
 
-    public void setBasicProperty() {
-        //@TODO do rozbudowy, celem tej funkcji jest umożliwienie dostepu do edycji praconika tylko dla admina
+    public void setBasicProperty(Positions position){
+
+        switch (position){
+            case ADMIN -> {
+                addUserButton.setVisible(true);
+                editButton.setVisible(true);
+
+                addUserButton.setDisable(false);
+                editButton.setDisable(false);
+
+                productsListButton.setLayoutX(49);
+                productsListButton.setLayoutY(295);
+
+            }
+            case EMPLOYEE -> {
+                addUserButton.setVisible(false);
+                editButton.setVisible(false);
+
+                addUserButton.setDisable(true);
+                editButton.setDisable(true);
+
+                productsListButton.setLayoutX(210);
+                productsListButton.setLayoutY(297);
+            }
+
+        }
+
 
     }
 

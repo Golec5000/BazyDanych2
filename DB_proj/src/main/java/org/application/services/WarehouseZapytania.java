@@ -24,7 +24,7 @@ public class WarehouseZapytania {
     //wyswietlanie dostepnych magazynow
     public List<Warehouse> getAllWarehouses() throws SQLException {
         List<Warehouse> warehouses = new ArrayList<>();
-        //String query = "SELECT * FROM ListaMagazynow";
+
 
         try (Connection conn = databaseConnection.getConnection();
              CallableStatement cstmt = conn.prepareCall("{CALL getAllWarehouses()}")) {
