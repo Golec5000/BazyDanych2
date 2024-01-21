@@ -19,7 +19,7 @@ import org.application.intefaces.ControllerInterface;
 import org.application.services.UserService;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeEditUsersPageController implements ControllerInterface {
 
@@ -76,7 +76,7 @@ public class EmployeeEditUsersPageController implements ControllerInterface {
     }
     public void setTable()
     {
-        ArrayList<Employee> employeeList = userService.getAllEmployees();
+        List<Employee> employeeList = userService.getAllEmployees();
         employeesObservableList.setAll(employeeList);
 
         NameTable.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -89,7 +89,7 @@ public class EmployeeEditUsersPageController implements ControllerInterface {
     }
     public void editEmployee(ActionEvent actionEvent) {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-order-status-page.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/gui/controller/employee/employee-user-page.fxml"));
         Parent root;
         try {
             root = loader.load();

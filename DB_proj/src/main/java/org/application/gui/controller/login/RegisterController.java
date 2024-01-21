@@ -69,8 +69,12 @@ public class RegisterController {
 
         try {
 
-            if(userService.isNickOccupiedInCustomers(loginTextField.getText()) || userService.isNickOccupiedInEmployees(loginTextField.getText())){
-                System.out.println("Nick is occupied");
+            if(userService.isNickOccupied(loginTextField.getText())){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Błąd walidacji");
+                alert.setHeaderText("Nie można zarejestrować użytkownika");
+                alert.setContentText("Podany login jest już zajęty");
+                alert.showAndWait();
                 return;
             }
 

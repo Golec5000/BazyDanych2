@@ -45,9 +45,9 @@ public class UserService {
         }
     }
 
-    public ArrayList<Employee> getAllEmployees() {
-        System.out.println("dupa");
-        ArrayList<Employee> employees = new ArrayList<>();
+    public List<Employee> getAllEmployees() {
+
+        List<Employee> employees = new ArrayList<>();
         //TODO zrobienia funkcja
         String query = "SELECT * FROM Pracownicy";
 
@@ -102,8 +102,12 @@ public class UserService {
         }
     }
 
-    //do wyjebania
-    public boolean isNickOccupiedInCustomers(String nick) {
+    public boolean isNickOccupied(String nick) {
+        return isNickOccupiedInCustomers(nick) || isNickOccupiedInEmployees(nick);
+    }
+
+    //@TODO ustawić wartości nicków na unikalne
+    private boolean isNickOccupiedInCustomers(String nick) {
         String query = "SELECT * FROM klienci WHERE nick=?";
 
         try (Connection conn = databaseConnection.getConnection();
@@ -118,7 +122,7 @@ public class UserService {
         }
     }
 
-    public boolean isNickOccupiedInEmployees(String nick) {
+    private boolean isNickOccupiedInEmployees(String nick) {
         String query = "SELECT * FROM pracownicy WHERE nick=?";
 
         try (Connection conn = databaseConnection.getConnection();
