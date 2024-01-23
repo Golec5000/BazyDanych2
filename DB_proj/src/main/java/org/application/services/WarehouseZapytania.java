@@ -67,12 +67,6 @@ public class WarehouseZapytania {
                 suppliers.add(supplier);
             }
         }
-
-        for (Supplier supplier : suppliers) {
-            System.out.println(supplier);
-        }
-
         return suppliers;
     }
-
 }
