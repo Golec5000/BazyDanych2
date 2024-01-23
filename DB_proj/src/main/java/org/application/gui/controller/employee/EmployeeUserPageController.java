@@ -52,6 +52,7 @@ public class EmployeeUserPageController implements ControllerInterface {
     @FXML
     private ComboBox<Positions> positionBox;
     UserService userService = UserService.getInstance();
+    Employee currEmployee;
 
     public void back(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/employee/employee-edit-user-page.fxml"));
@@ -62,7 +63,7 @@ public class EmployeeUserPageController implements ControllerInterface {
             throw new RuntimeException(e);
         }
         EmployeeEditUsersPageController employeeEditUsersPageController = loader.getController();
-        employeeEditUsersPageController.setEmployeeLogin(employee);
+        employeeEditUsersPageController.setEmployeeLogin(currEmployee);
         employeeEditUsersPageController.setTable();
 
 
@@ -94,6 +95,10 @@ public class EmployeeUserPageController implements ControllerInterface {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public void getCurrEmployee(Employee outemployee){
+        currEmployee=outemployee;
     }
 
 }

@@ -1,0 +1,26 @@
+DELIMITER //
+
+CREATE TRIGGER DeleteProductOpinions BEFORE DELETE ON Produkty
+FOR EACH ROW
+BEGIN
+    DELETE FROM OpinieKlientow WHERE idProduktu = OLD.idProduktu;
+END;
+//
+
+
+CREATE TRIGGER AddToAdminList AFTER INSERT ON Pracownicy
+FOR EACH ROW
+BEGIN
+    IF NEW.Stanowisko = 'ADMIN' THEN
+        INSERT INTO ListaAdministratorow (AdministratorId, Imie, Nazwisko, DataZatrudnienia)
+        VALUES (NEW.PracownikId, NEW.Imie, NEW.Nazwisko, NEW.DataZatrudnienia)
+        UPDATE pracownicy(AdministratorId)
+        VALUES(NEW.PracownikId)
+
+        ;
+    END IF;
+END;
+//
+
+
+DELIMITER ;

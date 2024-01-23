@@ -19,10 +19,6 @@ INSERT INTO Zamowienia (NumerZamowienia, DataTransakcji, StanZamowienia, Klienti
 ('15', '2024-01-18', 'W trakcie realizacji', '3', 'Laptop'),
 ('16', '2024-01-18', 'W trakcie realizacji', '4', 'Smartfon XYZ Model 1');
 
-INSERT INTO ListaAdministratorow (Imie, Nazwisko, DataZatrudnienia) VALUES
-('Adam', 'Kowal', '2023-01-01'),
-('Ewa', 'Nowak', '2023-02-01'),
-('Ola', 'Wiśnia', '2023-03-01');
 
 INSERT INTO Pracownicy (nick, Haslo, Imie, Nazwisko, NumerTelefonu, email, Stanowisko, DataZatrudnienia, AdministratorId)
 VALUES

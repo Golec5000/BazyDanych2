@@ -134,6 +134,7 @@ public class EmployeeEditUsersPageController implements ControllerInterface {
 
         EmployeeUserPageController employeeUserPageController = loader.getController();
         employeeUserPageController.setEmployee(selectedEmployee);
+        employeeUserPageController.getCurrEmployee(employee);
         employeeUserPageController.setComboBox();
         employeeUserPageController.setAllFields();
 
