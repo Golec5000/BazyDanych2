@@ -1,12 +1,13 @@
 CREATE TABLE Dostawcy (
-  IdDostawcy    int(10) NOT NULL,
-  IdMagazynu    int(10) NOT NULL,
-  NazwaDostawcy varchar(255) NOT NULL,
-  NumerTelefonu varchar(10) NOT NULL,
+  IdDostawcy               int(10) NOT NULL AUTO_INCREMENT,
+  IdMagazynu               int(10),
+  NazwaDostawcy            varchar(255) NOT NULL,
+  NumerTelefonu            varchar(10) NOT NULL,
+  ListaDostawcowIdDostawcy int(10) NOT NULL,
   PRIMARY KEY (IdDostawcy));
 CREATE TABLE Klienci (
   KlientId      int(11) NOT NULL AUTO_INCREMENT,
-  nick          varchar(25) NOT NULL,
+  nick          varchar(25) NOT NULL UNIQUE,
   Haslo         varchar(255) NOT NULL,
   Imie          varchar(50) NOT NULL,
   Nazwisko      varchar(50) NOT NULL,
@@ -20,15 +21,16 @@ CREATE TABLE ListaAdministratorow (
   Nazwisko         varchar(255) NOT NULL,
   DataZatrudnienia date NOT NULL,
   PRIMARY KEY (AdministratorId));
-CREATE TABLE ListaDostawcow (
-  IdDostawcy int(10) NOT NULL AUTO_INCREMENT,
-  IdMagazynu int(10) NOT NULL,
-  PRIMARY KEY (IdDostawcy));
 CREATE TABLE ListaMagazynow (
   IdMagazynu      int(10) NOT NULL AUTO_INCREMENT,
   Adres           varchar(50) NOT NULL,
-  AdministratorId int(10) NOT NULL,
+  AdministratorId int(10),
   PRIMARY KEY (IdMagazynu));
+CREATE TABLE ListaMagazynow_Dostawcy (
+  ListaMagazynowIdMagazynu int(10) NOT NULL,
+  DostawcyIdDostawcy       int(10) NOT NULL,
+  PRIMARY KEY (ListaMagazynowIdMagazynu,
+  DostawcyIdDostawcy));
 CREATE TABLE Magazyn (
   IdMagazynu int(10) NOT NULL,
   Ilosc      int(10) NOT NULL,
@@ -41,7 +43,7 @@ CREATE TABLE OpinieKlientow (
   KlientId   int(11) NOT NULL);
 CREATE TABLE Pracownicy (
   PracownikId      int(10) NOT NULL AUTO_INCREMENT,
-  nick             varchar(25) NOT NULL,
+  nick             varchar(25) NOT NULL UNIQUE,
   Haslo            varchar(255) NOT NULL,
   Imie             varchar(50) NOT NULL,
   Nazwisko         varchar(50) NOT NULL,
@@ -49,7 +51,7 @@ CREATE TABLE Pracownicy (
   email            varchar(30),
   Stanowisko       varchar(20) NOT NULL,
   DataZatrudnienia date NOT NULL,
-  AdministratorId  int(10) NOT NULL,
+  AdministratorId  int(10),
   PRIMARY KEY (PracownikId));
 CREATE TABLE Produkty (
   IdProduktu    int(10) NOT NULL AUTO_INCREMENT,
@@ -72,7 +74,8 @@ CREATE TABLE Zamowienia (
   KlientId        int(11) NOT NULL,
   Produkt         varchar(255) NOT NULL,
   PRIMARY KEY (NumerZamowienia));
-ALTER TABLE Dostawcy ADD CONSTRAINT FKDostawcy626501 FOREIGN KEY (IdDostawcy) REFERENCES ListaDostawcow (IdDostawcy);
+ALTER TABLE ListaMagazynow_Dostawcy ADD CONSTRAINT FKListaMagaz157993 FOREIGN KEY (ListaMagazynowIdMagazynu) REFERENCES ListaMagazynow (IdMagazynu);
+ALTER TABLE ListaMagazynow_Dostawcy ADD CONSTRAINT FKListaMagaz607683 FOREIGN KEY (DostawcyIdDostawcy) REFERENCES Dostawcy (IdDostawcy);
 ALTER TABLE OpinieKlientow ADD CONSTRAINT FKOpinieKlie250607 FOREIGN KEY (KlientId) REFERENCES Klienci (KlientId);
 ALTER TABLE Magazyn ADD CONSTRAINT FKMagazyn299317 FOREIGN KEY (IdProduktu) REFERENCES Produkty (IdProduktu);
 ALTER TABLE Zamowienia ADD CONSTRAINT FKZamowienia281009 FOREIGN KEY (KlientId) REFERENCES Klienci (KlientId);
@@ -81,4 +84,3 @@ ALTER TABLE OpinieKlientow ADD CONSTRAINT FKOpinieKlie85286 FOREIGN KEY (IdProdu
 ALTER TABLE Magazyn ADD CONSTRAINT FKMagazyn106861 FOREIGN KEY (IdMagazynu) REFERENCES ListaMagazynow (IdMagazynu);
 ALTER TABLE Pracownicy ADD CONSTRAINT FKPracownicy675238 FOREIGN KEY (AdministratorId) REFERENCES ListaAdministratorow (AdministratorId);
 ALTER TABLE ListaMagazynow ADD CONSTRAINT FKListaMagaz601202 FOREIGN KEY (AdministratorId) REFERENCES ListaAdministratorow (AdministratorId);
-ALTER TABLE ListaDostawcow ADD CONSTRAINT FKListaDosta431852 FOREIGN KEY (IdMagazynu) REFERENCES ListaMagazynow (IdMagazynu);

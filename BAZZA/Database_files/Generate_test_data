@@ -10,7 +10,6 @@ INSERT INTO Klienci (nick, Imie, Nazwisko, Adres, Email, NumerTelefonu, Haslo) V
 ('klient2', 'Adam', 'Szymanski', 'ul. Kwiatowa 95', 'adam.szymanski19@email.com', '223258166', 'haslo2'),
 ('klient3', 'Adam', 'Lewandowski', 'ul. Parkowa 26', 'adam.lewandowski1@email.com', '244912138', 'haslo3'),
 ('klient4', 'Dorota', 'Dabrowski', 'ul. Leśna 32', 'dorota.dabrowski13@email.com', '533812272', 'haslo4'),
-('1', '1', '1', '1', '1', '1', '1'),
 ('klient5', 'Adam', 'Lewandowski', 'ul. Słoneczna 25', 'adam.lewandowski70@email.com', '338335072', 'haslo5');
 
 
@@ -27,11 +26,17 @@ INSERT INTO ListaAdministratorow (Imie, Nazwisko, DataZatrudnienia) VALUES
 
 INSERT INTO Pracownicy (nick, Haslo, Imie, Nazwisko, NumerTelefonu, email, Stanowisko, DataZatrudnienia, AdministratorId)
 VALUES
-('janKowalski', 'haslo123', 'Jan', 'Kowalski', '123-456-789', 'jan.kowalski', 'Programista', '2023-01-01', 1),
-('annaNowak', 'haslo456', 'Anna', 'Nowak', '987-654-321', 'anna.nowak', 'Analityk', '2023-01-02', 2),
-('pawelZiolkowski', 'haslo789', 'Paweł', 'Ziolkowski', '567-890-123', 'pawel.ziolkowski', 'Menadżer', '2023-01-03', 3),
-('3', '3', 'Jan', 'Kowalski', '123-456-789', 'jan.kowalski', 'Programista', '2023-01-01', 3);
+('janKowalski', 'haslo123', 'Jan', 'Kowalski', '123-456-789', 'jan.kowalski', 'EMPLOYEE', '2023-01-01', 1),
+('anna', 'haslo', 'Anna', 'Nowak', '987-654-321', 'anna.nowak', 'EMPLOYEE', '2023-01-02', 2),
+('pawel', 'haslo1', 'Paweł', 'Ziolkowski', '567-890-123', 'pawel.ziolkowski', 'ADMIN', '2023-01-03', 3);
 
+INSERT INTO ListaMagazynow (Adres, AdministratorId) VALUES
+('Magazynowa 1', 1),
+('Magazynowa 2', 2);
+
+INSERT INTO OpinieKlientow (Ocena, Komentarz, klientid, IdProduktu) VALUES
+(5, 'Bardzo dobry produkt!', '1', 1),
+(4, 'Dobry, ale mogłoby być lepiej.', '2', 2);
 
 INSERT INTO Dostawcy (IdDostawcy, IdMagazynu, NazwaDostawcy, NumerTelefonu, ListaDostawcowIdDostawcy)
 VALUES
@@ -45,30 +50,3 @@ VALUES
 (8, 59, 'Węgrzynek-Mazepa i syn s.c.', '+48 693 8', 5),
 (9, 33, 'Gabinety Pasich s.c.', '696 ', 1),
 (10, 27, 'Gabinety Godyń S.A.', '534 55', 6);
-
-INSERT INTO ListaMagazynow (Adres, AdministratorId) VALUES
-('Magazynowa 1', 1),
-('Magazynowa 2', 2);
-
-INSERT INTO OpinieKlientow (Ocena, Komentarz, klientid, IdProduktu) VALUES
-(5, 'Bardzo dobry produkt!', '1', 1),
-(4, 'Dobry, ale mogłoby być lepiej.', '2', 2);
-
-INSERT INTO ListaDostawcow (IdMagazynu) VALUES
-(101),
-(102),
-(103),
-(104),
-(105);
-INSERT INTO Dostawcy (IdDostawcy, IdMagazynu, NazwaDostawcy, NumerTelefonu) VALUES
-(1, 101, 'Dostawca A', '1234567890'),
-(2, 102, 'Dostawca B', '2345678901'),
-(3, 103, 'Dostawca C', '3456789012'),
-(4, 104, 'Dostawca D', '4567890123'),
-(5, 105, 'Dostawca E', '5678901234');
-
-INSERT INTO ListaMagazynow (IdMagazynu, Adres, AdministratorId) VALUES (1, 'Haven', 1);
-INSERT INTO ListaMagazynow (IdMagazynu, Adres, AdministratorId) VALUES (2, 'Corner', 2);
-
-INSERT INTO ListaDostawcow (IdDostawcy, IdMagazynu) VALUES (2, 1);
-INSERT INTO ListaDostawcow (IdDostawcy, IdMagazynu) VALUES (1, 2);
